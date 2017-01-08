@@ -54,7 +54,7 @@ namespace Crystal.ActorTests {
       _ai = new UtilityAi("ai", _aic);
       var coreBehaviour = new Behaviour("coreBehaviour", _bc);
       coreBehaviour.Selector = new MaxUtilitySelector();
-      _ai.Add(coreBehaviour.NameId);
+      _ai.AddBehaviour(coreBehaviour.NameId);
 
       // Eat Option
       _eatOption = new Option();
@@ -62,9 +62,9 @@ namespace Crystal.ActorTests {
       var eatAction = new EatAction();
       var hungerConsideration = new HungerConsideration();
       _eatOption.SetAction(eatAction);
-      _eatOption.Add(hungerConsideration);
-      _eatOption.Add(new InverseBladderConsideration());
-      coreBehaviour.Add(_eatOption);
+      _eatOption.AddConsideration(hungerConsideration);
+      _eatOption.AddConsideration(new InverseBladderConsideration());
+      coreBehaviour.AddConsideration(_eatOption);
 
       // Drink Option
       _drinkOption = new Option();
@@ -72,8 +72,8 @@ namespace Crystal.ActorTests {
       var drinkAction = new DrinkAction();
       var thirstConsideration = new ThirstConsideration();
       _drinkOption.SetAction(drinkAction);
-      _drinkOption.Add(thirstConsideration);
-      _drinkOption.Add(new InverseBladderConsideration());
+      _drinkOption.AddConsideration(thirstConsideration);
+      _drinkOption.AddConsideration(new InverseBladderConsideration());
 
       // Toilet Option
       _toiletOption = new Option();
@@ -81,11 +81,11 @@ namespace Crystal.ActorTests {
       var toiletAction = new ToiletAction();
       var bladderConsideration = new BladderConsideration();
       _toiletOption.SetAction(toiletAction);
-      _toiletOption.Add(bladderConsideration);
+      _toiletOption.AddConsideration(bladderConsideration);
 
-      coreBehaviour.Add(_eatOption);
-      coreBehaviour.Add(_drinkOption);
-      coreBehaviour.Add(_toiletOption);
+      coreBehaviour.AddConsideration(_eatOption);
+      coreBehaviour.AddConsideration(_drinkOption);
+      coreBehaviour.AddConsideration(_toiletOption);
 
       Console.WriteLine(coreBehaviour);
 
@@ -108,46 +108,46 @@ namespace Crystal.ActorTests {
     [Test]
     public void GetSetFirstThinkDelayMinTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.FirstThinkDelayMin, Is.EqualTo(0f));
-      dm.FirstThinkDelayMin = 0.5f;
-      Assert.That(dm.FirstThinkDelayMin, Is.EqualTo(0.5));
+      Assert.That(dm.InitThinkDelayMin, Is.EqualTo(0f));
+      dm.InitThinkDelayMin = 0.5f;
+      Assert.That(dm.InitThinkDelayMin, Is.EqualTo(0.5));
     }
 
     [Test]
     public void FirstThinkDelayMinCannotBeNegativeTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.FirstThinkDelayMin = -100f;
-      Assert.That(dm.FirstThinkDelayMin, Is.EqualTo(0f));
+      dm.InitThinkDelayMin = -100f;
+      Assert.That(dm.InitThinkDelayMin, Is.EqualTo(0f));
     }
 
     [Test]
     public void GetSetFirstThinkDelayMaxTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.FirstThinkDelayMax, Is.EqualTo(0f));
-      dm.FirstThinkDelayMax = 0.5f;
-      Assert.That(dm.FirstThinkDelayMax, Is.EqualTo(0.5f));
+      Assert.That(dm.InitThinkDelayMax, Is.EqualTo(0f));
+      dm.InitThinkDelayMax = 0.5f;
+      Assert.That(dm.InitThinkDelayMax, Is.EqualTo(0.5f));
     }
 
     [Test]
     public void FirstThinkDelayMaxCannotBeNegativeTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.FirstThinkDelayMax = -100f;
-      Assert.That(dm.FirstThinkDelayMax, Is.EqualTo(0f));
+      dm.InitThinkDelayMax = -100f;
+      Assert.That(dm.InitThinkDelayMax, Is.EqualTo(0f));
     }
 
     [Test]
     public void FirstThinkDelayMinIsLessOrEqualToMinTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.FirstThinkDelayMax = 0.5f;
-      dm.FirstThinkDelayMin = 0.6f;
-      Assert.That(dm.FirstThinkDelayMax, Is.EqualTo(0.6f));
+      dm.InitThinkDelayMax = 0.5f;
+      dm.InitThinkDelayMin = 0.6f;
+      Assert.That(dm.InitThinkDelayMax, Is.EqualTo(0.6f));
 
-      dm.FirstThinkDelayMax = 0.5f;
-      Assert.That(dm.FirstThinkDelayMax, Is.EqualTo(0.6f));
+      dm.InitThinkDelayMax = 0.5f;
+      Assert.That(dm.InitThinkDelayMax, Is.EqualTo(0.6f));
 
-      dm.FirstThinkDelayMin = 0f;
-      dm.FirstThinkDelayMax = 0.1f;
-      Assert.That(dm.FirstThinkDelayMax, Is.EqualTo(0.1f));
+      dm.InitThinkDelayMin = 0f;
+      dm.InitThinkDelayMax = 0.1f;
+      Assert.That(dm.InitThinkDelayMax, Is.EqualTo(0.1f));
     }
 
 
@@ -200,46 +200,46 @@ namespace Crystal.ActorTests {
     [Test]
     public void GetSetFirstUpdateDelayMinTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.FirstUpdateDelayMin, Is.EqualTo(0f));
-      dm.FirstUpdateDelayMin = 0.5f;
-      Assert.That(dm.FirstUpdateDelayMin, Is.EqualTo(0.5));
+      Assert.That(dm.InitUpdateDelayMin, Is.EqualTo(0f));
+      dm.InitUpdateDelayMin = 0.5f;
+      Assert.That(dm.InitUpdateDelayMin, Is.EqualTo(0.5));
     }
 
     [Test]
     public void FirstUpdateMinCannotBeNegativeTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.FirstUpdateDelayMin = -100f;
-      Assert.That(dm.FirstUpdateDelayMin, Is.EqualTo(0f));
+      dm.InitUpdateDelayMin = -100f;
+      Assert.That(dm.InitUpdateDelayMin, Is.EqualTo(0f));
     }
 
     [Test]
     public void GetSetFirstUpdateDelayMaxTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.FirstUpdateDelayMax, Is.EqualTo(0f));
-      dm.FirstUpdateDelayMax = 0.5f;
-      Assert.That(dm.FirstUpdateDelayMax, Is.EqualTo(0.5f));
+      Assert.That(dm.InitUpdateDelayMax, Is.EqualTo(0f));
+      dm.InitUpdateDelayMax = 0.5f;
+      Assert.That(dm.InitUpdateDelayMax, Is.EqualTo(0.5f));
     }
 
     [Test]
     public void FirstUpdateMaxCannotBeNegativeTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.FirstUpdateDelayMax = -100f;
-      Assert.That(dm.FirstUpdateDelayMax, Is.EqualTo(0f));
+      dm.InitUpdateDelayMax = -100f;
+      Assert.That(dm.InitUpdateDelayMax, Is.EqualTo(0f));
     }
 
     [Test]
     public void FirstUpdateMinIsLessOrEqualToMinTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.FirstUpdateDelayMax = 0.5f;
-      dm.FirstUpdateDelayMin = 0.6f;
-      Assert.That(dm.FirstUpdateDelayMax, Is.EqualTo(0.6f));
+      dm.InitUpdateDelayMax = 0.5f;
+      dm.InitUpdateDelayMin = 0.6f;
+      Assert.That(dm.InitUpdateDelayMax, Is.EqualTo(0.6f));
 
-      dm.FirstUpdateDelayMax = 0.5f;
-      Assert.That(dm.FirstUpdateDelayMax, Is.EqualTo(0.6f));
+      dm.InitUpdateDelayMax = 0.5f;
+      Assert.That(dm.InitUpdateDelayMax, Is.EqualTo(0.6f));
 
-      dm.FirstUpdateDelayMin = 0f;
-      dm.FirstUpdateDelayMax = 0.1f;
-      Assert.That(dm.FirstUpdateDelayMax, Is.EqualTo(0.1f));
+      dm.InitUpdateDelayMin = 0f;
+      dm.InitUpdateDelayMax = 0.1f;
+      Assert.That(dm.InitUpdateDelayMax, Is.EqualTo(0.1f));
     }
 
 
@@ -358,7 +358,7 @@ namespace Crystal.ActorTests {
       circularOption.SetAction("TransitionToCircularAi");
 
       Assert.That(coreBehaviour.AddOption("recursive"), Is.True);
-      Assert.That(circularAi.Add(coreBehaviour.NameId), Is.True);
+      Assert.That(circularAi.AddBehaviour(coreBehaviour.NameId), Is.True);
 
       var dm = new DecisionMaker(circularAi, _toon, s);
       Assert.Throws<DecisionMakerBase.PotentialCircularDependencyException>(dm.Think);

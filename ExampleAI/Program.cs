@@ -18,16 +18,60 @@
 // You should have received a copy of the GNU General Public License
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using Crystal;
 
 
 namespace ExampleAI {
 
   internal class Program {
     static void Main() {
-      Console.WriteLine("Hello from ExampleAI");
+      int N = 4;
+      var characters = new List<Character>();
+      var decisionMakers = new List<DecisionMaker>();
 
-      // Stop the window from closing on us.
-      Console.ReadKey();
+      Console.WriteLine("Hello from ExampleAI");
+      var aiCollection = AiCollectionConstructor.Create();
+      ExAiConstructor aiConstructor = new ExAiConstructor(aiCollection);
+      Scheduler scheduler = new Scheduler();
+
+      // Create characters and their corresponding decision making logic
+      for(int i = 0; i < N; i++) {
+        var character = new Character(string.Format("Toon {0}", i));
+        var decisionMaker = new DecisionMaker(aiConstructor.Create(AiDefs.ToonAi), character, scheduler) {
+          InitThinkDelayMin = 0.1f,
+          InitThinkDelayMax = 0.5f,
+          ThinkDelayMin = 0.25f,
+          ThinkDelayMax = 0.3f,
+          InitUpdateDelayMin = 0.1f,
+          InitUpdateDelayMax = 0.15f,
+          UpdateDelayMin = 0.1f,
+          UpdateDelayMax = 0.12f
+        };
+        
+        characters.Add(character);
+        decisionMakers.Add(decisionMaker);
+        decisionMaker.Start();
+      }
+
+      // Simulation loop
+      Console.WriteLine("Entering Simulation Loop");
+      while(true) {
+        StringBuilder sb = new StringBuilder();
+        foreach(var character in characters) {
+          character.Update();
+          sb.AppendLine(character.ToString());
+        }
+
+        Console.SetCursorPosition(0, 0);
+        Console.Write(sb.ToString());
+
+        scheduler.Tick();
+        Thread.Sleep(250);
+      }
+
     }
   }
 

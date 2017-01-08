@@ -33,7 +33,7 @@ namespace Crystal.GeneralTests {
     MasterAiConstructor _ctor;
 
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _actions = new ActionCollection();
       _considerations = new ConsiderationCollection();

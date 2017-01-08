@@ -114,17 +114,17 @@ namespace Crystal.OptionTests {
       _aiConstructor.Collection.ClearAll();
       SetupActionsAndConsiderations();
       var o = new Option("o1", _aiConstructor.Options);
-      o.Add("c1");
-      o.Add("c2");
-      o.Add("c3");
-      o.Add("c4");
+      o.AddConsideration("c1");
+      o.AddConsideration("c2");
+      o.AddConsideration("c3");
+      o.AddConsideration("c4");
       var oc = o.Clone() as IOption;
       Assert.IsNotNull(oc);
-      Assert.That(oc.Add("c1"), Is.False);
-      Assert.That(oc.Add("c2"), Is.False);
-      Assert.That(oc.Add("c3"), Is.False);
-      Assert.That(oc.Add("c4"), Is.False);
-      Assert.That(oc.Add("c5"), Is.True);
+      Assert.That(oc.AddConsideration("c1"), Is.False);
+      Assert.That(oc.AddConsideration("c2"), Is.False);
+      Assert.That(oc.AddConsideration("c3"), Is.False);
+      Assert.That(oc.AddConsideration("c4"), Is.False);
+      Assert.That(oc.AddConsideration("c5"), Is.True);
     }
 
     [Test]
@@ -135,7 +135,7 @@ namespace Crystal.OptionTests {
       var o = new Option("o1", _aiConstructor.Options);
       Assert.IsNotNull(o);
       Assert.That(o.SetAction("a1"), Is.True);
-      o.Add("c1");
+      o.AddConsideration("c1");
       var oc = o.Clone() as IOption;
       Assert.IsNotNull(oc);
 

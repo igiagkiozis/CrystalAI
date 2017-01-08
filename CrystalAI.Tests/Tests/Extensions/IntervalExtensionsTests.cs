@@ -24,9 +24,7 @@ namespace Crystal.ExtensionsTests {
 
   [TestFixture]
   public class IntervalExtensionsTests {
-    [TestFixtureSetUp]
-    public void Initialize() {
-    }
+
 
     [Test, TestCase(0f, 1f, 1f, 2f, Closed, Closed, Closed, Closed, true),
      TestCase(0f, 1f, 1f, 2f, Open, Closed, Closed, Closed, true),

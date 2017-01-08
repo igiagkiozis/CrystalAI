@@ -20,6 +20,8 @@
 namespace ExampleAI {
 
   public static class BehaviourDefs {
+    public static readonly string LiveLong = "SurvivalBehaviour";
+    public static readonly string Prosper = "WealthCreationBehaviour";
   }
 
 }

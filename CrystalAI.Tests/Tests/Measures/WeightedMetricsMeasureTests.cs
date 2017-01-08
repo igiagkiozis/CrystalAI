@@ -26,11 +26,7 @@ namespace Crystal.MeasureTests {
   [TestFixture]
   public class WeightedMetricsMeasureTests {
     Pcg _rnd = new Pcg();
-
-    [TestFixtureSetUp]
-    public void Initialize() {
-    }
-
+    
     [Test]
     public void ConstructorTest() {
       var m = new WeightedMetrics();

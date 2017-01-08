@@ -27,10 +27,6 @@ namespace Crystal.MeasureTests {
   public class ChebyshevMeasureTests {
     Pcg _rnd = new Pcg();
 
-    [TestFixtureSetUp]
-    public void Initialize() {
-    }
-
     [Test]
     public void ConstructorTest() {
       var m = new Chebyshev();

@@ -25,21 +25,20 @@ namespace Crystal.UtilitiesTests {
 
   [TestFixture]
   internal class CrMathTests {
-    static readonly float Eps2 = 4 * CrMath.Eps;
+    static readonly float Eps10 = 1e-7f;
     static readonly float EpsD2 = CrMath.Eps / 2.0f;
-    static readonly double Deps2 = 4 * CrMath.Deps;
-    static readonly double DepsD2 = CrMath.Deps / 2.0f;
-
-
+    static readonly double Deps10 = 10.0 * CrMath.Deps;
+    static readonly double DepsD2 = CrMath.Deps / 2.0;
+    
     static readonly object[] AeqBFloatTestCases = {
       new object[] {1.0f, 1.0f, true},
       new object[] {1.0f, 2.0f, false},
       new object[] {1.0f, 1.0f + EpsD2, true},
-      new object[] {1.0f, 1.0f + Eps2, false},
+      new object[] {1.0f, 1.0f + Eps10, false},
       new object[] {-1.0f, -1.0f, true},
       new object[] {-1.0f, -2.0f, false},
       new object[] {-1.0f, -1.0f + EpsD2, true},
-      new object[] {-1.0f, -1.0f + Eps2, false}
+      new object[] {-1.0f, -1.0f + Eps10, false}
     };
 
 
@@ -47,22 +46,22 @@ namespace Crystal.UtilitiesTests {
       new object[] {1.0, 1.0, true},
       new object[] {1.0, 2.0, false},
       new object[] {1.0, 1.0 + DepsD2, true},
-      new object[] {1.0, 1.0 + Deps2, false},
+      new object[] {1.0, 1.0 + Deps10, false},
       new object[] {-1.0, -1.0, true},
       new object[] {-1.0, -2.0, false},
       new object[] {-1.0, -1.0 + DepsD2, true},
-      new object[] {-1.0, -1.0 + Deps2, false}
+      new object[] {-1.0, -1.0 + Deps10, false}
     };
 
     static readonly object[] AneqBFloatTestCases = {
       new object[] {1.0f, 1.0f, false},
       new object[] {1.0f, 2.0f, true},
       new object[] {1.0f, 1.0f + EpsD2, false},
-      new object[] {1.0f, 1.0f + Eps2, true},
+      new object[] {1.0f, 1.0f + Eps10, true},
       new object[] {-1.0f, -1.0f, false},
       new object[] {-1.0f, -2.0f, true},
       new object[] {-1.0f, -1.0f + EpsD2, false},
-      new object[] {-1.0f, -1.0f + Eps2, true}
+      new object[] {-1.0f, -1.0f + Eps10, true}
     };
 
 
@@ -70,36 +69,36 @@ namespace Crystal.UtilitiesTests {
       new object[] {1.0, 1.0, false},
       new object[] {1.0, 2.0, true},
       new object[] {1.0, 1.0 + DepsD2, false},
-      new object[] {1.0, 1.0 + Deps2, true},
+      new object[] {1.0, 1.0 + Deps10, true},
       new object[] {-1.0, -1.0, false},
       new object[] {-1.0, -2.0, true},
       new object[] {-1.0, -1.0 + DepsD2, false},
-      new object[] {-1.0, -1.0 + Deps2, true}
+      new object[] {-1.0, -1.0 + Deps10, true}
     };
 
     static readonly object[] AeqZeroFloatTestCases = {
       new object[] {0.0f, true},
       new object[] {EpsD2, true},
-      new object[] {Eps2, false}
+      new object[] {Eps10, false}
     };
 
     static readonly object[] AeqZeroDoubleTestCases = {
       new object[] {0.0, true},
       new object[] {DepsD2, true},
-      new object[] {Deps2, false}
+      new object[] {Deps10, false}
     };
 
 
     static readonly object[] AneqZeroFloatTestCases = {
       new object[] {0.0f, false},
       new object[] {EpsD2, false},
-      new object[] {Eps2, true}
+      new object[] {Eps10, true}
     };
 
     static readonly object[] AneqZeroDoubleTestCases = {
       new object[] {0.0, false},
       new object[] {DepsD2, false},
-      new object[] {Deps2, true}
+      new object[] {Deps10, true}
     };
 
     static readonly object[] LinearSpacedTestCases = {
@@ -111,10 +110,6 @@ namespace Crystal.UtilitiesTests {
       new object[] {3, 2f, 1f},
       new object[] {12, -2f, -1f}
     };
-
-    [OneTimeSetUp]
-    public void Initialize() {
-    }
 
     [Test]
     public void DefaultEpsCalculationTest() {
@@ -145,23 +140,21 @@ namespace Crystal.UtilitiesTests {
       var deps1000 = CrMath.Deps;
       Assert.That(deps1000, Is.GreaterThan(deps));
     }
-
-    // TODO For some reason the NUnit Test Runner fails here.
-//    [Test, TestCaseSource("AeqBFloatTestCases")]
-//    public void AeqBFloatTests(float a, float b, bool expected) {
-//      Assert.That(CrMath.AeqB(a, b), Is.EqualTo(expected));
-//    }
+    
+    [Test, TestCaseSource("AeqBFloatTestCases")]
+    public void AeqBFloatTests(float a, float b, bool expected) {
+      Assert.That(CrMath.AeqB(a, b), Is.EqualTo(expected));
+    }
 
     [Test, TestCaseSource("AeqBDoubleTestCases")]
     public void AeqBDoubleTests(double a, double b, bool expected) {
       Assert.That(CrMath.AeqB(a, b), Is.EqualTo(expected));
     }
 
-    // TODO For some reason the NUnit Test Runner fails here.
-//    [Test, TestCaseSource("AneqBFloatTestCases")]
-//    public void AneqBFloatTests(float a, float b, bool expected) {
-//      Assert.That(CrMath.AneqB(a, b), Is.EqualTo(expected));
-//    }
+    [Test, TestCaseSource("AneqBFloatTestCases")]
+    public void AneqBFloatTests(float a, float b, bool expected) {
+      Assert.That(CrMath.AneqB(a, b), Is.EqualTo(expected));
+    }
 
     [Test, TestCaseSource("AneqBDoubleTestCases")]
     public void AneqBDoubleTests(double a, double b, bool expected) {

@@ -28,13 +28,13 @@ namespace Crystal {
   public sealed class DecisionMaker : DecisionMakerBase {
     IScheduler _aiScheduler;
 
-    float _firstThinkDelayMax;
+    float _initThinkDelayMax;
 
-    float _firstThinkDelayMin;
+    float _initThinkDelayMin;
 
-    float _firstUpdateDelayMax;
+    float _initUpdateDelayMax;
 
-    float _firstUpdateDelayMin;
+    float _initUpdateDelayMin;
     IDeferredCommand _thinkCommand;
     IDeferredCommandHandle _thinkCommandHandle;
 
@@ -48,20 +48,20 @@ namespace Crystal {
 
     float _updateDelayMin;
 
-    public float FirstThinkDelayMin {
-      get { return _firstThinkDelayMin; }
+    public float InitThinkDelayMin {
+      get { return _initThinkDelayMin; }
       set {
-        _firstThinkDelayMin = value.ClampToPositive();
-        _firstThinkDelayMax = _firstThinkDelayMax.ClampToLowerBound(_firstThinkDelayMin);
-        _thinkCommand.InitExecutionDelayMin = _firstThinkDelayMin;
+        _initThinkDelayMin = value.ClampToPositive();
+        _initThinkDelayMax = _initThinkDelayMax.ClampToLowerBound(_initThinkDelayMin);
+        _thinkCommand.InitExecutionDelayMin = _initThinkDelayMin;
       }
     }
 
-    public float FirstThinkDelayMax {
-      get { return _firstThinkDelayMax; }
+    public float InitThinkDelayMax {
+      get { return _initThinkDelayMax; }
       set {
-        _firstThinkDelayMax = value.ClampToLowerBound(_firstThinkDelayMin);
-        _thinkCommand.InitExecutionDelayMax = _firstThinkDelayMax;
+        _initThinkDelayMax = value.ClampToLowerBound(_initThinkDelayMin);
+        _thinkCommand.InitExecutionDelayMax = _initThinkDelayMax;
       }
     }
 
@@ -82,20 +82,20 @@ namespace Crystal {
       }
     }
 
-    public float FirstUpdateDelayMin {
-      get { return _firstUpdateDelayMin; }
+    public float InitUpdateDelayMin {
+      get { return _initUpdateDelayMin; }
       set {
-        _firstUpdateDelayMin = value.ClampToPositive();
-        _firstUpdateDelayMax = _firstUpdateDelayMax.ClampToLowerBound(_firstUpdateDelayMin);
-        _updateCommand.InitExecutionDelayMin = _firstUpdateDelayMin;
+        _initUpdateDelayMin = value.ClampToPositive();
+        _initUpdateDelayMax = _initUpdateDelayMax.ClampToLowerBound(_initUpdateDelayMin);
+        _updateCommand.InitExecutionDelayMin = _initUpdateDelayMin;
       }
     }
 
-    public float FirstUpdateDelayMax {
-      get { return _firstUpdateDelayMax; }
+    public float InitUpdateDelayMax {
+      get { return _initUpdateDelayMax; }
       set {
-        _firstUpdateDelayMax = value.ClampToLowerBound(_firstUpdateDelayMin);
-        _updateCommand.InitExecutionDelayMax = _firstUpdateDelayMax;
+        _initUpdateDelayMax = value.ClampToLowerBound(_initUpdateDelayMin);
+        _updateCommand.InitExecutionDelayMax = _initUpdateDelayMax;
       }
     }
 
@@ -149,8 +149,8 @@ namespace Crystal {
 
     void InitializeThinkCommand() {
       _thinkCommand = new DeferredCommand(Think) {
-        InitExecutionDelayMin = FirstThinkDelayMin,
-        InitExecutionDelayMax = FirstThinkDelayMin,
+        InitExecutionDelayMin = InitThinkDelayMin,
+        InitExecutionDelayMax = InitThinkDelayMin,
         ExecutionDelayMin = ThinkDelayMin,
         ExecutionDelayMax = ThinkDelayMax
       };
@@ -158,8 +158,8 @@ namespace Crystal {
 
     void InitializeUpdateCommand() {
       _updateCommand = new DeferredCommand(Update) {
-        InitExecutionDelayMin = FirstUpdateDelayMin,
-        InitExecutionDelayMax = FirstUpdateDelayMin,
+        InitExecutionDelayMin = InitUpdateDelayMin,
+        InitExecutionDelayMax = InitUpdateDelayMin,
         ExecutionDelayMin = UpdateDelayMin,
         ExecutionDelayMax = UpdateDelayMax
       };

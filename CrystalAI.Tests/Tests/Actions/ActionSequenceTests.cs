@@ -44,7 +44,7 @@ namespace Crystal.ActionTests {
       new object[] {new ActionSequence("name", new ActionCollection()), 10}
     };
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _aiConstructor = new HelperAiConstructor();
       _customContext = new CustomContext();

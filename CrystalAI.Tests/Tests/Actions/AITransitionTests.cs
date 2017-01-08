@@ -32,7 +32,7 @@ namespace Crystal.ActionTests {
 
     IUtilityAi _utilityAi;
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _actions = new ActionCollection();
       _considerations = new ConsiderationCollection();

@@ -29,11 +29,7 @@ namespace Crystal.EvaluatorTests {
     int _evN = 1000;
 
     float _minK = -0.99999f;
-    float _maxK = 0.99999f;
-
-    [TestFixtureSetUp]
-    public void Initialize() {
-    }
+    float _maxK = 0.99999f;    
 
     [Test]
     public void DefaultConstructorTest() {

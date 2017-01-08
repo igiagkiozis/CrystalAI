@@ -36,7 +36,7 @@ namespace Crystal.SchedulingTests {
     DeferredCommand _cmd3;
     Processes _p;
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _p = new Processes();
       _proc1 = _p.Process1;

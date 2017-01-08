@@ -30,7 +30,10 @@ namespace ExampleAI {
     }
 
     protected override void OnExecute(CharacterContext context) {
-      //EndInSuccess(context);
+      context.Character.Report(Name);
+      context.Cleanliness += 90f;
+      context.Energy += 2.5f;
+      EndInSuccess(context);
     }
 
     protected override void OnUpdate(CharacterContext context) {

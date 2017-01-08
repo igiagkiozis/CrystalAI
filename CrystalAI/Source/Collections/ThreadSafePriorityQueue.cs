@@ -103,7 +103,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Remove the specified item. Note that the queue may contain multiples of the same item, in
+    ///   RemoveBehaviour the specified item. Note that the queue may contain multiples of the same item, in
     ///   which case this removes the one that is closest to the head.
     /// </summary>
     public TItem Remove(TItem item) {
@@ -112,7 +112,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Remove the specified item. Note that the queue may contain multiples of the same item, in
+    ///   RemoveBehaviour the specified item. Note that the queue may contain multiples of the same item, in
     ///   which case this removes the one that is closest to the head.
     /// </summary>
     public TItem Remove(Func<TItem, bool> predicate) {

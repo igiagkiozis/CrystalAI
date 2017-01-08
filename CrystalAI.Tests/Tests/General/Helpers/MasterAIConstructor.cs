@@ -62,19 +62,19 @@ namespace Crystal.GeneralTests {
     protected override void DefineOptions() {
       O = new Option(EatOption, Options);
       O.SetAction(EatAction);
-      IsOkay(O.Add(HungerConsideration));
+      IsOkay(O.AddConsideration(HungerConsideration));
 
       O = new Option(DrinkOption, Options);
       O.SetAction(DrinkAction);
-      IsOkay(O.Add(ThirstConsideration));
+      IsOkay(O.AddConsideration(ThirstConsideration));
 
       O = new Option(ToiletOption, Options);
       O.SetAction(ToiletAction);
-      IsOkay(O.Add(BladderConsideration));
+      IsOkay(O.AddConsideration(BladderConsideration));
 
       O = new Option(ShowerOption, Options);
       O.SetAction(ShowerAction);
-      IsOkay(O.Add(CleanlinessConsideration));
+      IsOkay(O.AddConsideration(CleanlinessConsideration));
     }
 
     protected override void DefineBehaviours() {

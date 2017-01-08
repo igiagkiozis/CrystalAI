@@ -3,7 +3,7 @@
 // Copyright (c) 2016-2017 Bismur Studios Ltd.
 // Copyright (c) 2016-2017 Ioannis Giagkiozis
 // 
-// DrinkAction.cs is part of Crystal AI.
+// PhysicalExerciseAction.cs is part of Crystal AI.
 //  
 // Crystal AI is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,32 +22,47 @@ using Crystal;
 
 namespace ExampleAI {
 
-  public class DrinkAction : ActionBase<CharacterContext> {
-    public static readonly string Name = "Drink";
-
+  public class PhysicalExerciseAction : ActionBase<CharacterContext> {
+    public static readonly string Name = "Exercise";
+    float dFit;
     public override IAction Clone() {
-      return new DrinkAction(this);
+      return new PhysicalExerciseAction(this);
     }
 
     protected override void OnExecute(CharacterContext context) {
       context.Character.Report(Name);
-      context.Bladder += 25f;
-      context.Thirst -= 90f;
-      context.Wealth -= 10f;
-      EndInSuccess(context);
+      dFit = 0f;
+      Exercise(context);
     }
 
     protected override void OnUpdate(CharacterContext context) {
+      if(dFit >= 60f || context.Fitness > 98f)
+        EndInSuccess(context);
+
+      Exercise(context);
     }
 
-    public DrinkAction() {
+    public PhysicalExerciseAction() {
     }
 
-    DrinkAction(DrinkAction other) : base(other) {
+    PhysicalExerciseAction(PhysicalExerciseAction other) : base(other) {
     }
 
-    public DrinkAction(IActionCollection collection) : base(Name, collection) {
+    public PhysicalExerciseAction(IActionCollection collection) : base(Name, collection) {
     }
+
+    void Exercise(CharacterContext context) {
+      dFit += 10f;
+      context.Fitness += 10f;
+      context.Bladder += 1.5f;
+      context.Hunger += 1.5f;
+      context.Thirst += 2.5f;
+      context.Energy -= 7.5f;
+      // Those expensive gyms.. ;) 
+      context.Wealth -= 20f;
+      context.Cleanliness -= 2.5f;
+    }
+
   }
 
 }

@@ -76,7 +76,7 @@ namespace Crystal.ActionTests {
       new object[] {new FailingGenericAction()}
     };
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _customContext = new CustomContext();
       for(int i = 0; i < 10; i++)

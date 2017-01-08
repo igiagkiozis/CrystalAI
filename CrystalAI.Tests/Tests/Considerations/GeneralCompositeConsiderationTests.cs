@@ -30,7 +30,7 @@ namespace Crystal.ConsiderationTests {
   public class GeneralCompositeConsiderationTests {
     IConsiderationCollection _considerations;
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _considerations = new ConsiderationCollection();
     }
@@ -77,8 +77,8 @@ namespace Crystal.ConsiderationTests {
       var c = ConsiderationConstructor.Chebyshev("name", _considerations);
       var b1 = new BasicConsideration("b1", _considerations);
       var b1C = b1.Clone();
-      Assert.That(c.Add(b1));
-      Assert.That(c.Add(b1C) == false);
+      Assert.That(c.AddConsideration(b1));
+      Assert.That(c.AddConsideration(b1C) == false);
     }
 
     [Test]
@@ -86,23 +86,23 @@ namespace Crystal.ConsiderationTests {
       _considerations.Clear();
       var c = ConsiderationConstructor.Chebyshev("name", _considerations);
       var b1 = new BasicConsideration("b1", _considerations);
-      Assert.That(c.Add(b1));
-      Assert.That(c.Add(b1) == false);
+      Assert.That(c.AddConsideration(b1));
+      Assert.That(c.AddConsideration(b1) == false);
     }
 
     [Test]
     public void EmptyOrNullConsiderationIdNotAcceptableTest() {
       _considerations.Clear();
       var c = ConsiderationConstructor.Chebyshev("name", _considerations);
-      Assert.That(c.Add("") == false);
-      Assert.That(c.Add((string)null) == false);
+      Assert.That(c.AddConsideration("") == false);
+      Assert.That(c.AddConsideration((string)null) == false);
     }
 
     [Test]
     public void IfCollectionNullDontTryToAddNameIdConsiderationTest() {
       _considerations.Clear();
       var c = new CompositeConsideration();
-      Assert.That(c.Add("some") == false);
+      Assert.That(c.AddConsideration("some") == false);
     }
 
     [Test]
@@ -110,8 +110,8 @@ namespace Crystal.ConsiderationTests {
       _considerations.Clear();
       var c = ConsiderationConstructor.Chebyshev("name", _considerations);
       var b1 = new BasicConsideration("b1", _considerations);
-      Assert.That(c.Add("b1"));
-      Assert.That(c.Add("b1") == false);
+      Assert.That(c.AddConsideration("b1"));
+      Assert.That(c.AddConsideration("b1") == false);
     }
 
     [Test]
@@ -128,8 +128,8 @@ namespace Crystal.ConsiderationTests {
       var c = ConsiderationConstructor.Chebyshev("name", _considerations);
       var cc = c.Clone() as ICompositeConsideration;
       var b1 = new BasicConsideration("b1", _considerations);
-      Assert.That(c.Add("b1"));
-      Assert.That(cc.Add("b1"));
+      Assert.That(c.AddConsideration("b1"));
+      Assert.That(cc.AddConsideration("b1"));
     }
 
     [Test]
@@ -138,12 +138,12 @@ namespace Crystal.ConsiderationTests {
       var c = ConsiderationConstructor.Chebyshev("name", _considerations);
       var b1 = new BasicConsideration("b1", _considerations);
       var b2 = new BasicConsideration("b2", _considerations);
-      c.Add("b1");
-      c.Add("b2");
+      c.AddConsideration("b1");
+      c.AddConsideration("b2");
       var cc = c.Clone() as ICompositeConsideration;
 
-      Assert.That(cc.Add("b1") == false);
-      Assert.That(cc.Add("b2") == false);
+      Assert.That(cc.AddConsideration("b1") == false);
+      Assert.That(cc.AddConsideration("b2") == false);
     }
 
     [Test]
@@ -154,8 +154,8 @@ namespace Crystal.ConsiderationTests {
       context.BaseUtility = new Utility(util, 0.8f);
       var b1 = new BasicConsideration("b1", _considerations);
       var b2 = new BasicConsideration("b2", _considerations);
-      c.Add("b1");
-      c.Add("b2");
+      c.AddConsideration("b1");
+      c.AddConsideration("b2");
       var cc = c.Clone() as ICompositeConsideration;
 
       c.Consider(context);

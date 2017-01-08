@@ -70,13 +70,13 @@ namespace Crystal.BehaviourTests {
       IOption tmpo;
       tmpo = new Option("o1", _options);
       tmpo.SetAction("a1");
-      tmpo.Add("c1");
-      tmpo.Add("c2");
+      tmpo.AddConsideration("c1");
+      tmpo.AddConsideration("c2");
 
       tmpo = new Option("o2", _options);
       tmpo.SetAction("a2");
-      tmpo.Add("c3");
-      tmpo.Add("c4");
+      tmpo.AddConsideration("c3");
+      tmpo.AddConsideration("c4");
     }
   }
 

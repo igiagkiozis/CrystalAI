@@ -29,7 +29,7 @@ namespace Crystal.ExtensionsTests {
     Pcg _rng = new Pcg();
 
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _rng.NextDouble();
     }

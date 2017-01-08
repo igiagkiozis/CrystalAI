@@ -20,6 +20,7 @@
 namespace ExampleAI {
 
   public static class AiDefs {
+    public static readonly string ToonAi = "ToonAi";
   }
 
 }

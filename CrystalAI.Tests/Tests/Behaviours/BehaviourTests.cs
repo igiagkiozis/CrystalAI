@@ -107,23 +107,23 @@ namespace Crystal.BehaviourTests {
     public void DoesNotAddDuplicateOptionTest() {
       var b = new Behaviour();
       var o = new Option();
-      Assert.That(b.Add(o), Is.True);
-      Assert.That(b.Add(o), Is.False);
+      Assert.That(b.AddConsideration(o), Is.True);
+      Assert.That(b.AddConsideration(o), Is.False);
     }
 
     [Test]
     public void AddConsiderationTest() {
       var b = new Behaviour();
       var consideration = new BehaviourConsideration();
-      b.Add(consideration);
+      b.AddConsideration(consideration);
     }
 
     [Test]
     public void AddDuplicateConsiderationTest() {
       var b = new Behaviour();
       var consideration = new BehaviourConsideration();
-      b.Add(consideration);
-      b.Add(consideration);
+      b.AddConsideration(consideration);
+      b.AddConsideration(consideration);
     }
 
     [Test]
@@ -131,7 +131,7 @@ namespace Crystal.BehaviourTests {
       var b = new Behaviour();
       var context = new BehaviourContext();
       var consideration = new BehaviourConsideration();
-      b.Add(consideration);
+      b.AddConsideration(consideration);
       context.Bval = value;
       var cVal = value.Clamp01();
       b.Consider(context);
@@ -178,12 +178,12 @@ namespace Crystal.BehaviourTests {
         Measure = new Chebyshev()
       };
       optionL2A.NameId = "l2a";
-      optionRootA.Add(optionL1A);
-      optionRootA.Add(optionL2A);
-      optionL1A.Add(_c1);
-      optionL1A.Add(_c2);
-      optionL2A.Add(_c3);
-      optionL2A.Add(_c4);
+      optionRootA.AddConsideration(optionL1A);
+      optionRootA.AddConsideration(optionL2A);
+      optionL1A.AddConsideration(_c1);
+      optionL1A.AddConsideration(_c2);
+      optionL2A.AddConsideration(_c3);
+      optionL2A.AddConsideration(_c4);
       return optionRootA;
     }
 
@@ -200,12 +200,12 @@ namespace Crystal.BehaviourTests {
         Measure = new Chebyshev()
       };
       optionL2B.NameId = "l2b";
-      optionRootB.Add(optionL1B);
-      optionRootB.Add(optionL2B);
-      optionL1B.Add(_c5);
-      optionL1B.Add(_c6);
-      optionL2B.Add(_c7);
-      optionL2B.Add(_c8);
+      optionRootB.AddConsideration(optionL1B);
+      optionRootB.AddConsideration(optionL2B);
+      optionL1B.AddConsideration(_c5);
+      optionL1B.AddConsideration(_c6);
+      optionL2B.AddConsideration(_c7);
+      optionL2B.AddConsideration(_c8);
       return optionRootB;
     }
 

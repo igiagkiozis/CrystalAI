@@ -27,8 +27,8 @@ namespace Crystal {
 
     ISelector Selector { get; set; }
 
-    bool Add(string behaviourId);
-    bool Remove(string behaviourId);
+    bool AddBehaviour(string behaviourId);
+    bool RemoveBehaviour(string behaviourId);
     IAction Select(IContext context);
   }
 

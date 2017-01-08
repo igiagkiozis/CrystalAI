@@ -3,7 +3,7 @@
 // Copyright (c) 2016-2017 Bismur Studios Ltd.
 // Copyright (c) 2016-2017 Ioannis Giagkiozis
 // 
-// BladderConsideration.cs is part of Crystal AI.
+// EnergyConsideration.cs is part of Crystal AI.
 //  
 // Crystal AI is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,35 +22,42 @@ using Crystal;
 
 namespace ExampleAI {
 
-  public class BladderConsideration : ConsiderationBase<CharacterContext> {
+  public class EnergyConsideration : ConsiderationBase<CharacterContext> {
     IEvaluator _evaluator;
-    public static readonly string Name = "BladderConsideration";
+    public static readonly string Name = "Energy";
 
     public override void Consider(CharacterContext context) {
-      Utility = new Utility(_evaluator.Evaluate(context.Bladder), Weight);
+      Utility = new Utility(_evaluator.Evaluate(context.Energy), Weight);
     }
 
     public override IConsideration Clone() {
-      return new BladderConsideration(this);
+      return new EnergyConsideration(this);
     }
 
-    public BladderConsideration() {
+    public EnergyConsideration() {
       Initialize();
     }
 
-    BladderConsideration(BladderConsideration other) : base(other) {
+    EnergyConsideration(EnergyConsideration other) : base(other) {
       Initialize();
     }
 
-    public BladderConsideration(IConsiderationCollection collection)
+    public EnergyConsideration(IConsiderationCollection collection)
       : base(Name, collection) {
       Initialize();
     }
 
     void Initialize() {
-      var ptA = new Pointf(0f, 0f);
-      var ptB = new Pointf(100f, 1f);
-      _evaluator = new PowerEvaluator(ptA, ptB, 3f);
+      var ptA1 = new Pointf(0f, 0f);
+      var ptB1 = new Pointf(20f, 0.2f);
+      var powEv = new PowerEvaluator(ptA1, ptB1, 2f);
+      var ptA2 = new Pointf(20f, 0.2f);
+      var ptB2 = new Pointf(100f, 1f);
+      var linEv = new LinearEvaluator(ptA2, ptB2);
+      var cmpEv = new CompositeEvaluator();
+      cmpEv.Add(powEv);
+      cmpEv.Add(linEv);
+      _evaluator = cmpEv;
     }
 
   }

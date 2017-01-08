@@ -34,7 +34,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Add the specified Evaluator.
+    ///   AddConsideration the specified Evaluator.
     /// </summary>
     /// <param name="ev">Ev.</param>
     public void Add(IEvaluator ev) {

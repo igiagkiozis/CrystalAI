@@ -20,6 +20,17 @@
 namespace ExampleAI {
 
   public static class OptionDefs {
+    public static readonly string Eat = "Eat";
+    public static readonly string Drink = "Drink";
+    public static readonly string Toilet = "Toilet";
+    public static readonly string Shower = "Shower";
+    public static readonly string Sleep = "Sleep";    
+    public static readonly string Exercise = "Exercise";
+
+    public static readonly string Work = "Work";
+    public static readonly string Read = "Read";
+
+    public static readonly string Idle = "Idle";
   }
 
 }

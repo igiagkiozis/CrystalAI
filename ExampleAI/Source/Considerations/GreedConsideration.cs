@@ -3,7 +3,7 @@
 // Copyright (c) 2016-2017 Bismur Studios Ltd.
 // Copyright (c) 2016-2017 Ioannis Giagkiozis
 // 
-// HigherObjectivesBehaviourConsideration.cs is part of Crystal AI.
+// GreedConsideration.cs is part of Crystal AI.
 //  
 // Crystal AI is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,27 +22,39 @@ using Crystal;
 
 namespace ExampleAI {
 
-  public class HigherObjectivesBehaviourConsideration : ConsiderationBase<CharacterContext> {
+  public class GreedConsideration : ConsiderationBase<CharacterContext> {
     IEvaluator _evaluator;
-    public static readonly string Name = "HigherObjectivesConsideration";
+    public static readonly string Name = "Greed";
 
     public override void Consider(CharacterContext context) {
-      //Utility = _evaluator.Evaluate();
+      Utility = new Utility(_evaluator.Evaluate(context.Greed), Weight);
     }
 
     public override IConsideration Clone() {
-      return new HigherObjectivesBehaviourConsideration(this);
+      return new GreedConsideration(this);
     }
 
-    public HigherObjectivesBehaviourConsideration() {
+    public GreedConsideration() {
+      Initialize();
     }
 
-    HigherObjectivesBehaviourConsideration(HigherObjectivesBehaviourConsideration other) : base(other) {
+    GreedConsideration(GreedConsideration other) : base(other) {
+      Initialize();
     }
 
-    public HigherObjectivesBehaviourConsideration(IConsiderationCollection collection)
+    public GreedConsideration(IConsiderationCollection collection)
       : base(Name, collection) {
+      Initialize();
     }
+
+    void Initialize() {
+      var xa = Pcg.Default.NextFloat(20f, 30f);
+      var ptA = new Pointf(xa, 0f);
+      var xb = Pcg.Default.NextFloat(40f, 100f);
+      var ptB = new Pointf(xb, 1f);
+      _evaluator = new SigmoidEvaluator(ptA, ptB, 0.3f);
+    }
+
   }
 
 }

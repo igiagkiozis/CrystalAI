@@ -3,7 +3,7 @@
 // Copyright (c) 2016-2017 Bismur Studios Ltd.
 // Copyright (c) 2016-2017 Ioannis Giagkiozis
 // 
-// CleanlinessConsideration.cs is part of Crystal AI.
+// CuriosityConsideration.cs is part of Crystal AI.
 //  
 // Crystal AI is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,25 +22,25 @@ using Crystal;
 
 namespace ExampleAI {
 
-  public class CleanlinessConsideration : ConsiderationBase<CharacterContext> {
+  public class CuriosityConsideration : ConsiderationBase<CharacterContext> {
     IEvaluator _evaluator;
-    public static readonly string Name = "CleanlinessConsideration";
+    public static readonly string Name = "Curiosity";
 
     public override void Consider(CharacterContext context) {
-      //Utility = _evaluator.Evaluate();
+      Utility = new Utility(0.01f, Weight);
     }
 
     public override IConsideration Clone() {
-      return new CleanlinessConsideration(this);
+      return new CuriosityConsideration(this);
     }
 
-    public CleanlinessConsideration() {
+    public CuriosityConsideration() {
     }
 
-    CleanlinessConsideration(CleanlinessConsideration other) : base(other) {
+    CuriosityConsideration(CuriosityConsideration other) : base(other) {
     }
 
-    public CleanlinessConsideration(IConsiderationCollection collection)
+    public CuriosityConsideration(IConsiderationCollection collection)
       : base(Name, collection) {
     }
   }

@@ -28,7 +28,7 @@ namespace Crystal.ConsiderationTests {
   public class WeightedMetricsConsiderationTests {
     OptionContext _optionContext;
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _optionContext = new OptionContext();
     }
@@ -62,8 +62,8 @@ namespace Crystal.ConsiderationTests {
       var cd2 = new OptionConsideration2();
       cd1.NameId = "cd1";
       cd2.NameId = "cd2";
-      consideration.Add(cd1);
-      consideration.Add(cd2);
+      consideration.AddConsideration(cd1);
+      consideration.AddConsideration(cd2);
       _optionContext.XVal1 = xval1;
       _optionContext.XVal2 = xval2;
       cd1.Consider(_optionContext);

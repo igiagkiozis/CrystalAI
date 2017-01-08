@@ -28,7 +28,7 @@ namespace Crystal.ConsiderationTests {
   public class AbsoluteChebyshevConsiderationTests {
     OptionContext _optionContext;
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _optionContext = new OptionContext();
     }
@@ -60,8 +60,8 @@ namespace Crystal.ConsiderationTests {
       var cd2 = new OptionConsideration2();
       cd1.NameId = "cd1";
       cd2.NameId = "cd2";
-      c.Add(cd1);
-      c.Add(cd2);
+      c.AddConsideration(cd1);
+      c.AddConsideration(cd2);
       _optionContext.XVal1 = xval1;
       _optionContext.XVal2 = xval2;
       cd1.Consider(_optionContext);
@@ -90,8 +90,8 @@ namespace Crystal.ConsiderationTests {
       var cd2 = new OptionConsideration2();
       cd1.NameId = "cd1";
       cd2.NameId = "cd2";
-      c.Add(cd1);
-      c.Add(cd2);
+      c.AddConsideration(cd1);
+      c.AddConsideration(cd2);
       _optionContext.XVal1 = xval1;
       _optionContext.XVal2 = xval2;
       cd1.Consider(_optionContext);

@@ -23,12 +23,18 @@ namespace ExampleAI {
 
   public static class ConsiderationDefs {
     public static readonly string Bladder = BladderConsideration.Name;
-    public static readonly string Cleanliness = CleanlinessConsideration.Name;
+    public static readonly string Shower = ShowerConsideration.Name;
     public static readonly string Hunger = HungerConsideration.Name;
     public static readonly string Thirst = ThirstConsideration.Name;
+    public static readonly string Energy = EnergyConsideration.Name;
+    public static readonly string Tiredness = TirednessConsideration.Name;
+    public static readonly string HowUnfit = HowUnfitConsideration.Name;
 
-    public static readonly string PrimaryNeeds = PrimaryNeedsBehaviourConsideration.Name;
-    public static readonly string HigherObjectives = HigherObjectivesBehaviourConsideration.Name;
+    public static readonly string Greed = GreedConsideration.Name;
+    public static readonly string Curiosity = CuriosityConsideration.Name;
+
+    public static readonly string LiveLong = "LiveLong";
+    public static readonly string Prosper = "Prosper";
   }
 
 }
