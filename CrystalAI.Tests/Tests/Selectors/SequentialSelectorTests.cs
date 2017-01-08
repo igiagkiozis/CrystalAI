@@ -27,10 +27,6 @@ namespace Crystal.SelectorTests {
   public class SequentialSelectorTests {
     Pcg _rnd = new Pcg();
 
-    [TestFixtureSetUp]
-    public void Initialize() {
-    }
-
     [Test]
     public void ConstructorTest() {
       var s = new SequentialSelector();

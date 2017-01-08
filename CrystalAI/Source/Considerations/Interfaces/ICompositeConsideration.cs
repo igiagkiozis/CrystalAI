@@ -31,14 +31,14 @@ namespace Crystal {
     IMeasure Measure { get; set; }
 
     /// <summary>
-    ///   Add the specified consideration.
+    ///   AddConsideration the specified consideration.
     /// </summary>
-    bool Add(IConsideration consideration);
+    bool AddConsideration(IConsideration consideration);
 
     /// <summary>
-    ///   Add the consideration associated with the given ID.
+    ///   AddConsideration the consideration associated with the given ID.
     /// </summary>
-    bool Add(string considerationId);
+    bool AddConsideration(string considerationId);
   }
 
 }

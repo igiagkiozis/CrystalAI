@@ -27,7 +27,7 @@ namespace ExampleAI {
     public static readonly string Name = "ThirstConsideration";
 
     public override void Consider(CharacterContext context) {
-      //Utility = _evaluator.Evaluate();
+      Utility = new Utility(_evaluator.Evaluate(context.Thirst), Weight);
     }
 
     public override IConsideration Clone() {
@@ -35,14 +35,24 @@ namespace ExampleAI {
     }
 
     public ThirstConsideration() {
+      Initialize();
     }
 
     ThirstConsideration(ThirstConsideration other) : base(other) {
+      Initialize();
     }
 
     public ThirstConsideration(IConsiderationCollection collection)
       : base(Name, collection) {
+      Initialize();
     }
+
+    void Initialize() {
+      var ptA = new Pointf(85f, 0f);
+      var ptB = new Pointf(100f, 1f);
+      _evaluator = new SigmoidEvaluator(ptA, ptB, 0.7f);
+    }
+
   }
 
 }

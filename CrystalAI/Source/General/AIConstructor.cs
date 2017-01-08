@@ -79,6 +79,7 @@ namespace Crystal {
 
     protected IAction A;
     protected IConsideration C;
+    protected ICompositeConsideration Cc;
     protected IOption O;
     protected IBehaviour B;
     protected IUtilityAi Ai;

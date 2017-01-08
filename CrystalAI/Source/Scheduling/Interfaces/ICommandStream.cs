@@ -24,7 +24,7 @@ namespace Crystal {
   /// </summary>
   public interface ICommandStream {
     /// <summary>
-    ///   Add the specified item to the scheduler queue for execution.
+    ///   AddConsideration the specified item to the scheduler queue for execution.
     /// </summary>
     IDeferredCommandHandle Add(IDeferredCommand item);
 

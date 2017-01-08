@@ -27,9 +27,37 @@ namespace ExampleAI {
     float _thirst;
     float _hunger;
     float _cleanliness;
-    float _sleepiness;
+    float _energy;
+    float _fitness;
+    float _wealth;
+    float _greedFactor = 0.1f;
+    float _greed;
 
-    public float Wealth;
+    public float Wealth {
+      get { return _wealth; }
+      set {
+        var oldWealth = _wealth;
+        _wealth = value;
+        Greed -= (_wealth - oldWealth) * _greedFactor;
+      }
+    }
+
+    public float Greed {
+      get { return _greed; }
+      set { _greed = value.Clamp(0f, 100f); }
+    }
+
+    public Character Character { get; }
+
+    public float Energy {
+      get { return _energy; }
+      set { _energy = value.Clamp(0f, 100f); }
+    }
+
+    public float Fitness {
+      get { return _fitness; }
+      set { _fitness = value.Clamp(0f, 100f); }
+    }
 
     public float Bladder {
       get { return _bladder; }
@@ -38,12 +66,12 @@ namespace ExampleAI {
 
     public float Thirst {
       get { return _thirst; }
-      set { _thirst = value.Clamp(0f, 100); }
+      set { _thirst = value.Clamp(0f, 100f); }
     }
 
     public float Hunger {
       get { return _hunger; }
-      set { _hunger = value.Clamp(0f, 100); }
+      set { _hunger = value.Clamp(0f, 100f); }
     }
 
     public float Cleanliness {
@@ -51,17 +79,27 @@ namespace ExampleAI {
       set { _cleanliness = value.Clamp(0f, 100f); }
     }
 
-    public float Sleepiness {
-      get { return _sleepiness; }
-      set { _sleepiness = value.Clamp(0f, 100f); }
+    public override string ToString() {
+      return string.Format(
+                           "Wlth {0,6}, Nrg {1,7:00.00%}, B {2,7:00.00%}, T {3,7:00.00%}, H {4,7:00.00%}, C {5,7:00.00%}, Ft {6,7:00.00%}",
+                           Wealth,
+                           Energy / 100f,
+                           Bladder / 100f,
+                           Thirst / 100f,
+                           Hunger / 100f,
+                           Cleanliness / 100f,
+                           Fitness / 100f);
     }
 
-    public CharacterContext() {
+    public CharacterContext(Character character) {
+      Character = character;
       _bladder = 0f;
       _thirst = 0f;
       _hunger = 0f;
-      _sleepiness = 0f;
+      _fitness = 100f;
       _cleanliness = 100f;
+      _energy = 100f;
+      _greed = 20f;
       Wealth = 1000f;
     }
   }

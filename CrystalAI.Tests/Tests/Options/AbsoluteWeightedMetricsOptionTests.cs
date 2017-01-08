@@ -28,7 +28,7 @@ namespace Crystal.OptionTests {
   public class AbsoluteWeightedMetricsOptionTests {
     OptionContext _optionContext;
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _optionContext = new OptionContext();
     }
@@ -85,8 +85,8 @@ namespace Crystal.OptionTests {
       var cd2 = new OptionConsideration2();
       cd1.NameId = "cd1";
       cd2.NameId = "cd2";
-      option.Add(cd1);
-      option.Add(cd2);
+      option.AddConsideration(cd1);
+      option.AddConsideration(cd2);
       _optionContext.XVal1 = xval1;
       _optionContext.XVal2 = xval2;
       cd1.Consider(_optionContext);
@@ -119,8 +119,8 @@ namespace Crystal.OptionTests {
       var cd2 = new OptionConsideration2();
       cd1.NameId = "cd1";
       cd2.NameId = "cd2";
-      option.Add(cd1);
-      option.Add(cd2);
+      option.AddConsideration(cd1);
+      option.AddConsideration(cd2);
       _optionContext.XVal1 = xval1;
       _optionContext.XVal2 = xval2;
       cd1.Consider(_optionContext);

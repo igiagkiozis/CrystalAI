@@ -69,7 +69,7 @@ namespace Crystal.UtilitiesTests {
       // 16384-dimensionally equidistributed generator, period 2^(16384*32 + 64)     1024 and below. Still, not bad!
     };
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _rng = PcgExtended.Default;
     }

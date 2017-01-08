@@ -27,7 +27,7 @@ namespace Crystal.ActionTests {
   public class BehaviourTransitionTests {
     AiConstructor _aiConstructor;
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _aiConstructor = new HelperAiConstructor();
     }

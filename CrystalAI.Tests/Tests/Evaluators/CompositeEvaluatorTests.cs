@@ -28,7 +28,7 @@ namespace Crystal.EvaluatorTests {
     float _floatPrecision = 1e-6f;
     int _evN = 1000;
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
     }
 
@@ -115,7 +115,7 @@ namespace Crystal.EvaluatorTests {
       var compositeXInterval = new Interval<float>(minX, maxX);
 
       var cev = new CompositeEvaluator();
-      // Add them out of order to ensure the ordering works.
+      // AddConsideration them out of order to ensure the ordering works.
       cev.Add(ev2);
       cev.Add(ev4);
       cev.Add(ev3);

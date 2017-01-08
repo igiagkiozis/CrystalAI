@@ -72,7 +72,7 @@ namespace Crystal {
       set { _weight = value.Clamp01(); }
     }
 
-    public bool Add(IConsideration consideration) {
+    public bool AddConsideration(IConsideration consideration) {
       if(consideration == null)
         return false;
       if(_considerations.Contains(consideration))
@@ -80,11 +80,11 @@ namespace Crystal {
       if(_considerations.Any(c => string.Equals(c.NameId, consideration.NameId)))
         return false;
 
-      AddConsideration(consideration);
+      InternalAddConsideration(consideration);
       return true;
     }
 
-    public bool Add(string considerationId) {
+    public bool AddConsideration(string considerationId) {
       if(_collection == null)
         return false;
       if(string.IsNullOrEmpty(considerationId))
@@ -94,7 +94,7 @@ namespace Crystal {
       if(_collection.Contains(considerationId) == false)
         return false;
 
-      AddConsideration(considerationId);
+      InternalAddConsideration(considerationId);
       return true;
     }
 
@@ -104,6 +104,9 @@ namespace Crystal {
     /// <param name="context">The context.</param>
     /// <returns>The utility of this option.</returns>
     public virtual void Consider(IContext context) {
+      if(_considerations.Count == 0)
+        return;
+
       UpdateConsiderationUtilities(context);
       var mValue = Measure.Calculate(_considerationUtilities);
       Utility = new Utility(mValue, Weight);
@@ -174,12 +177,12 @@ namespace Crystal {
       }
     }
 
-    void AddConsideration(IConsideration c) {
+    void InternalAddConsideration(IConsideration c) {
       _considerations.Add(c);
       _considerationUtilities.Add(new Utility(0.0f, 0.0f));
     }
 
-    void AddConsideration(string nameId) {
+    void InternalAddConsideration(string nameId) {
       _considerations.Add(_collection.Create(nameId));
       _considerationUtilities.Add(new Utility(0.0f, 0.0f));
     }

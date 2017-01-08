@@ -31,7 +31,7 @@ namespace Crystal.UtilitiesTests {
 
     static object[] _nextDoubleMeanTestCases = {1f, 2f, 4.3f, 10f, 1000f, 10000000f};
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _rng = Pcg.Default;
     }

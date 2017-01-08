@@ -29,7 +29,7 @@ namespace Crystal.EvaluatorTests {
     float _floatPrecision = 1e-5f;
     int _evN = 1000;
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
     }
 

@@ -80,22 +80,22 @@ namespace Crystal.ActorTests {
     [Test]
     public void AddStringBehaviourReturnsFalseWithNullCollectionTest() {
       var ai = new UtilityAi();
-      Assert.That(ai.Add("SomeBehaviour"), Is.False);
+      Assert.That(ai.AddBehaviour("SomeBehaviour"), Is.False);
     }
 
     [Test]
     public void AddExistingStringBehaviourReturnsFalseTest() {
       _aic.Clear();
       var ai = new UtilityAi("testai", _aic);
-      Assert.That(ai.Add("b1"), Is.True);
-      Assert.That(ai.Add("b1"), Is.False);
+      Assert.That(ai.AddBehaviour("b1"), Is.True);
+      Assert.That(ai.AddBehaviour("b1"), Is.False);
     }
 
     [Test]
     public void AddNonExistentBehaviourReturnsFalseTest() {
       _aic.Clear();
       var ai = new UtilityAi("testai", _aic);
-      Assert.That(ai.Add("some"), Is.False);
+      Assert.That(ai.AddBehaviour("some"), Is.False);
     }
 
     [Test]
@@ -108,15 +108,15 @@ namespace Crystal.ActorTests {
     public void RemoveNonExistentStringBehaviourReturnsFalseTest() {
       _aic.Clear();
       var ai = new UtilityAi("testai", _aic);
-      Assert.That(ai.Remove("some"), Is.False);
+      Assert.That(ai.RemoveBehaviour("some"), Is.False);
     }
 
     [Test]
     public void RemoveStringBehaviourReturnsTrueTest() {
       _aic.Clear();
       var ai = new UtilityAi("testai", _aic);
-      Assert.That(ai.Add("b1"), Is.True);
-      Assert.That(ai.Remove("b1"), Is.True);
+      Assert.That(ai.AddBehaviour("b1"), Is.True);
+      Assert.That(ai.RemoveBehaviour("b1"), Is.True);
     }
 
     [Test]
@@ -155,8 +155,8 @@ namespace Crystal.ActorTests {
       b2.NameId = "b2";
       var consideration1 = new BehaviourConsideration1();
       var consideration2 = new BehaviourConsideration2();
-      b1.Add(consideration1);
-      b2.Add(consideration2);
+      b1.AddConsideration(consideration1);
+      b2.AddConsideration(consideration2);
 
       var a1 = new MockAction();
       a1.NameId = "a1";

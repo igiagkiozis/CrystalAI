@@ -27,7 +27,7 @@ namespace Crystal.ConsiderationTests {
   public class ConsiderationTests {
     CustomContext _customContext;
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _customContext = new CustomContext();
     }

@@ -66,7 +66,7 @@ namespace Crystal {
       return true;
     }
 
-    public bool Add(string behaviourId) {
+    public bool AddBehaviour(string behaviourId) {
       if(_collection == null)
         return false;
       if(_collection.Behaviours.Contains(behaviourId) == false)
@@ -77,7 +77,7 @@ namespace Crystal {
       return InternalAddBehaviour(behaviourId);
     }
 
-    public bool Remove(string behaviourId) {
+    public bool RemoveBehaviour(string behaviourId) {
       return InternalRemove(behaviourId);
     }
 

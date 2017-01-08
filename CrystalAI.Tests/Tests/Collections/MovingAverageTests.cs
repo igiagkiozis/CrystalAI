@@ -27,7 +27,7 @@ namespace Crystal.CollectionsTests {
   public class MovingAverageTests {
     Pcg _rng;
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _rng = new Pcg();
     }

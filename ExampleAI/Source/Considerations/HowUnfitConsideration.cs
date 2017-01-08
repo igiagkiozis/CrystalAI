@@ -3,7 +3,7 @@
 // Copyright (c) 2016-2017 Bismur Studios Ltd.
 // Copyright (c) 2016-2017 Ioannis Giagkiozis
 // 
-// PrimaryNeedsBehaviourConsideration.cs is part of Crystal AI.
+// HowUnfitConsideration.cs is part of Crystal AI.
 //  
 // Crystal AI is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,27 +22,37 @@ using Crystal;
 
 namespace ExampleAI {
 
-  public class PrimaryNeedsBehaviourConsideration : ConsiderationBase<CharacterContext> {
+  public class HowUnfitConsideration : ConsiderationBase<CharacterContext> {
     IEvaluator _evaluator;
-    public static readonly string Name = "PrimaryNeedsBehaviourConsideration";
+    public static readonly string Name = "HowUnfit";
 
     public override void Consider(CharacterContext context) {
-      //Utility = _evaluator.Evaluate();
+      Utility = new Utility(_evaluator.Evaluate(context.Fitness), Weight);
     }
 
     public override IConsideration Clone() {
-      return new PrimaryNeedsBehaviourConsideration(this);
+      return new HowUnfitConsideration(this);
     }
 
-    public PrimaryNeedsBehaviourConsideration() {
+    public HowUnfitConsideration() {
+      Initialize();
     }
 
-    PrimaryNeedsBehaviourConsideration(PrimaryNeedsBehaviourConsideration other) : base(other) {
+    HowUnfitConsideration(HowUnfitConsideration other) : base(other) {
+      Initialize();
     }
 
-    public PrimaryNeedsBehaviourConsideration(IConsiderationCollection collection)
+    public HowUnfitConsideration(IConsiderationCollection collection)
       : base(Name, collection) {
+      Initialize();
     }
+
+    void Initialize() {
+      var ptA = new Pointf(0f, 1f);
+      var ptB = new Pointf(40f, 0f);
+      _evaluator = new PowerEvaluator(ptA, ptB, 4f);
+    }
+
   }
 
 }

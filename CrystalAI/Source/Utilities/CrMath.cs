@@ -59,6 +59,7 @@ namespace Crystal {
     /// <param name="a">The alpha value.</param>
     /// <param name="b">The blue value.</param>
     public static bool AeqB(float a, float b) {
+      var df = Math.Abs(a - b);
       return Math.Abs(a - b) < Eps;
     }
 
@@ -195,9 +196,9 @@ namespace Crystal {
     ///   MS defines their float.EPSILON it is unreliable... (way too small).
     /// </summary>
     static void EstimateEps(float centre) {
-      _eps = 0.5f;
+      _eps = 1f;
       while(_eps + centre > centre)
-        _eps /= 2;
+        _eps /= 2f;
     }
 
     /// <summary>
@@ -205,9 +206,9 @@ namespace Crystal {
     ///   MS defines their double.EPSILON it is unreliable... (way too small).
     /// </summary>
     static void EstimateDeps(double centre) {
-      _deps = 0.5;
+      _deps = 1.0;
       while(_deps + centre > centre)
-        _deps /= 2;
+        _deps /= 2.0;
     }
   }
 

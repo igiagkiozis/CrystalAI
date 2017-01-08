@@ -3,7 +3,7 @@
 // Copyright (c) 2016-2017 Bismur Studios Ltd.
 // Copyright (c) 2016-2017 Ioannis Giagkiozis
 // 
-// BladderConsideration.cs is part of Crystal AI.
+// EnergyConsideration.cs is part of Crystal AI.
 //  
 // Crystal AI is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,35 +22,35 @@ using Crystal;
 
 namespace ExampleAI {
 
-  public class BladderConsideration : ConsiderationBase<CharacterContext> {
+  public class TirednessConsideration : ConsiderationBase<CharacterContext> {
     IEvaluator _evaluator;
-    public static readonly string Name = "BladderConsideration";
+    public static readonly string Name = "Tiredness";
 
     public override void Consider(CharacterContext context) {
-      Utility = new Utility(_evaluator.Evaluate(context.Bladder), Weight);
+      Utility = new Utility(_evaluator.Evaluate(context.Energy), Weight);
     }
 
     public override IConsideration Clone() {
-      return new BladderConsideration(this);
+      return new TirednessConsideration(this);
     }
 
-    public BladderConsideration() {
+    public TirednessConsideration() {
       Initialize();
     }
 
-    BladderConsideration(BladderConsideration other) : base(other) {
+    TirednessConsideration(TirednessConsideration other) : base(other) {
       Initialize();
     }
 
-    public BladderConsideration(IConsiderationCollection collection)
+    public TirednessConsideration(IConsiderationCollection collection)
       : base(Name, collection) {
       Initialize();
     }
 
     void Initialize() {
-      var ptA = new Pointf(0f, 0f);
-      var ptB = new Pointf(100f, 1f);
-      _evaluator = new PowerEvaluator(ptA, ptB, 3f);
+      var ptA1 = new Pointf(0f, 1f);
+      var ptB1 = new Pointf(30f, 0f);
+      _evaluator = new PowerEvaluator(ptA1, ptB1, 2f);      
     }
 
   }

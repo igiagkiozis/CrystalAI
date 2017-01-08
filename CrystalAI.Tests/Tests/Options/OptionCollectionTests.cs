@@ -31,7 +31,7 @@ namespace Crystal.OptionTests {
     IConsiderationCollection _considerations;
     IOptionCollection _options;
 
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Initialize() {
       _actions = new ActionCollection();
       _considerations = new ConsiderationCollection();
