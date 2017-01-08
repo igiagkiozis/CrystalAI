@@ -1,0 +1,15 @@
+os:
+  - osx
+  - linux
+  
+language: csharp
+solution: CrystalAI.sln
+
+install:
+  - nuget restore CrystalAI.sln
+  - nuget install NUnit.Runners -Version 3.5.0 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release CrystalAI.sln
+  - mono ./testrunner/NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe ./CrystalAI.Tests/bin/Release/CrystalAI.Tests.dll 
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{07C0FAB3-2769-4792-8625-36501A4D197F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CrystalAI</RootNamespace>
+    <AssemblyName>CrystalAI</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Actions\AiTransition.cs" />
+    <Compile Include="Source\Actions\ActionBase.cs" />
+    <Compile Include="Source\Actions\ActionCollection.cs" />
+    <Compile Include="Source\Actions\ActionSequence.cs" />
+    <Compile Include="Source\Actions\ActionStatus.cs" />
+    <Compile Include="Source\Actions\BehaviourTransition.cs" />
+    <Compile Include="Source\Actions\GenericActionBase.cs" />
+    <Compile Include="Source\Actions\Interfaces\IAction.cs" />
+    <Compile Include="Source\Actions\Interfaces\IActionCollection.cs" />
+    <Compile Include="Source\Actions\Interfaces\ITransition.cs" />
+    <Compile Include="Source\Actors\AiCollection.cs" />
+    <Compile Include="Source\Actors\AiCollectionConstructor.cs" />
+    <Compile Include="Source\Actors\DecisionMaker.cs" />
+    <Compile Include="Source\Actors\DecisionMakerBase.cs" />
+    <Compile Include="Source\Actors\DecisionMakerState.cs" />
+    <Compile Include="Source\Actors\UtilityAI.cs" />
+    <Compile Include="Source\Actors\Interfaces\IAICollection.cs" />
+    <Compile Include="Source\Actors\Interfaces\IContext.cs" />
+    <Compile Include="Source\Actors\Interfaces\IContextProvider.cs" />
+    <Compile Include="Source\Actors\Interfaces\IDecisionMaker.cs" />
+    <Compile Include="Source\Actors\Interfaces\IUtilityAI.cs" />
+    <Compile Include="Source\Behaviours\Behaviour.cs" />
+    <Compile Include="Source\Behaviours\BehaviourCollection.cs" />
+    <Compile Include="Source\Behaviours\Interfaces\IBehaviour.cs" />
+    <Compile Include="Source\Behaviours\Interfaces\IBehaviourCollection.cs" />
+    <Compile Include="Source\Collections\CircularBuffer.cs" />
+    <Compile Include="Source\Collections\ICircularBuffer.cs" />
+    <Compile Include="Source\Collections\IPriorityQueue.cs" />
+    <Compile Include="Source\Collections\MovingAverage.cs" />
+    <Compile Include="Source\Collections\PriorityQueue.cs" />
+    <Compile Include="Source\Collections\ThreadSafePriorityQueue.cs" />
+    <Compile Include="Source\Considerations\CompositeConsideration.cs" />
+    <Compile Include="Source\Considerations\ConsiderationBase.cs" />
+    <Compile Include="Source\Considerations\ConsiderationCollection.cs" />
+    <Compile Include="Source\Considerations\ConsiderationConstructor.cs" />
+    <Compile Include="Source\Considerations\GenericConsiderationBase.cs" />
+    <Compile Include="Source\Considerations\Interfaces\ICompositeConsideration.cs" />
+    <Compile Include="Source\Considerations\Interfaces\IConsideration.cs" />
+    <Compile Include="Source\Considerations\Interfaces\IConsiderationCollection.cs" />
+    <Compile Include="Source\Evaluators\CompositeEvaluator.cs" />
+    <Compile Include="Source\Evaluators\EvaluatorBase.cs" />
+    <Compile Include="Source\Evaluators\LinearEvaluator.cs" />
+    <Compile Include="Source\Evaluators\PowerEvaluator.cs" />
+    <Compile Include="Source\Evaluators\SigmoidEvaluator.cs" />
+    <Compile Include="Source\Evaluators\Interfaces\IEvaluator.cs" />
+    <Compile Include="Source\Extensions\IntervalExtensions.cs" />
+    <Compile Include="Source\Extensions\UtilityExtensions.cs" />
+    <Compile Include="Source\Extensions\ValueTypeExtensions.cs" />
+    <Compile Include="Source\General\AIConstructor.cs" />
+    <Compile Include="Source\General\Interval.cs" />
+    <Compile Include="Source\General\Point.cs" />
+    <Compile Include="Source\General\Utility.cs" />
+    <Compile Include="Source\General\Interfaces\IAIPrototype.cs" />
+    <Compile Include="Source\Measures\Chebyshev.cs" />
+    <Compile Include="Source\Measures\ConstrainedChebyshev.cs" />
+    <Compile Include="Source\Measures\ConstrainedWeightedMetrics.cs" />
+    <Compile Include="Source\Measures\MultiplicativePseudoMeasure.cs" />
+    <Compile Include="Source\Measures\WeightedMetrics.cs" />
+    <Compile Include="Source\Measures\Interfaces\IMeasure.cs" />
+    <Compile Include="Source\Options\ConstantUtilityOption.cs" />
+    <Compile Include="Source\Options\Option.cs" />
+    <Compile Include="Source\Options\OptionCollection.cs" />
+    <Compile Include="Source\Options\OptionConstructor.cs" />
+    <Compile Include="Source\Options\Interfaces\IOption.cs" />
+    <Compile Include="Source\Options\Interfaces\IOptionCollection.cs" />
+    <Compile Include="Source\Utilities\Pcg.cs" />
+    <Compile Include="Source\Utilities\PcgExtended.cs" />
+    <Compile Include="Source\Utilities\PcgSeed.cs" />
+    <Compile Include="Source\Scheduling\CommandStream.cs" />
+    <Compile Include="Source\Scheduling\DeferredCommand.cs" />
+    <Compile Include="Source\Scheduling\Scheduler.cs" />
+    <Compile Include="Source\Scheduling\Interfaces\ICommandStream.cs" />
+    <Compile Include="Source\Scheduling\Interfaces\IDeferredCommand.cs" />
+    <Compile Include="Source\Scheduling\Interfaces\IDeferredCommandHandle.cs" />
+    <Compile Include="Source\Scheduling\Interfaces\IScheduler.cs" />
+    <Compile Include="Source\Selectors\MaxUtilitySelector.cs" />
+    <Compile Include="Source\Selectors\RandomSelector.cs" />
+    <Compile Include="Source\Selectors\SequentialSelector.cs" />
+    <Compile Include="Source\Selectors\WeightedRandomSelector.cs" />
+    <Compile Include="Source\Selectors\Interfaces\ISelector.cs" />
+    <Compile Include="Source\Utilities\CrMath.cs" />
+    <Compile Include="Source\Utilities\CrTime.cs" />
+    <Compile Include="Source\Extensions\ArrayExtensions.cs" />
+    <Compile Include="Source\Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Source\Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Source\Extensions\ReaderWriterLockSlimExtensions.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup />
+</Project>

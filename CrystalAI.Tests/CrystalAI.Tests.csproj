@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D41A0E68-B3AA-43A4-B46F-E8D351E8E88A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CrystalAI.Tests</RootNamespace>
+    <AssemblyName>CrystalAI.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.5.0\lib\net35\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tests\Actions\AITransitionTests.cs" />
+    <Compile Include="Tests\Actions\ActionCollectionTests.cs" />
+    <Compile Include="Tests\Actions\ActionSequenceTests.cs" />
+    <Compile Include="Tests\Actions\ActionTests.cs" />
+    <Compile Include="Tests\Actions\BehaviourTransitionTests.cs" />
+    <Compile Include="Tests\Actions\GenericActionBaseTests.cs" />
+    <Compile Include="Tests\Collections\ThreadSafePriorityQueueTests.cs" />
+    <Compile Include="Tests\Considerations\ConsiderationConstructorTests.cs" />
+    <Compile Include="Tests\Evaluators\EvaluatorBaseTests.cs" />
+    <Compile Include="Tests\Evaluators\TestEvaluator.cs" />
+    <Compile Include="Tests\General\PointfTests.cs" />
+    <Compile Include="Tests\Helpers\Actions\CustomContext.cs" />
+    <Compile Include="Tests\Helpers\Actions\FailingAction.cs" />
+    <Compile Include="Tests\Helpers\Actions\FailingGenericAction.cs" />
+    <Compile Include="Tests\Helpers\Actions\MockAction.cs" />
+    <Compile Include="Tests\Helpers\Actions\MockGenericAction.cs" />
+    <Compile Include="Tests\Helpers\Actions\UpdatingAction.cs" />
+    <Compile Include="Tests\Helpers\Actions\UpdatingGenericAction.cs" />
+    <Compile Include="Tests\Actors\AICollectionTests.cs" />
+    <Compile Include="Tests\Actors\DecisionMakerTests.cs" />
+    <Compile Include="Tests\Actors\UtilityAiTests.cs" />
+    <Compile Include="Tests\Actors\Helpers\CharacterContext.cs" />
+    <Compile Include="Tests\Actors\Helpers\RecursiveOption.cs" />
+    <Compile Include="Tests\Actors\Helpers\Toon.cs" />
+    <Compile Include="Tests\Actors\Helpers\Actions\DrinkAction.cs" />
+    <Compile Include="Tests\Actors\Helpers\Actions\EatAction.cs" />
+    <Compile Include="Tests\Actors\Helpers\Actions\ToiletAction.cs" />
+    <Compile Include="Tests\Actors\Helpers\Condiderations\BladderConsideration.cs" />
+    <Compile Include="Tests\Actors\Helpers\Condiderations\HungerConsideration.cs" />
+    <Compile Include="Tests\Actors\Helpers\Condiderations\InverseBladderConsideration.cs" />
+    <Compile Include="Tests\Actors\Helpers\Condiderations\ThirstConsideration.cs" />
+    <Compile Include="Tests\Behaviours\BehaviourCollectionTests.cs" />
+    <Compile Include="Tests\Behaviours\BehaviourTests.cs" />
+    <Compile Include="Tests\Behaviours\GeneralBehaviourTests.cs" />
+    <Compile Include="Tests\Behaviours\Helpers\BehaviourHelper.cs" />
+    <Compile Include="Tests\Collections\AIComponents.cs" />
+    <Compile Include="Tests\Collections\CircularBufferTests.cs" />
+    <Compile Include="Tests\Collections\MovingAverageTests.cs" />
+    <Compile Include="Tests\Collections\PriorityQueueTestBase.cs" />
+    <Compile Include="Tests\Collections\PriorityQueueTests.cs" />
+    <Compile Include="Tests\Considerations\AbsoluteChebyshevConsiderationTests.cs" />
+    <Compile Include="Tests\Considerations\AbsoluteWeightedMetricsConsiderationTests.cs" />
+    <Compile Include="Tests\Considerations\ChebyshevConsiderationTests.cs" />
+    <Compile Include="Tests\Considerations\ConsiderationCollectionTests.cs" />
+    <Compile Include="Tests\Considerations\ConsiderationTests.cs" />
+    <Compile Include="Tests\Considerations\GeneralCompositeConsiderationTests.cs" />
+    <Compile Include="Tests\Considerations\MultiplicativeConsiderationTests.cs" />
+    <Compile Include="Tests\Considerations\WeightedMetricsConsiderationTests.cs" />
+    <Compile Include="Tests\Considerations\Helpers\Considerations.cs" />
+    <Compile Include="Tests\Evaluators\CompositeEvaluatorTests.cs" />
+    <Compile Include="Tests\Evaluators\LinearEvaluatorTests.cs" />
+    <Compile Include="Tests\Evaluators\PowerEvaluatorTests.cs" />
+    <Compile Include="Tests\Evaluators\SigmoidEvaluatorTests.cs" />
+    <Compile Include="Tests\Extensions\ArrayExtensionsTests.cs" />
+    <Compile Include="Tests\Extensions\DictionaryExtensionsTests.cs" />
+    <Compile Include="Tests\Extensions\IntervalExtensionsTests.cs" />
+    <Compile Include="Tests\Extensions\UtilityExtensionsTests.cs" />
+    <Compile Include="Tests\Extensions\ValueTypeExtensionsTests.cs" />
+    <Compile Include="Tests\General\AIConstructorTests.cs" />
+    <Compile Include="Tests\General\IntervalTests.cs" />
+    <Compile Include="Tests\General\UtilityTests.cs" />
+    <Compile Include="Tests\General\Helpers\MasterAIConstructor.cs" />
+    <Compile Include="Tests\General\Helpers\MockAction.cs" />
+    <Compile Include="Tests\General\Helpers\MockConsideration.cs" />
+    <Compile Include="Tests\General\Helpers\MockContext.cs" />
+    <Compile Include="Tests\Helpers\HelperAiConstructor.cs" />
+    <Compile Include="Tests\Helpers\TestActionDefs.cs" />
+    <Compile Include="Tests\Helpers\TestAiDefs.cs" />
+    <Compile Include="Tests\Helpers\TestBehaviourDefs.cs" />
+    <Compile Include="Tests\Helpers\TestConsiderationDefs.cs" />
+    <Compile Include="Tests\Helpers\TestOptionDefs.cs" />
+    <Compile Include="Tests\Measures\ChebyshevMeasureTests.cs" />
+    <Compile Include="Tests\Measures\ConstrainedChebyshevMeasureTests.cs" />
+    <Compile Include="Tests\Measures\ConstrainedWeightedMetricsMeasureTests.cs" />
+    <Compile Include="Tests\Measures\MultiplicativePseudoMeasureTests.cs" />
+    <Compile Include="Tests\Measures\WeightedMetricsMeasureTests.cs" />
+    <Compile Include="Tests\Measures\Helpers\MeasureTestsHelper.cs" />
+    <Compile Include="Tests\Helpers\MockRandom.cs" />
+    <Compile Include="Tests\Options\AbsoluteChebyshevOptionTests.cs" />
+    <Compile Include="Tests\Options\AbsoluteWeightedMetricsOptionTests.cs" />
+    <Compile Include="Tests\Options\ChebyshevOptionTests.cs" />
+    <Compile Include="Tests\Options\DefaultOptionTests.cs" />
+    <Compile Include="Tests\Options\FixedUtilityOptionTests.cs" />
+    <Compile Include="Tests\Options\GeneralOptionTests.cs" />
+    <Compile Include="Tests\Options\MultiplicativeUtilityOptionTests.cs" />
+    <Compile Include="Tests\Options\OptionCollectionTests.cs" />
+    <Compile Include="Tests\Options\OptionConstructorTests.cs" />
+    <Compile Include="Tests\Options\WeightedMetricsTests.cs" />
+    <Compile Include="Tests\Options\Helpers\Considerations.cs" />
+    <Compile Include="Tests\Scheduling\DeferredCommandTests.cs" />
+    <Compile Include="Tests\Scheduling\SchedulerTests.cs" />
+    <Compile Include="Tests\Utilities\CrMathTests.cs" />
+    <Compile Include="Tests\Utilities\PCGExtendedTests.cs" />
+    <Compile Include="Tests\Utilities\PCGTests.cs" />
+    <Compile Include="Tests\Scheduling\CommandStreamTests.cs" />
+    <Compile Include="Tests\Scheduling\Helpers\Processes.cs" />
+    <Compile Include="Tests\Selectors\MaxUtilitySelectorTests.cs" />
+    <Compile Include="Tests\Selectors\RandomSelectorTests.cs" />
+    <Compile Include="Tests\Selectors\SequentialSelectorTests.cs" />
+    <Compile Include="Tests\Selectors\WeightedRandomSelectorTests.cs" />
+    <Compile Include="Tests\Selectors\Helpers\SelectorTestsHelper.cs" />
+    <Compile Include="Tests\Utilities\Helpers\RandomHelpers.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CrystalAI\CrystalAI.csproj">
+      <Project>{07C0FAB3-2769-4792-8625-36501A4D197F}</Project>
+      <Name>CrystalAI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\pcg32_k_table_pow2_10_advance_pow2_16_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_10_advance_pow2_32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_11_advance_pow2_16_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_11_advance_pow2_32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_12_advance_pow2_16_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_12_advance_pow2_32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_13_advance_pow2_16_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_13_advance_pow2_32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_14_advance_pow2_16_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_14_advance_pow2_32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_1_advance_pow2_16_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_1_advance_pow2_32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_2_advance_pow2_16_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_2_advance_pow2_32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_3_advance_pow2_16_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_3_advance_pow2_32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_4_advance_pow2_16_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_4_advance_pow2_32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_5_advance_pow2_16_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_5_advance_pow2_32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_6_advance_pow2_16_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_6_advance_pow2_32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_7_advance_pow2_16_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_7_advance_pow2_32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_8_advance_pow2_16_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_8_advance_pow2_32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_9_advance_pow2_16_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_k_table_pow2_9_advance_pow2_32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\pcg32_seed_42.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Readme.txt" />
+  </ItemGroup>
+</Project>

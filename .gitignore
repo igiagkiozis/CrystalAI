@@ -1,0 +1,13 @@
+.vs
+*.userprefs
+*.DotSettings.user
+packages
+testrunner
+CrystalAI/bin
+CrystalAI/obj
+CrystalAI.Tests/bin
+CrystalAI.Tests/obj
+ExampleAI/bin
+ExampleAI/obj
+*.dcvr
+.DS_Store
