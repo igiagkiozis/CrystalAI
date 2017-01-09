@@ -23,11 +23,10 @@ using Crystal;
 namespace ExampleAI {
 
   public class EnergyConsideration : ConsiderationBase<CharacterContext> {
-    IEvaluator _evaluator;
     public static readonly string Name = "Energy";
 
     public override void Consider(CharacterContext context) {
-      Utility = new Utility(_evaluator.Evaluate(context.Energy), Weight);
+      Utility = new Utility(Evaluator.Evaluate(context.Energy), Weight);
     }
 
     public override IConsideration Clone() {
@@ -57,7 +56,7 @@ namespace ExampleAI {
       var cmpEv = new CompositeEvaluator();
       cmpEv.Add(powEv);
       cmpEv.Add(linEv);
-      _evaluator = cmpEv;
+      Evaluator = cmpEv;
     }
 
   }

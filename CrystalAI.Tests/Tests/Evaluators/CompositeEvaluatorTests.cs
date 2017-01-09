@@ -25,12 +25,8 @@ namespace Crystal.EvaluatorTests {
 
   [TestFixture]
   public class CompositeEvaluatorTests {
-    float _floatPrecision = 1e-6f;
+    const float Tolerance = 1e-6f;
     int _evN = 1000;
-
-    [OneTimeSetUp]
-    public void Initialize() {
-    }
 
     [Test]
     public void DefaultConstructorTest() {
@@ -72,17 +68,17 @@ namespace Crystal.EvaluatorTests {
       Assert.AreEqual(cev.MaxX, minXmaxX.Y);
     }
 
-    [Test,
-     TestCase(0.0f, 0.0f, 0.2f, 0.3f, 0.22f, 0.32f, 0.3f, 0.4f, 0.35f, 0.34f, 0.55f, 0.55f, 0.55f, 0.55f, 1.0f, 1.0f),
-     TestCase(-100.0f, 1.0f, -20.0f, 0.4f, -15.0f, 0.37f, -2.0f, 0.35f, -2.0f, 0.35f, 0.0f, 0.45f, 0.0f, 0.55f, 1000.0f,
-       1.0f),
-     TestCase(0.0f, 5.0f, 0.2f, 0.2f, 0.224f, 0.532f, 0.43f, 0.4f, 50.35f, 0.34f, 550.55f, 0.55f, 5520.55f, 0.55f,
-       6001.0f, 1.0f),
-     TestCase(0.0f, 0.0f, 0.2f, 0.3f, 0.2f, 0.3f, 0.3f, 0.4f, 0.4f, 0.4f, 0.55f, 0.55f, 0.55f, 0.55f, 1.0f, 1.0f),
-     TestCase(0.0f, 0.0f, 0.2f, 0.3f, 0.22f, 0.32f, 0.3f, 0.4f, 0.35f, 0.34f, 0.55f, 0.55f, 0.65f, 0.75f, 1.0f, 1.0f),
-     TestCase(-10.0f, 5.0f, 10.2f, 0.3f, 20.22f, 0.32f, 21.3f, 0.4f, 27.35f, 0.34f, 28.55f, 0.55f, 10000.55f, 0.95f,
-       100000.0f, 1.0f)]
-    public void EvaluateTest1(
+    static readonly object[] EvaluateCases = {
+      new object[] { 0.0f, 0.0f, 0.2f, 0.3f, 0.22f, 0.32f, 0.3f, 0.4f, 0.35f, 0.34f, 0.55f, 0.55f, 0.55f, 0.55f, 1.0f, 1.0f},
+      new object[] {-100.0f, 1.0f, -20.0f, 0.4f, -15.0f, 0.37f, -2.0f, 0.35f, -2.0f, 0.35f, 0.0f, 0.45f, 0.0f, 0.55f, 1000.0f, 1.0f},
+      new object[] {0.0f, 5.0f, 0.2f, 0.2f, 0.224f, 0.532f, 0.43f, 0.4f, 50.35f, 0.34f, 550.55f, 0.55f, 5520.55f, 0.55f, 6001.0f, 1.0f},
+      new object[] {0.0f, 0.0f, 0.2f, 0.3f, 0.2f, 0.3f, 0.3f, 0.4f, 0.4f, 0.4f, 0.55f, 0.55f, 0.55f, 0.55f, 1.0f, 1.0f},
+      new object[] {0.0f, 0.0f, 0.2f, 0.3f, 0.22f, 0.32f, 0.3f, 0.4f, 0.35f, 0.34f, 0.55f, 0.55f, 0.65f, 0.75f, 1.0f, 1.0f},
+      new object[] { -10.0f, 5.0f, 10.2f, 0.3f, 20.22f, 0.32f, 21.3f, 0.4f, 27.35f, 0.34f, 28.55f, 0.55f, 10000.55f, 0.95f, 100000.0f, 1.0f }
+    };
+
+    [Test, TestCaseSource("EvaluateCases")]
+    public void EvaluateTest(
       float xA1, float yA1,
       float xB1, float yB1,
       float xA2, float yA2,
@@ -107,8 +103,6 @@ namespace Crystal.EvaluatorTests {
       var ptB4 = new Pointf(xB4, yB4);
       var ev4 = new SigmoidEvaluator(ptA4, ptB4, 0.6f);
 
-//      var minX = UE.Mathf.Min(xA1, xA2, xA3, xA4);
-//      var maxX = UE.Mathf.Max(xB1, xB2, xB3, xB4);
       var minX = Math.Min(Math.Min(xA1, xA2), Math.Min(xA3, xA4));
       var maxX = Math.Max(Math.Max(xB1, xB2), Math.Max(xB3, xB4));
 
@@ -128,15 +122,15 @@ namespace Crystal.EvaluatorTests {
         Utility cResult = cVal;
 
         var aResult = cev.Evaluate(xqArray[i]);
-        Assert.That(aResult, Is.EqualTo(cResult.Value).Within(_floatPrecision));
+        Assert.That(aResult, Is.EqualTo(cResult.Value).Within(Tolerance));
         Assert.That(aResult <= 1.0f);
         Assert.That(aResult >= 0.0f);
       }
       // Check the end points
       var utilA = cev.Evaluate(compositeXInterval.LowerBound);
       var utilB = cev.Evaluate(compositeXInterval.UpperBound);
-      Assert.That(utilA, Is.EqualTo(ev1.PtA.Y).Within(_floatPrecision));
-      Assert.That(utilB, Is.EqualTo(ev4.PtB.Y).Within(_floatPrecision));
+      Assert.That(utilA, Is.EqualTo(ev1.PtA.Y).Within(Tolerance));
+      Assert.That(utilB, Is.EqualTo(ev4.PtB.Y).Within(Tolerance));
     }
 
     float CombinedEvaluatorEvaluate(float x, IEvaluator ev1, IEvaluator ev2, IEvaluator ev3, IEvaluator ev4) {

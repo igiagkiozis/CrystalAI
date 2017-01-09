@@ -33,6 +33,8 @@ namespace Crystal {
     IMeasure _measure;
     float _weight = 1.0f;
 
+    bool _isInverted;
+
     /// <summary>
     ///   A string alias for ID.
     /// </summary>
@@ -70,6 +72,22 @@ namespace Crystal {
     public float Weight {
       get { return _weight; }
       set { _weight = value.Clamp01(); }
+    }
+
+    /// <summary>
+    ///   If true, then the output of the associated evaluator is inverted, in effect, inverting the
+    ///   consideration.
+    /// </summary>
+    public bool IsInverted {
+      get { return _isInverted; }
+      set {
+        if(_isInverted == value ||
+           _considerations.Count == 0)
+          return;
+
+        foreach(var c in _considerations)
+          c.IsInverted = value;
+      }
     }
 
     public bool AddConsideration(IConsideration consideration) {

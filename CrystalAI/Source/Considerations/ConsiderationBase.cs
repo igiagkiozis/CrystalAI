@@ -28,8 +28,8 @@ namespace Crystal {
   /// <seealso cref="T:Crystal.IConsideration"/>
   public abstract class ConsiderationBase : IConsideration {
     IConsiderationCollection _collection;
-
     float _weight = 1.0f;
+    protected IEvaluator Evaluator;
 
     /// <summary>
     ///   A string alias for ID.
@@ -53,6 +53,25 @@ namespace Crystal {
     public float Weight {
       get { return _weight; }
       set { _weight = value.Clamp01(); }
+    }
+
+    /// <summary>
+    ///   If true, then the output of the associated evaluator is inverted, in effect inverting the
+    ///   consideration.
+    /// </summary>
+    public bool IsInverted {
+      get {
+        if(Evaluator == null)
+          return false;
+
+        return Evaluator.IsInverted;
+      }
+      set {
+        if(Evaluator == null)
+          return;
+
+        Evaluator.IsInverted = value;
+      }
     }
 
     /// <summary>Calculates the utility given the specified context.</summary>

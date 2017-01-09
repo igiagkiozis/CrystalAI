@@ -18,6 +18,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 using NUnit.Framework;
+
+
 //using UE = UnityEngine;
 
 
@@ -25,7 +27,13 @@ namespace Crystal.EvaluatorTests {
 
   [TestFixture]
   public class LinearEvaluatorTests {
-    float _floatPrecision = 1e-6f;
+    static readonly object[] LinearEvaluatorCases = {
+      new object[] {-10f, 0f, 10f, 1f},
+      new object[] {-10f, 1f, 10f, 0f},
+      new object[] {1f, 0.2f, 100f, 0.8f},
+      new object[] {0f, -2f, 1f, 2f}
+    };
+    const float Tolerance = 1e-6f;
     int _evN = 1000;
 
     [OneTimeSetUp]
@@ -46,27 +54,20 @@ namespace Crystal.EvaluatorTests {
       Assert.IsNotNull(ev);
     }
 
-    [Test]
-    public void PtAandPtBTest(
-      [Range(-10.0f, 10.0f, 10f)] float xA,
-      [Range(0.0f, 2.0f, 0.5f)] float yA,
-      [Range(30.0f, 50.0f, 10f)] float xB,
-      [Range(2.0f, 0.0f, -0.5f)] float yB) {
+    [Test, TestCaseSource("LinearEvaluatorCases")]
+    public void PtAandPtBTest(float xA, float yA, float xB, float yB) {
       var pt1 = new Pointf(xA, yA.Clamp01());
       var pt2 = new Pointf(xB, yB.Clamp01());
       var ev = new LinearEvaluator(pt1, pt2);
       Assert.AreEqual(pt1, ev.PtA);
+      Assert.AreEqual(pt2, ev.PtB);
     }
 
-    [Test]
-    public void EvaluateTest(
-      [Range(-10.0f, 10.0f, 10f)] float xA,
-      [Range(0.0f, 2.0f, 0.5f)] float yA,
-      [Range(30.0f, 50.0f, 10f)] float xB,
-      [Range(2.0f, 0.0f, -0.5f)] float yB) {
+    [Test, TestCaseSource("LinearEvaluatorCases")]
+    public void EvaluateTest(float xA, float yA, float xB, float yB) {
       var pt1 = new Pointf(xA, yA);
       var pt2 = new Pointf(xB, yB);
-      var ev = new LinearEvaluator(pt1, pt2);
+      IEvaluator ev = new LinearEvaluator(pt1, pt2);
 
       var yAn = yA.Clamp01();
       var yBn = yB.Clamp01();
@@ -76,18 +77,55 @@ namespace Crystal.EvaluatorTests {
       var beta = yBn - alpha * xB;
       var xqArray = CrMath.LinearSpaced(_evN, xA - 10.0f, xB + 10.0f);
       for(int i = 0; i < _evN - 1; i++) {
-        Utility cResult = (alpha * xqArray[i] + beta).Clamp01();
-        var aResult = ev.Evaluate(xqArray[i]);
-        Assert.That(aResult, Is.EqualTo(cResult.Value).Within(_floatPrecision));
-        Assert.That(aResult, Is.EqualTo(cResult.Value).Within(_floatPrecision));
-        Assert.That(aResult <= 1.0f);
-        Assert.That(aResult >= 0.0f);
+        var cVal = LinearClamped(xqArray[i], alpha, beta);
+        var aVal = ev.Evaluate(xqArray[i]);
+        Assert.That(aVal, Is.EqualTo(cVal).Within(Tolerance));
+        Assert.That(aVal, Is.EqualTo(cVal).Within(Tolerance));
+        Assert.That(aVal <= 1.0f);
+        Assert.That(aVal >= 0.0f);
       }
       // Check the end points
       var utilA = ev.Evaluate(xA);
       var utilB = ev.Evaluate(xB);
-      Assert.That(utilA, Is.EqualTo(yA.Clamp01()).Within(_floatPrecision));
-      Assert.That(utilB, Is.EqualTo(yB.Clamp01()).Within(_floatPrecision));
+      Assert.That(utilA, Is.EqualTo(yA.Clamp01()).Within(Tolerance));
+      Assert.That(utilB, Is.EqualTo(yB.Clamp01()).Within(Tolerance));
+    }
+
+    [Test, TestCaseSource("LinearEvaluatorCases")]
+    public void InverseEvaluateTest(float xA, float yA, float xB, float yB) {
+      var pt1 = new Pointf(xA, yA);
+      var pt2 = new Pointf(xB, yB);
+      IEvaluator ev = new LinearEvaluator(pt1, pt2);
+      ev.IsInverted = true;
+
+      var yAn = yA.Clamp01();
+      var yBn = yB.Clamp01();
+      var xdf = xB - xA;
+      var ydf = yBn - yAn;
+      var alpha = ydf / xdf;
+      var beta = yBn - alpha * xB;
+      var xqArray = CrMath.LinearSpaced(_evN, xA - 10.0f, xB + 10.0f);
+      for(int i = 0; i < _evN - 1; i++) {
+        var cVal = InverseLinearClamped(xqArray[i], alpha, beta);
+        var aVal = ev.Evaluate(xqArray[i]);
+        Assert.That(aVal, Is.EqualTo(cVal).Within(Tolerance));
+        Assert.That(aVal, Is.EqualTo(cVal).Within(Tolerance));
+        Assert.That(aVal <= 1.0f);
+        Assert.That(aVal >= 0.0f);
+      }
+      // Check the end points
+      var utilA = ev.Evaluate(xA);
+      var utilB = ev.Evaluate(xB);
+      Assert.That(utilA, Is.EqualTo(1f - yA.Clamp01()).Within(Tolerance));
+      Assert.That(utilB, Is.EqualTo(1f - yB.Clamp01()).Within(Tolerance));
+    }
+
+    float LinearClamped(float x, float alpha, float beta) {
+      return (alpha * x + beta).Clamp01();
+    }
+
+    float InverseLinearClamped(float x, float alpha, float beta) {
+      return 1f - LinearClamped(x, alpha, beta);
     }
   }
 

@@ -81,7 +81,7 @@ namespace ExampleAI {
 
     public override string ToString() {
       return string.Format(
-                           "Wlth {0,6}, Nrg {1,7:00.00%}, B {2,7:00.00%}, T {3,7:00.00%}, H {4,7:00.00%}, C {5,7:00.00%}, Ft {6,7:00.00%}",
+                           "$ {0,6}, Nrg {1,7:00.00%}, Bl {2,7:00.00%}, T {3,7:00.00%}, Hr {4,7:00.00%}, Cl {5,7:00.00%}, Ft {6,7:00.00%}",
                            Wealth,
                            Energy / 100f,
                            Bladder / 100f,

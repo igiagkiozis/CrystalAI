@@ -42,6 +42,12 @@ namespace Crystal {
     /// </summary>
     float Weight { get; set; }
 
+    /// <summary>
+    ///   If true, then the output of the associated evaluator is inverted, in effect, inverting the
+    ///   consideration.
+    /// </summary>
+    bool IsInverted { get; set; }
+
     /// <summary>Calculates the utility given the specified context.</summary>
     /// <param name="context">The context.</param>
     /// <returns>The utility.</returns>

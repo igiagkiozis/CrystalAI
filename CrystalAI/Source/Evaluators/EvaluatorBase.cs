@@ -22,7 +22,12 @@ using System;
 
 namespace Crystal {
 
-  public abstract class EvaluatorBase : IEvaluator, IComparable<IEvaluator> {
+  public class EvaluatorBase : IEvaluator, IComparable<IEvaluator> {
+    protected float Xa;
+    protected float Xb;
+    protected float Ya;
+    protected float Yb;
+
     /// <summary>
     ///   The first point in terms of x!
     /// </summary>
@@ -85,6 +90,11 @@ namespace Crystal {
       get { return new Interval<float>(MinY, MaxY); }
     }
 
+    /// <summary>
+    ///   When true, the output of the Evaluate method is equal to 1.0f - (normal output).
+    /// </summary>
+    public bool IsInverted { get; set; }
+
     public int CompareTo(IEvaluator other) {
       return XInterval.CompareTo(other.XInterval);
     }
@@ -93,8 +103,14 @@ namespace Crystal {
     ///   Returns the utility for the specified value x.
     /// </summary>
     /// <param name="x">The x value.</param>
-    public abstract float Evaluate(float x);
+    float IEvaluator.Evaluate(float x) {
+      return IsInverted ? 1f - Evaluate(x) : Evaluate(x);
+    }
 
+    public virtual float Evaluate(float x) {
+      return 0f;
+    }
+  
     protected EvaluatorBase() {
       Initialize(0.0f, 0.0f, 1.0f, 1.0f);
     }
@@ -114,11 +130,6 @@ namespace Crystal {
       Ya = yA.Clamp01();
       Yb = yB.Clamp01();
     }
-
-    protected float Xa;
-    protected float Xb;
-    protected float Ya;
-    protected float Yb;
 
     internal class EvaluatorDxZeroException : Exception {
     }
