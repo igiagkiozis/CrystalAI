@@ -24,7 +24,7 @@ let me know.
 
 ## Getting Started
 For the time being the unit tests and the example project (ExampleAI) are the only documentation. 
-Keep an eye on the [Wiki](https://github.com/ThelDoctor/CrystalAI/wiki/Crystal-AI-Wiki) for upcoming documentation, tutorials and examples.
+Keep an eye on the [Wiki](https://github.com/ThelDoctor/CrystalAI/wiki) for upcoming documentation, tutorials and examples.
 
 ### Prerequisites
 Crystal AI has no external dependencies. If you intend to use it with [Unity](https://unity3d.com/) make sure that the API Compatiblity 
