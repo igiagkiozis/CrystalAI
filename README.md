@@ -3,11 +3,11 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/rw0tma0eucs45fi5/branch/master?svg=true)](https://ci.appveyor.com/project/ThelDoctor/crystalai/branch/master)
 ![Tests Status](http://flauschig.ch/batch.php?type=tests&account=ThelDoctor&slug=CrystalAI)
 
-# Crystal AI v0.7.2
-A Utility Theory Based AI for C# and Unity
+# Crystal AI v0.7.2 Utility Theory Based AI for C# and Unity
+Crystal is a general purpose reasoning AI for C# based on concepts in utility theory. 
 
 ## Getting Started
-For the time being the unit tests are the only documentation.
+For the time being the unit tests and the example project (ExampleAI) are the only documentation.
 
 ## License
 GPL v3 License
