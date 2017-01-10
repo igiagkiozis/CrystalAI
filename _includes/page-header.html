@@ -5,5 +5,24 @@
   <a href="https://github.com/ThelDoctor/CrystalAI/archive/v0.7.2.zip" class="btn">Download .zip</a>
   <a href="https://github.com/ThelDoctor/CrystalAI/archive/v0.7.2.tar.gz" class="btn">Download .tar.gz</a>
   <a href="http://www.bismur.co.uk/forums/forum-11.html" class="btn" target="_blank">Visit the Crystal AI Forum</a>
-  <a href="doxydoc/index.html" class="btn" target="_blank">Documentation</a>
+  <a href="{{ site.baseurl }}/doxydoc/index.html" class="btn" target="_blank">Documentation</a>
+  <br>
+  <section>
+      <div class="container">
+        <nav class="main-nav">
+          <ul>
+            {% assign navigation_pages = site.html_pages | sort: 'navigation_weight' %}
+            {% for p in navigation_pages %}
+              {% if p.navigation_weight %}
+                <li>
+                  <h2><a href="{{ site.baseurl }}{{ p.url }}" {% if p.url == page.url %}class="active"{% endif %}>
+                    {{ p.title }}
+                  </a></h2>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </nav>
+      </div>
+    </section>
 </section>

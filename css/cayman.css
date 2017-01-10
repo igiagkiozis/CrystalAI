@@ -53,7 +53,7 @@ a {
   color: #fff;
   text-align: center;
   background-color: #159957;
-  background-image: linear-gradient(120deg, #155799, #159957); }
+  background-image: linear-gradient(180deg, #155799, #159957); }
   @media screen and (min-width: 64em) {
     .page-header {
       padding: 5rem 6rem; } }
@@ -137,7 +137,7 @@ a {
     font: 1rem Consolas, "Liberation Mono", Menlo, Courier, monospace;
     color: #567482;
     word-wrap: normal;
-    background-color: #f3f6fa;
+    background-color: #262626;
     border: solid 1px #dce6f0;
     border-radius: 0.3rem; }
     .main-content pre > code {
@@ -240,8 +240,58 @@ a {
 .site-footer-credits {
   color: #819198; }
 
+
+
 .center-image
 {
     margin: 0 auto;
     display: block;
+}
+
+nav.main-nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  float: right;
+}
+
+nav.main-nav li,
+nav.main-nav a {
+  display: inline-block;
+  /*color: #010101;*/
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+nav.main-nav a:hover {
+  display: inline-block;
+  /*color: #a3a3a3;*/
+  color: #165899;
+  text-decoration: none;
+}
+
+nav.main-nav a.active {
+  display: inline-block;
+  /*color: #a4a4a4;*/
+  color: #155799;
+  text-decoration: none;
+}
+
+nav.main-nav li a {
+  padding: 10px;
+}
+
+div.container,
+div.small-container {
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+div.container {
+  margin: 0 auto;
+  max-width: 940px;
+}
+
+div.small-container {
+  max-width: 700px;
 }
