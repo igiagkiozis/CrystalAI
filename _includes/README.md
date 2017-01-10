@@ -41,12 +41,12 @@ You can find documentation on NUnit [here](https://www.nunit.org/){:target="_bla
 ### Command Line Mono
 To run the unit tests using [Mono](http://www.mono-project.com/){:target="_blank"} cd into the directory you have downloaded Crystal AI into and 
 execute the following commands
-```
+{% highlight bash %}
 nuget restore CrystalAI.sln
 nuget install NUnit.Runners -Version 3.5.0 -OutputDirectory testrunner
 xbuild /p:Configuration=Release CrystalAI.sln
 mono ./testrunner/NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe ./CrystalAI.Tests/bin/Release/CrystalAI.Tests.dll
-```
+{% endhighlight %}
 
 ### MonoDevelop Version Bundled with Unity
 The MonoDevelop version bundled with Unity, although has its problems, is fairly good and obviously has the added benefit of 
