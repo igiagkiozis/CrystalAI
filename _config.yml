@@ -1,1 +1,17 @@
-theme: jekyll-theme-cayman
+# Setup
+title:        Crystal AI
+tagline:      An Open Source Utility Theory Based AI for C# and Unity
+baseurl:      "/CrystalAI"
+paginate:     1
+
+# About/contact
+author:
+  name:       Ioannis Giagkiozis
+  url:        http://www.bismur.co.uk
+
+# Gems
+gems:
+  - jekyll-paginate
+
+#Others
+markdown: kramdown
