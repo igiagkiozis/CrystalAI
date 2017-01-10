@@ -67,7 +67,7 @@ install [NUnit3TestAdapter v3.6.0](https://www.nuget.org/packages/NUnit3TestAdap
 
 ## Feature Requests and Bugs
 If you find any bugs in Crystal AI, or simply have an awsome suggestion, we'd love hear about it. After all, squashing bugs is fun!
-The best way to report a bug or a feature request is via the GitHub Issue system [here](https://github.com/ThelDoctor/CrystalAI/issues).
+The best way to report a bug or a feature request is via the GitHub Issue system [here](https://github.com/ThelDoctor/CrystalAI/issues). For discussing anything Crystal you can [visit our forums](http://www.bismur.co.uk/forums/index.php).
 
 ## History
 - v0.7.2 Changed a portion of the API to make it more intuitive. Added a basic example project showcasing the AI. 
