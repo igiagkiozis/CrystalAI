@@ -1,0 +1,5 @@
+var searchData=
+[
+  ['add',['Add',['../class_crystal_1_1_composite_evaluator.html#ae7f2268410e48b048ecc749c342bef02',1,'Crystal.CompositeEvaluator.Add()'],['../class_crystal_1_1_command_stream.html#a99b53c69fec70ffa332e9c50174aec1e',1,'Crystal.CommandStream.Add()'],['../interface_crystal_1_1_i_command_stream.html#a1e475e7ea8bea1ed4d85ca6b01c3c7a3',1,'Crystal.ICommandStream.Add()']]],
+  ['addconsideration',['AddConsideration',['../class_crystal_1_1_composite_consideration.html#a53dc2d48d749e2b874ceec75ad841d12',1,'Crystal.CompositeConsideration.AddConsideration(IConsideration consideration)'],['../class_crystal_1_1_composite_consideration.html#a06c5f8a8cbc60a8f43c17053af4bf02e',1,'Crystal.CompositeConsideration.AddConsideration(string considerationId)'],['../interface_crystal_1_1_i_composite_consideration.html#a57db9b928fb6a3e4490942abeaad2312',1,'Crystal.ICompositeConsideration.AddConsideration(IConsideration consideration)'],['../interface_crystal_1_1_i_composite_consideration.html#af6f7cc36706bed8b010f6f10de46ffbc',1,'Crystal.ICompositeConsideration.AddConsideration(string considerationId)']]]
+];
