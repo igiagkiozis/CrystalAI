@@ -66,7 +66,7 @@ To run the unit tests from within Visual Studio, apart from NUnit 3.5.0 you will
 install [NUnit3TestAdapter v3.6.0](https://www.nuget.org/packages/NUnit3TestAdapter/).
 
 ## Feature Requests and Bugs
-If you find any bugs in Crystal AI, or simply have an awsome suggestion, we'd love hear about it. After all, squashing bugs is fun!
+If you find any bugs in Crystal AI, or simply have an awsome suggestion, we'd love to hear about it. After all, squashing bugs is fun!
 The best way to report a bug or a feature request is via the GitHub Issue system [here](https://github.com/ThelDoctor/CrystalAI/issues). For discussing anything Crystal you can [visit our forums](http://www.bismur.co.uk/forums/index.php).
 
 ## History
