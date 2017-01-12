@@ -155,7 +155,7 @@ namespace Crystal {
     }
 
     void UpdateBehaviourUtilitites(IContext context) {
-      for(int i = 0; i < _behaviours.Count; i++) {
+      for(int i = 0, count = _behaviours.Count; i < count; i++) {
         _behaviours[i].Consider(context);
         _behaviourUtilities[i] = _behaviours[i].Utility;
       }

@@ -29,8 +29,6 @@ namespace Crystal.SchedulingTests {
       CommandAction ca = () => { };
       var dc = new DeferredCommand(ca);
       Assert.IsNotNull(dc);
-      Assert.IsNotNull(dc.Process);
-      Assert.That(dc.Process, Is.EqualTo(ca));
     }
 
     [Test]

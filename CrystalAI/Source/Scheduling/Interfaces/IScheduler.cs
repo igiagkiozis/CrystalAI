@@ -23,12 +23,12 @@ namespace Crystal {
     /// <summary>
     ///   The Think cycle.
     /// </summary>
-    ICommandStream ThinkStream { get; }
+    CommandStream ThinkStream { get; }
 
     /// <summary>
     ///   The Update cycle.
     /// </summary>
-    ICommandStream UpdateStream { get; }
+    CommandStream UpdateStream { get; }
 
     /// <summary>
     ///   Invoking this will execute one think and update cycle.

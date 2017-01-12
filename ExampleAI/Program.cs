@@ -28,7 +28,7 @@ namespace ExampleAI {
 
   internal class Program {
     static void Main() {
-      int N = 4;
+      int N = 10000;
       var characters = new List<Character>();
       var decisionMakers = new List<DecisionMaker>();
 

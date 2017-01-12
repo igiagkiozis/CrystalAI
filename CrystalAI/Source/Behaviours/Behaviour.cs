@@ -63,7 +63,7 @@ namespace Crystal {
     /// <param name="context">The context.</param>
     /// <returns>The action to execute.</returns>
     public IAction Select(IContext context) {
-      for(int i = 0; i < _options.Count; i++) {
+      for(int i = 0, count = _options.Count; i < count; i++) {
         _options[i].Consider(context);
         _optionUtilities[i] = _options[i].Utility;
       }

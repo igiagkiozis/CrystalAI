@@ -25,7 +25,7 @@ namespace Crystal {
   /// <summary>
   ///   The CommandStream processes a given fraction of the AI events on every loop.
   /// </summary>
-  public sealed class CommandStream : ICommandStream {
+  public sealed class CommandStream {
     float _extraTimeNeeded;
     float _frameBeginTime;
 
@@ -35,7 +35,6 @@ namespace Crystal {
     float _minimumDelay = 1e-6f;
     QueuedCommand _nextCommand;
     int _processedCommandsCounter;
-    IPriorityQueue<QueuedCommand, float> _queue;
     Stopwatch _watch;
 
     /// <summary>
@@ -67,19 +66,18 @@ namespace Crystal {
     ///   The number of scheduled commands in the queue.
     /// </summary>
     public int CommandsCount {
-      get { return _queue.Count; }
+      get { return Queue.Count; }
     }
 
-    public IDeferredCommandHandle Add(IDeferredCommand cmd) {
+    public IDeferredCommandHandle Add(DeferredCommand cmd) {
       float time = CrTime.Time;
-      var scheduledCommand = new QueuedCommand {
-        Queue = this,
+      var scheduledCommand = new QueuedCommand(this) {
         Command = cmd,
         LastExecution = time,
         NextExecution = time + cmd.InitExecutionDelay
       };
 
-      _queue.Enqueue(scheduledCommand, scheduledCommand.NextExecution);
+      Queue.Enqueue(scheduledCommand, scheduledCommand.NextExecution);
       return scheduledCommand;
     }
 
@@ -97,7 +95,7 @@ namespace Crystal {
           RescheduleOrRemoveExecutedCommand();
         } else
           break;
-      } while(StillHaveTime());
+      } while(_watch.Elapsed.TotalMilliseconds < MaxProcessingTime);
 
       UpdatePerformanceMeasurements();
     }
@@ -108,7 +106,7 @@ namespace Crystal {
     /// <param name="initialQueueSize">Initial queue size.</param>
     public CommandStream(int initialQueueSize) {
       _watch = new Stopwatch();
-      _queue = new PriorityQueue<QueuedCommand, float>(initialQueueSize);
+      Queue = new PriorityQueue<QueuedCommand, float>(initialQueueSize);
     }
 
     void ResetVariables() {
@@ -124,16 +122,12 @@ namespace Crystal {
     }
 
     bool CanGetNextCommand() {
-      if(_queue.HasNext == false)
+      if(Queue.HasNext == false)
         return false;
 
-      _nextCommand = _queue.Peek();
+      _nextCommand = Queue.Peek();
       return _nextCommand.NextExecution <= _frameBeginTime;
-    }
-
-    bool StillHaveTime() {
-      return _watch.Elapsed.TotalMilliseconds < MaxProcessingTime;
-    }
+    }    
 
     void CalculateOverdueUpdates() {
       float timeSinceLastUpdate = _frameBeginTime - _nextCommand.LastExecution;
@@ -154,10 +148,9 @@ namespace Crystal {
 
     void UpdateScheduledItem() {
       _nextCommand.LastExecution = _frameBeginTime;
-      _nextCommand.NextExecution = _frameBeginTime + _nextCommand.Command.ExecutionDelay; // + MinimumDelay;
-//      _queue.UpdatePriority(_nextCommand, _nextCommand.NextExecution);
-      _queue.Dequeue();
-      _queue.Enqueue(_nextCommand, _nextCommand.NextExecution);
+      _nextCommand.NextExecution = _frameBeginTime + _nextCommand.Command.ExecutionDelay + _minimumDelay;
+      Queue.Dequeue();
+      Queue.Enqueue(_nextCommand, _nextCommand.NextExecution);
     }
 
     void UpdatePerformanceMeasurements() {
@@ -166,90 +159,7 @@ namespace Crystal {
       TotalMilliseconds = _watch.Elapsed.TotalMilliseconds;
     }
 
-    void Add(QueuedCommand item, float priority) {
-      _queue.Enqueue(item, priority);
-    }
-
-    void Remove(QueuedCommand item) {
-      _queue.Remove(item);
-    }
-
-    QueuedCommand Peek() {
-      return _queue.Peek();
-    }
-
-    QueuedCommand Dequeue() {
-      return _queue.Dequeue();
-    }
-
-    void UpdatePriority(QueuedCommand item, float priority) {
-      _queue.UpdatePriority(item, priority);
-    }
-
-    class QueuedCommand : IDeferredCommandHandle {
-      bool _isActive = true;
-
-      /// <summary>
-      ///   The scheduled command this handle refers to.
-      /// </summary>
-      /// <value>The command.</value>
-      public IDeferredCommand Command { get; set; }
-
-      /// <summary>
-      ///   If true the associated command is still being executed.
-      /// </summary>
-      public bool IsActive {
-        get { return _isActive; }
-        set {
-          if(_isActive != value) {
-            if(_isActive)
-              RemoveSelfFromQueue();
-            else
-              AddSelfToQueue();
-            _isActive = value;
-          }
-        }
-      }
-
-      public void Pause() {
-        if(_isActive == false)
-          return;
-
-        float time = CrTime.Time;
-        float num = NextExecution - time;
-        LastExecution = num;
-        NextExecution = float.PositiveInfinity;
-        Queue.UpdatePriority(this, NextExecution);
-      }
-
-      public void Resume() {
-        if(_isActive == false)
-          return;
-
-        float time = CrTime.Time;
-        LastExecution = time;
-        NextExecution = time + Command.ExecutionDelay;
-        Queue.UpdatePriority(this, NextExecution);
-      }
-
-      void AddSelfToQueue() {
-        float time = CrTime.Time;
-        LastExecution = time;
-        NextExecution = time + Command.ExecutionDelay;
-        Queue.Add(this, NextExecution);
-      }
-
-      void RemoveSelfFromQueue() {
-        if(Queue.Peek() == this)
-          Queue.Dequeue();
-        else
-          Queue.Remove(this);
-      }
-
-      internal CommandStream Queue;
-      internal float LastExecution;
-      internal float NextExecution;
-    }
+    internal IPriorityQueue<QueuedCommand, float> Queue;
   }
 
 }

@@ -61,10 +61,7 @@ namespace Crystal {
     /// </summary>
     public bool IsInverted {
       get {
-        if(Evaluator == null)
-          return false;
-
-        return Evaluator.IsInverted;
+        return Evaluator != null && Evaluator.IsInverted;
       }
       set {
         if(Evaluator == null)

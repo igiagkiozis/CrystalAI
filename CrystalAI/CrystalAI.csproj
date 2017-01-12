@@ -101,14 +101,13 @@
     <Compile Include="Source\Options\OptionConstructor.cs" />
     <Compile Include="Source\Options\Interfaces\IOption.cs" />
     <Compile Include="Source\Options\Interfaces\IOptionCollection.cs" />
+    <Compile Include="Source\Scheduling\QueuedCommand.cs" />
     <Compile Include="Source\Utilities\Pcg.cs" />
     <Compile Include="Source\Utilities\PcgExtended.cs" />
     <Compile Include="Source\Utilities\PcgSeed.cs" />
     <Compile Include="Source\Scheduling\CommandStream.cs" />
     <Compile Include="Source\Scheduling\DeferredCommand.cs" />
     <Compile Include="Source\Scheduling\Scheduler.cs" />
-    <Compile Include="Source\Scheduling\Interfaces\ICommandStream.cs" />
-    <Compile Include="Source\Scheduling\Interfaces\IDeferredCommand.cs" />
     <Compile Include="Source\Scheduling\Interfaces\IDeferredCommandHandle.cs" />
     <Compile Include="Source\Scheduling\Interfaces\IScheduler.cs" />
     <Compile Include="Source\Selectors\MaxUtilitySelector.cs" />

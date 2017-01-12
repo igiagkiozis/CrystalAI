@@ -189,7 +189,7 @@ namespace Crystal {
     }
 
     void UpdateConsiderationUtilities(IContext context) {
-      for(int i = 0; i < _considerations.Count; i++) {
+      for(int i = 0, count = _considerations.Count; i < count; i++) {
         _considerations[i].Consider(context);
         _considerationUtilities[i] = _considerations[i].Utility;
       }
