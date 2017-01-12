@@ -70,6 +70,11 @@ namespace Crystal {
     Interval<float> YInterval { get; }
 
     /// <summary>
+    ///   When true, the output of the Evaluate method is equal to 1.0f - (normal output).
+    /// </summary>
+    bool IsInverted { get; set; }
+
+    /// <summary>
     ///   Returns the utility value for the specified x.
     /// </summary>
     /// <param name="x">The x value.</param>

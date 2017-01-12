@@ -25,7 +25,7 @@ namespace Crystal.EvaluatorTests {
 
   [TestFixture]
   public class SigmoidEvaluatorTests {
-    float _floatPrecision = 1e-6f;
+    const float Tolerance = 1e-6f;
     int _evN = 1000;
 
     float _minK = -0.99999f;
@@ -61,30 +61,45 @@ namespace Crystal.EvaluatorTests {
       Assert.IsNotNull(ev);
     }
 
-    [Test]
-    public void PtAandPtBTest(
-      [Range(-10.0f, 10.0f, 10f)] float xA,
-      [Range(0.0f, 2.0f, 0.5f)] float yA,
-      [Range(30.0f, 50.0f, 10f)] float xB,
-      [Range(2.0f, 0.0f, -0.5f)] float yB) {
+    static readonly object[] PtAandPtBCases = {
+      new object[] {-10f, 0f, 10f, 1f},
+      new object[] {-10f, 1f, 10f, 0f},
+      new object[] {1f, 0.2f, 100f, 0.8f},
+      new object[] {0f, -2f, 1f, 2f}
+    };
+
+    [Test, TestCaseSource("PtAandPtBCases")]
+    public void PtAandPtBTest(float xA, float yA, float xB, float yB) {
       var pt1 = new Pointf(xA, yA.Clamp01());
       var pt2 = new Pointf(xB, yB.Clamp01());
       var ev = new SigmoidEvaluator(pt1, pt2);
       Assert.AreEqual(pt1, ev.PtA);
+      Assert.AreEqual(pt2, ev.PtB);
     }
 
-    [Test, TestCase(0.0f, 0.0f, 1.0f, 1.0f, -0.9999f), TestCase(-100.0f, 0.0f, 100.0f, 1.0f, -0.2f),
-     TestCase(-100.0f, 1.0f, -20.0f, 0.0f, 0.3f), TestCase(42.0f, 0.5f, 54f, 0.6f, 0.234f),
-     TestCase(42.0f, 0.9f, 100.0f, 0.0f, 0.0f), TestCase(0.0f, 2.0f, 4.0f, 0.2f, 0.33f),
-     TestCase(0.0f, 10.0f, 0.00001f, 0.0f, 0.001f), TestCase(0.0f, 1.0f, 0.000001f, 0.99999f, 0.0001f),
-     TestCase(-0.0001f, 0.0001f, 0.0001f, 0.0f, 0.00001f), TestCase(0.0f, 10.0f, 0.00001f, 0.0f, 0.54f),
-     TestCase(0.0f, 1.0f, 0.000001f, 0.99999f, 0.99999f), TestCase(-0.0001f, 0.0001f, 0.0001f, 0.0f, 0.99991f),
-     TestCase(0.0f, 0.2f, 0.5f, 0.75f, 11.999999999f), TestCase(0.0f, 0.75f, 0.5f, 0.2f, -1.0f),
-     TestCase(0.0f, 0.75f, 0.5f, 0.75f, 1.0f)]
+    static readonly object[] EvaluateCases = {
+      new object[] {0.0f, 0.0f, 1.0f, 1.0f, -0.9999f},
+      new object[] {-100.0f, 0.0f, 100.0f, 1.0f, -0.2f},
+      new object[] {-100.0f, 1.0f, -20.0f, 0.0f, 0.3f},
+      new object[] {42.0f, 0.5f, 54f, 0.6f, 0.234f},
+      new object[] {42.0f, 0.9f, 100.0f, 0.0f, 0.0f},
+      new object[] {0.0f, 2.0f, 4.0f, 0.2f, 0.33f},
+      new object[] {0.0f, 10.0f, 0.00001f, 0.0f, 0.001f},
+      new object[] {0.0f, 1.0f, 0.000001f, 0.99999f, 0.0001f},
+      new object[] {-0.0001f, 0.0001f, 0.0001f, 0.0f, 0.00001f},
+      new object[] {0.0f, 10.0f, 0.00001f, 0.0f, 0.54f},
+      new object[] {0.0f, 1.0f, 0.000001f, 0.99999f, 0.99999f},
+      new object[] {-0.0001f, 0.0001f, 0.0001f, 0.0f, 0.99991f},
+      new object[] {0.0f, 0.2f, 0.5f, 0.75f, 11.999999999f},
+      new object[] {0.0f, 0.75f, 0.5f, 0.2f, -1.0f},
+      new object[] {0.0f, 0.75f, 0.5f, 0.75f, 1.0f}
+    };
+
+    [Test, TestCaseSource("EvaluateCases")]
     public void EvaluateTest(float xA, float yA, float xB, float yB, float k) {
       var ptA = new Pointf(xA, yA);
       var ptB = new Pointf(xB, yB);
-      var ev = new SigmoidEvaluator(ptA, ptB, k);
+      IEvaluator ev = new SigmoidEvaluator(ptA, ptB, k);
       var kN = k.Clamp<float>(_minK, _maxK);
       var yAn = yA.Clamp01();
       var yBn = yB.Clamp01();
@@ -103,18 +118,55 @@ namespace Crystal.EvaluatorTests {
         var den = kN * (1 - 2 * Math.Abs(twoOverAbsDx * xqMinusMeanX)) + 1;
         var cVal = dyOver2 * (num / den) + meanY;
 
-        Utility cResult = cVal;
-        var aResult = ev.Evaluate(xqArray[i]);
-        Assert.That(aResult, Is.EqualTo(cResult.Value).Within(_floatPrecision));
-        Assert.That(aResult <= 1.0f);
-        Assert.That(aResult >= 0.0f);
+        var aVal = ev.Evaluate(xqArray[i]);
+        Assert.That(aVal, Is.EqualTo(cVal).Within(Tolerance));
+        Assert.That(aVal <= 1.0f);
+        Assert.That(aVal >= 0.0f);
       }
       // Check the end points
       var utilA = ev.Evaluate(xA);
       var utilB = ev.Evaluate(xB);
-      Assert.That(utilA, Is.EqualTo(yAn).Within(_floatPrecision));
-      Assert.That(utilB, Is.EqualTo(yBn).Within(_floatPrecision));
+      Assert.That(utilA, Is.EqualTo(yAn).Within(Tolerance));
+      Assert.That(utilB, Is.EqualTo(yBn).Within(Tolerance));
     }
+
+
+    [Test, TestCaseSource("EvaluateCases")]
+    public void InvertedEvaluateTest(float xA, float yA, float xB, float yB, float k) {
+      var ptA = new Pointf(xA, yA);
+      var ptB = new Pointf(xB, yB);
+      IEvaluator ev = new SigmoidEvaluator(ptA, ptB, k);
+      var kN = k.Clamp<float>(_minK, _maxK);
+      var yAn = yA.Clamp01();
+      var yBn = yB.Clamp01();
+      ev.IsInverted = true;
+
+      var xqArray = CrMath.LinearSpaced(_evN, xA - 0.001f * xA, xB + 0.001f * xB);
+      for(int i = 0; i < _evN - 1; i++) {
+        var dy = yBn - yAn;
+        var dx = xB - xA;
+        var dyOver2 = dy / 2.0f;
+        var twoOverAbsDx = 2.0f / Math.Abs(dx);
+        var meanX = (xA + xB) / 2.0f;
+        var oneMinusK = 1.0f - kN;
+        var meanY = (yAn + yBn) / 2.0f;
+        var xqMinusMeanX = xqArray[i].Clamp<float>(xA, xB) - meanX;
+        var num = twoOverAbsDx * xqMinusMeanX * oneMinusK;
+        var den = kN * (1 - 2 * Math.Abs(twoOverAbsDx * xqMinusMeanX)) + 1;
+        var cVal = 1f - (dyOver2 * (num / den) + meanY);
+
+        var aVal = ev.Evaluate(xqArray[i]);
+        Assert.That(aVal, Is.EqualTo(cVal).Within(Tolerance));
+        Assert.That(aVal <= 1.0f);
+        Assert.That(aVal >= 0.0f);
+      }
+      // Check the end points
+      var utilA = ev.Evaluate(xA);
+      var utilB = ev.Evaluate(xB);
+      Assert.That(utilA, Is.EqualTo(1f-yAn).Within(Tolerance));
+      Assert.That(utilB, Is.EqualTo(1f-yBn).Within(Tolerance));
+    }
+
   }
 
 }

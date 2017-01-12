@@ -27,7 +27,7 @@ namespace Crystal {
     /// <summary>
     ///   The scheduled command this handle refers to.
     /// </summary>
-    IDeferredCommand Command { get; }
+    DeferredCommand Command { get; }
 
     /// <summary>
     ///   If true the associated command is still being executed.

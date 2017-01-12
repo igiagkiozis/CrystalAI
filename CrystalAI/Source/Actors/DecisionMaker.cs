@@ -27,27 +27,20 @@ namespace Crystal {
   /// </summary>
   public sealed class DecisionMaker : DecisionMakerBase {
     IScheduler _aiScheduler;
-
     float _initThinkDelayMax;
-
     float _initThinkDelayMin;
-
     float _initUpdateDelayMax;
-
     float _initUpdateDelayMin;
-    IDeferredCommand _thinkCommand;
-    IDeferredCommandHandle _thinkCommandHandle;
-
     float _thinkDelayMax;
-
     float _thinkDelayMin;
-    IDeferredCommand _updateCommand;
-    IDeferredCommandHandle _updateCommandHandle;
-
     float _updateDelayMax;
-
     float _updateDelayMin;
-
+    DeferredCommand _thinkCommand;
+    IDeferredCommandHandle _thinkCommandHandle;
+    
+    DeferredCommand _updateCommand;
+    IDeferredCommandHandle _updateCommandHandle;
+    
     public float InitThinkDelayMin {
       get { return _initThinkDelayMin; }
       set {

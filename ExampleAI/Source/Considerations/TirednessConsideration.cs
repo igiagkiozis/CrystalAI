@@ -23,11 +23,10 @@ using Crystal;
 namespace ExampleAI {
 
   public class TirednessConsideration : ConsiderationBase<CharacterContext> {
-    IEvaluator _evaluator;
     public static readonly string Name = "Tiredness";
 
     public override void Consider(CharacterContext context) {
-      Utility = new Utility(_evaluator.Evaluate(context.Energy), Weight);
+      Utility = new Utility(Evaluator.Evaluate(context.Energy), Weight);
     }
 
     public override IConsideration Clone() {
@@ -50,7 +49,7 @@ namespace ExampleAI {
     void Initialize() {
       var ptA1 = new Pointf(0f, 1f);
       var ptB1 = new Pointf(30f, 0f);
-      _evaluator = new PowerEvaluator(ptA1, ptB1, 2f);      
+      Evaluator = new PowerEvaluator(ptA1, ptB1, 2f);      
     }
 
   }

@@ -137,7 +137,6 @@ namespace Crystal.ActionTests {
       var actionSequence = new ActionSequence();
       for(int i = 0; i < 10; i++)
         actionSequence.Actions.Add(new UpdatingAction(UpdateIterations));
-      // TODO Here we're adding an action directly. This shouldn't be happening.
       var newAction = _aiConstructor.Actions.Create(TestActionDefs.FailingAction);
       actionSequence.Actions.Add(newAction);
       for(int i = 0; i < 11; i++)

@@ -157,8 +157,6 @@ namespace Crystal.SchedulingTests {
           InitExecutionDelayMax = 0.0f,
           ExecutionDelayMin = 0.00001f,
           ExecutionDelayMax = 0.00001f
-//          ExecutionDelayMin = 0.0f,
-//          ExecutionDelayMax = 0.0f
         };
         s.Add(cm1);
         cmdList.Add(cm1);
@@ -172,9 +170,6 @@ namespace Crystal.SchedulingTests {
 #if DISPLAY_LOG
         StreamLog(s);
 #endif
-//        if(i > 1)
-//          Assert.That(s.TotalMilliseconds, Is.LessThanOrEqualTo(processingTime+0.01f));
-//        Thread.Sleep(2);
       }
 
 #if DISPLAY_LOG

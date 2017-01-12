@@ -23,11 +23,10 @@ using Crystal;
 namespace ExampleAI {
 
   public class HowUnfitConsideration : ConsiderationBase<CharacterContext> {
-    IEvaluator _evaluator;
     public static readonly string Name = "HowUnfit";
 
     public override void Consider(CharacterContext context) {
-      Utility = new Utility(_evaluator.Evaluate(context.Fitness), Weight);
+      Utility = new Utility(Evaluator.Evaluate(context.Fitness), Weight);
     }
 
     public override IConsideration Clone() {
@@ -50,7 +49,7 @@ namespace ExampleAI {
     void Initialize() {
       var ptA = new Pointf(0f, 1f);
       var ptB = new Pointf(40f, 0f);
-      _evaluator = new PowerEvaluator(ptA, ptB, 4f);
+      Evaluator = new PowerEvaluator(ptA, ptB, 4f);
     }
 
   }

@@ -23,7 +23,7 @@ using Crystal;
 namespace ExampleAI {
 
   public class CuriosityConsideration : ConsiderationBase<CharacterContext> {
-    IEvaluator _evaluator;
+
     public static readonly string Name = "Curiosity";
 
     public override void Consider(CharacterContext context) {

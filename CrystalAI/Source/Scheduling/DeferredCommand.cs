@@ -22,24 +22,23 @@ using System;
 
 namespace Crystal {
 
-  public class DeferredCommand : IDeferredCommand {
+  /// <summary>
+  ///   This delegate is used for the process in DeferredCommand
+  /// </summary>
+  public delegate void CommandAction();
+
+  public class DeferredCommand {
     float _executionDelayMax;
-
     float _executionDelayMin;
-
     float _firstExecutionDelayMax;
-
     float _firstExecutionDelayMin;
     // This is by far the most common use.
     bool _isRepeating = true;
-
     CommandAction _process;
+    long _timesExecuted;
+    float _lastExecutionTime;
+    float _lastUpdateDeltaTime;
 
-    int _timesExecuted;
-
-    public int TimesExecuted {
-      get { return _timesExecuted; }
-    }
 
     /// <summary>
     ///   Gets or sets a value indicating whether this instance is repeating.
@@ -107,15 +106,42 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   This is what the command executes when run.
+    ///   The number of times the Execute() command was called.
     /// </summary>
-    public CommandAction Process {
-      get { return _process; }
+    public long TimesExecuted {
+      get { return _timesExecuted; }
+    }
+
+    /// <summary>
+    ///   The time of the last execution in seconds since the start of the application.
+    /// </summary>
+    public float LastExecution {
+      get { return _lastExecutionTime; }
+    }
+
+    /// <summary>
+    ///   The time since the last update in seconds.
+    /// </summary>
+    public float TimeSinceLastUpdate {
+      get { return CrTime.Time - _lastExecutionTime; }
+    }
+
+    /// <summary>
+    ///   This returns the time difference between the last update time and the second to
+    ///   last update time.
+    /// </summary>
+    public float LastUpdateDeltaTime {
+      get { return _lastUpdateDeltaTime; }
     }
 
     public void Execute() {
-      Process();
-      _timesExecuted++;
+      _process();
+      var lastExecOld = _lastExecutionTime;
+      _lastExecutionTime = CrTime.Time;
+      _lastUpdateDeltaTime = _lastExecutionTime - lastExecOld;
+      unchecked {
+        _timesExecuted++;
+      }
     }
 
     /// <summary>

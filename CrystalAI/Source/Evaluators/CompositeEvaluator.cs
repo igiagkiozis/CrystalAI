@@ -40,7 +40,7 @@ namespace Crystal {
     public void Add(IEvaluator ev) {
       if(DoesNotOverlapWithAnyEvaluator(ev))
         Evaluators.Add(ev);
-      //_evaluators.Sort();
+
       Evaluators.Sort((e1, e2) => e1.XInterval.CompareTo(e2.XInterval));
       UpdateXyPoints();
     }

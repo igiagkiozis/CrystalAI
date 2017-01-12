@@ -26,13 +26,13 @@ namespace Crystal {
     /// <summary>
     ///   The Think cycle.
     /// </summary>
-    public ICommandStream ThinkStream { get; private set; }
+    public CommandStream ThinkStream { get; private set; }
 
     /// <summary>
     ///   The Update cycle.
     /// </summary>
     /// <value>The update queue.</value>
-    public ICommandStream UpdateStream { get; private set; }
+    public CommandStream UpdateStream { get; private set; }
 
     /// <summary>
     ///   Tick this instance.

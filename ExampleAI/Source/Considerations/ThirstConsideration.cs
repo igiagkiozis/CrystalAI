@@ -23,11 +23,10 @@ using Crystal;
 namespace ExampleAI {
 
   public class ThirstConsideration : ConsiderationBase<CharacterContext> {
-    IEvaluator _evaluator;
     public static readonly string Name = "ThirstConsideration";
 
     public override void Consider(CharacterContext context) {
-      Utility = new Utility(_evaluator.Evaluate(context.Thirst), Weight);
+      Utility = new Utility(Evaluator.Evaluate(context.Thirst), Weight);
     }
 
     public override IConsideration Clone() {
@@ -50,7 +49,7 @@ namespace ExampleAI {
     void Initialize() {
       var ptA = new Pointf(85f, 0f);
       var ptB = new Pointf(100f, 1f);
-      _evaluator = new SigmoidEvaluator(ptA, ptB, 0.7f);
+      Evaluator = new SigmoidEvaluator(ptA, ptB, 0.7f);
     }
 
   }
