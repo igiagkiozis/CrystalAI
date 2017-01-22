@@ -40,7 +40,10 @@ namespace Crystal {
     
     DeferredCommand _updateCommand;
     IDeferredCommandHandle _updateCommandHandle;
-    
+
+    /// <summary>
+    /// The minimum initial think delay in seconds.
+    /// </summary>
     public float InitThinkDelayMin {
       get { return _initThinkDelayMin; }
       set {
@@ -50,6 +53,12 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    /// Gets or sets the initialize think delay maximum.
+    /// </summary>
+    /// <value>
+    /// The initialize think delay maximum.
+    /// </value>
     public float InitThinkDelayMax {
       get { return _initThinkDelayMax; }
       set {
@@ -58,6 +67,12 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    /// Gets or sets the think delay minimum.
+    /// </summary>
+    /// <value>
+    /// The think delay minimum.
+    /// </value>
     public float ThinkDelayMin {
       get { return _thinkDelayMin; }
       set {
@@ -67,6 +82,12 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    /// Gets or sets the think delay maximum.
+    /// </summary>
+    /// <value>
+    /// The think delay maximum.
+    /// </value>
     public float ThinkDelayMax {
       get { return _thinkDelayMax; }
       set {
@@ -75,6 +96,12 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    /// Gets or sets the initialize update delay minimum.
+    /// </summary>
+    /// <value>
+    /// The initialize update delay minimum.
+    /// </value>
     public float InitUpdateDelayMin {
       get { return _initUpdateDelayMin; }
       set {
@@ -84,6 +111,12 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    /// Gets or sets the initialize update delay maximum.
+    /// </summary>
+    /// <value>
+    /// The initialize update delay maximum.
+    /// </value>
     public float InitUpdateDelayMax {
       get { return _initUpdateDelayMax; }
       set {
@@ -92,6 +125,12 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    /// Gets or sets the update delay minimum.
+    /// </summary>
+    /// <value>
+    /// The update delay minimum.
+    /// </value>
     public float UpdateDelayMin {
       get { return _updateDelayMin; }
       set {
@@ -101,6 +140,12 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    /// Gets or sets the update delay maximum.
+    /// </summary>
+    /// <value>
+    /// The update delay maximum.
+    /// </value>
     public float UpdateDelayMax {
       get { return _updateDelayMax; }
       set {
@@ -109,7 +154,7 @@ namespace Crystal {
       }
     }
 
-    /// <summary>Starts the AI.</summary>
+    
     protected override void OnStart() {
       _thinkCommandHandle = _aiScheduler.ThinkStream.Add(_thinkCommand);
       _updateCommandHandle = _aiScheduler.UpdateStream.Add(_updateCommand);

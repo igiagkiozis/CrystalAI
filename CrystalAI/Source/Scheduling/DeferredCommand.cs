@@ -50,7 +50,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Controls the minimum Time delay before this command is executed for the first Time.
+    ///   Controls the minimum Time delay before this command is executed for the first time.
     /// </summary>
     /// <value>The first execution delay minimum.</value>
     public float InitExecutionDelayMin {

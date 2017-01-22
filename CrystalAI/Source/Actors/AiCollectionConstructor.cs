@@ -19,6 +19,9 @@
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 namespace Crystal {
 
+  /// <summary>
+  ///   A convenience static class to create the collection hierarchy required by AiCollection.
+  /// </summary>
   public static class AiCollectionConstructor {
     /// <summary>
     ///   Creates all necessary collections for the AI. Note that the collections created by this

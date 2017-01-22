@@ -21,13 +21,12 @@ namespace Crystal {
 
   /// <summary>
   ///   Interface for context provider responsible for supplying the <see cref="T:Crystal.IContext"/>
-  ///   implementing context instances for e.g. AI clients.
+  ///   implementing context instances.
   /// </summary>
   public interface IContextProvider {
     /// <summary>
-    ///   Retrieves the context instance. This can be a simple getter or a factory method.
+    ///   Retrieves the context instance.
     /// </summary>
-    /// <returns>The concrete context instance for use by the requester.</returns>
     IContext Context();
   }
 
