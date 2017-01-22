@@ -3,25 +3,21 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/rw0tma0eucs45fi5/branch/master?svg=true)](https://ci.appveyor.com/project/ThelDoctor/crystalai/branch/master)
 ![Tests Status](http://flauschig.ch/batch.php?type=tests&account=ThelDoctor&slug=CrystalAI)
 
-# Crystal AI v0.7.2
-A Utility Theory Based AI for C# and Unity
+# [Crystal AI](https://theldoctor.github.io/CrystalAI/)
 
-## Getting Started
-For the time being the unit tests are the only documentation.
+## A Utility AI for C# and Unity 
 
-## License
-GPL v3 License
- 
-Copyright (c) 2016-2017 Bismur Studios Ltd.
+Crystal is a fast, scalable and extensible general purpose decision making AI for C# that is based on concepts in utility theory. It was created and is maintained by [Ioannis Giagkiozis](http://www.bismur.co.uk/). 
 
-Copyright (c) 2016-2017 Ioannis Giagkiozis
- 
-Crystal AI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-  
-Crystal AI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+To get started check out the [Crystal AI pages](https://theldoctor.github.io/CrystalAI/).
+
+## Compatibility 
+- .NET 3.5 and above 
+- [Unity](https://unity3d.com/)
+
+## History
+- v0.7.2 Changed a portion of the API to make it more intuitive. Added a basic example project showcasing the AI. 
+- v0.7.1 First public version containing only the library and the test suite.
+
+## Copyright and License
+Code and documentation copyright 2016-2017 the Bismur Studios Ltd. and Ioannis Giagkiozis. The source code is released under the GPL v3 license. For further details on licensing please see [Crystal AI licensing page](https://theldoctor.github.io/CrystalAI/license/).
