@@ -20,7 +20,8 @@
 namespace Crystal {
 
   /// <summary>
-  ///   The context interface is a bilateral communication conduit between the AI and a unit/agent.
+  ///   The context interface enables the communication and sharing of information
+  ///   between the agent and the AI.
   /// </summary>
   public interface IContext {
   }

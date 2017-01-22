@@ -20,21 +20,21 @@
 namespace Crystal {
 
   /// <summary>
-  ///   Represents the state of an <see cref="T:Crystal.DecisionMakerBase"/>
+  ///   Represents the state of a <see cref="T:Crystal.DecisionMakerBase"/>
   /// </summary>
   public enum DecisionMakerState {
     /// <summary>
-    ///   AI Client Stopped state.
+    ///   The associated AI is not running.
     /// </summary>
     Stopped,
 
     /// <summary>
-    ///   AI Client Running state.
+    ///   The associated AI is running.
     /// </summary>
     Running,
 
     /// <summary>
-    ///   AI Client Paused state.
+    ///   The associated AI is paused.
     /// </summary>
     Paused
   }

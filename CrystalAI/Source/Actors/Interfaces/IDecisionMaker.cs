@@ -20,31 +20,36 @@
 namespace Crystal {
 
   /// <summary>
-  ///   The DecisionMaker interface.
+  ///   Interface for the decision maker. The only responsibility of the decision maker is
+  ///   to manage its associated AI.
   /// </summary>
   public interface IDecisionMaker {
     /// <summary>
-    ///   Gets the state of the decision maker.
+    ///   The state of the decision maker.
     /// </summary>
     DecisionMakerState State { get; }
 
     /// <summary>
-    ///   Starts the Decision Maker AI and sets its State to <see cref="F:Crystal.DecisionMakerState.Running"/>.
+    ///   Starts the associated AI and sets the decision maker state to
+    ///  <see cref="F:Crystal.DecisionMakerState.Running"/>.
     /// </summary>
     void Start();
 
     /// <summary>
-    ///   Stops the Decision Maker AI and sets its State to <see cref="F:Crystal.DecisionMakerState.Stopped"/>.
+    ///   Stops the associated AI and sets the decision maker state to
+    ///  <see cref="F:Crystal.DecisionMakerState.Stopped"/>.
     /// </summary>
     void Stop();
 
     /// <summary>
-    ///   Pauses the AI and sets its State to <see cref="F:Crystal.DecisionMakerState.Paused"/>.
+    ///   Pauses the associated AI and the decision maker state to 
+    /// <see cref="F:Crystal.DecisionMakerState.Paused"/>.
     /// </summary>
     void Pause();
 
     /// <summary>
-    ///   Resumes the AI and sets its State to <see cref="F:Crystal.DecisionMakerState.Running"/>.
+    ///   Resumes execution of the associated AI and sets the decision maker state to 
+    /// <see cref="F:Crystal.DecisionMakerState.Running"/>.
     /// </summary>
     void Resume();
 

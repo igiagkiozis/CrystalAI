@@ -22,6 +22,10 @@ using System;
 
 namespace Crystal {
 
+  /// <summary>
+  ///   The decision maker, every agent will have one or more of these to execute different AIs.
+  /// </summary>
+  /// <seealso cref="Crystal.IDecisionMaker"/>
   public abstract class DecisionMakerBase : IDecisionMaker {
     IUtilityAi _ai;
     IContextProvider _contextProvider;
@@ -29,10 +33,15 @@ namespace Crystal {
     IContext _currentContext;
     int _recursionCounter;
     ITransition _transitionAction;
+
+    /// <summary>
+    /// The state of the decision maker.
+    /// </summary>
     public DecisionMakerState State { get; protected set; }
 
     /// <summary>
-    ///   Start the decison maker Ai.
+    /// Starts the associated AI and sets the decision maker state to
+    /// <see cref="F:Crystal.DecisionMakerState.Running" />.
     /// </summary>
     public void Start() {
       if(State != DecisionMakerState.Stopped)
@@ -42,6 +51,10 @@ namespace Crystal {
       OnStart();
     }
 
+    /// <summary>
+    /// Stops the associated AI and sets the decision maker state to
+    /// <see cref="F:Crystal.DecisionMakerState.Stopped" />.
+    /// </summary>
     public void Stop() {
       if(State == DecisionMakerState.Stopped)
         return;
@@ -50,6 +63,10 @@ namespace Crystal {
       OnStop();
     }
 
+    /// <summary>
+    /// Pauses the associated AI and the decision maker state to
+    /// <see cref="F:Crystal.DecisionMakerState.Paused" />.
+    /// </summary>
     public void Pause() {
       if(State != DecisionMakerState.Running)
         return;
@@ -58,6 +75,10 @@ namespace Crystal {
       OnPause();
     }
 
+    /// <summary>
+    /// Resumes execution of the associated AI and sets the decision maker state to
+    /// <see cref="F:Crystal.DecisionMakerState.Running" />.
+    /// </summary>
     public void Resume() {
       if(State != DecisionMakerState.Paused)
         return;
@@ -96,30 +117,32 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Called after <see cref="M:Crystal.DecisionMakerBase.Start"/>. Deriving classes
-    ///   should implement additional start-up logic here.
+    ///   Called after <see cref="M:Crystal.DecisionMakerBase.Start"/>. 
     /// </summary>
     protected abstract void OnStart();
 
     /// <summary>
-    ///   Called after <see cref="M:Crystal.DecisionMakerBase.Stop"/>. Deriving classes
-    ///   should implement additional tear-down logic here.
+    ///   Called after <see cref="M:Crystal.DecisionMakerBase.Stop"/>.
     /// </summary>
     protected abstract void OnStop();
 
     /// <summary>
-    ///   Called after <see cref="M:Crystal.DecisionMakerBase.Pause"/>. Deriving classes
-    ///   should implement additional pause logic here.
+    ///   Called after <see cref="M:Crystal.DecisionMakerBase.Pause"/>. 
     /// </summary>
     protected abstract void OnPause();
 
     /// <summary>
-    ///   Called after <see cref="M:Crystal.DecisionMakerBase.Resume"/>. Deriving classes
-    ///   should implement additional resume logic here.
+    ///   Called after <see cref="M:Crystal.DecisionMakerBase.Resume"/>.
     /// </summary>
     protected abstract void OnResume();
-
-
+    
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DecisionMakerBase"/> class.
+    /// </summary>
+    /// <param name="ai">The ai.</param>
+    /// <param name="contextProvider">The context provider.</param>
+    /// <exception cref="Crystal.DecisionMakerBase.UtilityAiNullException"></exception>
+    /// <exception cref="Crystal.DecisionMakerBase.ContextProviderNullException"></exception>
     protected DecisionMakerBase(IUtilityAi ai, IContextProvider contextProvider) {
       if(ai == null)
         throw new UtilityAiNullException();
@@ -132,10 +155,7 @@ namespace Crystal {
     }
 
     bool ActionStillRunning() {
-      if(_currentAction != null)
-        return _currentAction.ActionStatus == ActionStatus.Running;
-
-      return false;
+      return _currentAction?.ActionStatus == ActionStatus.Running;
     }
 
     bool CouldNotUpdateContext() {

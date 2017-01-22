@@ -23,7 +23,7 @@ using System;
 namespace Crystal {
 
   /// <summary>
-  ///   Base class for contextual scorers used by <see cref="T:Crystal.ICompositeConsideration"/>s
+  ///   Base class for considerations.
   /// </summary>
   /// <typeparam name="TContext">The type of the context.</typeparam>
   /// <seealso cref="T:Crystal.IConsideration"/>

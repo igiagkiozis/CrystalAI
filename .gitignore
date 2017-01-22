@@ -11,4 +11,5 @@ ExampleAI/bin
 ExampleAI/obj
 *.dcvr
 .DS_Store
+*.csproj.user
 CrystalAI/docs

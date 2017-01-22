@@ -19,8 +19,6 @@
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 namespace Crystal {
 
-  /// <summary>Interface for contextual scorers.</summary>
-  /// <seealso cref="T:Crystal.ICompositeConsideration"/>
   public interface IConsideration : IAiPrototype<IConsideration> {
     /// <summary>
     ///   A unique named identifier for this consideration.

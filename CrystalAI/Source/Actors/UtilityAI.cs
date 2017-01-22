@@ -24,6 +24,10 @@ using System.Linq;
 
 namespace Crystal {
 
+  /// <summary>
+  /// The Utility AI. 
+  /// </summary>
+  /// <seealso cref="Crystal.IUtilityAi" />
   public sealed class UtilityAi : IUtilityAi {
     Dictionary<string, Behaviour> _behaviourMap;
     List<Behaviour> _behaviours;
@@ -32,8 +36,17 @@ namespace Crystal {
 
     ISelector _selector;
 
+    /// <summary>
+    /// A unique name identifier for this AI.
+    /// </summary>
     public string NameId { get; set; }
 
+    /// <summary>
+    /// Gets or sets the selector.
+    /// </summary>
+    /// <value>
+    /// The selector.
+    /// </value>
     public ISelector Selector {
       get { return _selector; }
       set { _selector = value ?? _selector; }

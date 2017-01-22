@@ -23,22 +23,46 @@ using System.Collections.Generic;
 
 namespace Crystal {
 
+
+  /// <summary>
+  /// An AiCollection is a container of all AI building blocks necessary for the construction
+  /// of utility AI instances.
+  /// </summary>
+  /// <seealso cref="Crystal.IAiCollection" />
   public class AiCollection : IAiCollection {
     Dictionary<string, IUtilityAi> _aiMap;
-    public IBehaviourCollection Behaviours { get; private set; }
 
+    /// <summary>
+    ///   All behaviours available to this AiCollection.
+    /// </summary>
+    public IBehaviourCollection Behaviours { get; private set; }
+    
+    /// <summary>
+    ///   All options available to this AiCollection.
+    /// </summary>
     public IOptionCollection Options {
       get { return Behaviours.Options; }
     }
 
+    /// <summary>
+    ///   All considerations available to this AiCollection.
+    /// </summary>
     public IConsiderationCollection Considerations {
       get { return Behaviours.Options.Considerations; }
     }
 
+    /// <summary>
+    ///   All actions available to this AiCollection.
+    /// </summary>
     public IActionCollection Actions {
       get { return Behaviours.Options.Actions; }
     }
 
+    /// <summary>
+    ///   Adds the specified AI.
+    /// </summary>
+    /// <param name="ai">The AI.</param>
+    /// <returns></returns>
     public bool Add(IUtilityAi ai) {
       if(ai == null)
         return false;
@@ -51,22 +75,46 @@ namespace Crystal {
       return true;
     }
 
+    /// <summary>
+    ///   Determines whether [contains] [the specified name identifier].
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <returns>
+    ///   <c>true</c> if [contains] [the specified name identifier]; otherwise, <c>false</c>.
+    /// </returns>
     public bool Contains(string nameId) {
       return _aiMap.ContainsKey(nameId);
     }
 
+    /// <summary>
+    ///   Gets the AI.
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <returns></returns>
     public IUtilityAi GetAi(string nameId) {
       return _aiMap.ContainsKey(nameId) ? _aiMap[nameId] : null;
     }
 
+    /// <summary>
+    ///   Creates a new utility AI instance if the requested AI named nameId exists within
+    ///   the AiCollection, otherwise this returns null.
+    /// </summary>
+    /// <param name="nameId"></param>
+    /// <returns></returns>
     public IUtilityAi Create(string nameId) {
       return _aiMap.ContainsKey(nameId) ? _aiMap[nameId].Clone() : null;
     }
 
+    /// <summary>
+    ///   Removes all AIs in this collection.
+    /// </summary>
     public void Clear() {
       _aiMap.Clear();
     }
 
+    /// <summary>
+    ///   Clears everything, i.e. all actions, considerations, options, behaviours and AIs.
+    /// </summary>
     public void ClearAll() {
       _aiMap.Clear();
       Behaviours.Clear();
@@ -75,6 +123,11 @@ namespace Crystal {
       Actions.Clear();
     }
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="AiCollection"/> class.
+    /// </summary>
+    /// <param name="behaviourCollection">The behaviour collection.</param>
+    /// <exception cref="Crystal.AiCollection.BehaviourCollectionNullException"></exception>
     public AiCollection(IBehaviourCollection behaviourCollection) {
       if(behaviourCollection == null)
         throw new BehaviourCollectionNullException();
