@@ -23,7 +23,7 @@ namespace Crystal {
     bool Add(IConsideration consideration);
     bool Contains(string nameId);
     void Clear();
-    IConsideration Create(string nameId);
+    IConsideration Create(string considerationId);
   }
 
 }

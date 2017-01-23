@@ -65,7 +65,7 @@ namespace Crystal.OptionTests {
       option.Measure = measure;
       measure.LowerBound = 0.0f;
 
-      option.SetAction(new MockAction());
+      (option as Option).SetAction(new MockAction());
       var cd1 = new OptionConsideration1();
       var cd2 = new OptionConsideration2();
       cd1.NameId = "cd1";
@@ -99,7 +99,7 @@ namespace Crystal.OptionTests {
       option.Measure = measure;
       measure.LowerBound = threshold;
 
-      option.SetAction(new MockAction());
+      (option as Option).SetAction(new MockAction());
       var cd1 = new OptionConsideration1();
       var cd2 = new OptionConsideration2();
       cd1.NameId = "cd1";

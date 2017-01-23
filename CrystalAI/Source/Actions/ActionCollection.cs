@@ -37,16 +37,16 @@ namespace Crystal {
       return true;
     }
 
-    public bool Contains(string nameId) {
-      return _actionsMap.ContainsKey(nameId);
+    public bool Contains(string actionId) {
+      return _actionsMap.ContainsKey(actionId);
     }
 
     public void Clear() {
       _actionsMap.Clear();
     }
 
-    public IAction Create(string nameId) {
-      return _actionsMap.ContainsKey(nameId) ? _actionsMap[nameId].Clone() : null;
+    public IAction Create(string actionId) {
+      return _actionsMap.ContainsKey(actionId) ? _actionsMap[actionId].Clone() : null;
     }
 
     public ActionCollection() {

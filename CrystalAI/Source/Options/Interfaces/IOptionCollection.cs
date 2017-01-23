@@ -24,10 +24,10 @@ namespace Crystal {
     IConsiderationCollection Considerations { get; }
 
     bool Add(IOption option);
-    bool Contains(string nameId);
+    bool Contains(string optionId);
     void Clear();
     void ClearAll();
-    IOption Create(string nameId);
+    IOption Create(string optionId);
   }
 
 }

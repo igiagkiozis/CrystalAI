@@ -154,27 +154,46 @@ namespace Crystal {
       }
     }
 
-    
+
+    /// <summary>
+    /// Called after <see cref="M:Crystal.DecisionMakerBase.Start" />.
+    /// </summary>
     protected override void OnStart() {
       _thinkCommandHandle = _aiScheduler.ThinkStream.Add(_thinkCommand);
       _updateCommandHandle = _aiScheduler.UpdateStream.Add(_updateCommand);
     }
 
+    /// <summary>
+    /// Called after <see cref="M:Crystal.DecisionMakerBase.Stop" />.
+    /// </summary>
     protected override void OnStop() {
       _thinkCommandHandle.IsActive = false;
       _updateCommandHandle.IsActive = false;
     }
 
+    /// <summary>
+    /// Called after <see cref="M:Crystal.DecisionMakerBase.Pause" />.
+    /// </summary>
     protected override void OnPause() {
       _thinkCommandHandle.Pause();
       _updateCommandHandle.Pause();
     }
 
+    /// <summary>
+    /// Called after <see cref="M:Crystal.DecisionMakerBase.Resume" />.
+    /// </summary>
     protected override void OnResume() {
       _thinkCommandHandle.Resume();
       _updateCommandHandle.Resume();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DecisionMaker"/> class.
+    /// </summary>
+    /// <param name="uai">The uai.</param>
+    /// <param name="contextProvider">The context provider.</param>
+    /// <param name="aiScheduler">The ai scheduler.</param>
+    /// <exception cref="Crystal.DecisionMaker.SchedulerNullException"></exception>
     public DecisionMaker(IUtilityAi uai, IContextProvider contextProvider, IScheduler aiScheduler)
       : base(uai, contextProvider) {
       if(aiScheduler == null)

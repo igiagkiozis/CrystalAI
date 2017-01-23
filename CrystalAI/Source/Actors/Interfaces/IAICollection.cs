@@ -55,18 +55,18 @@ namespace Crystal {
     /// <summary>
     ///   Determines whether [contains] [the specified name identifier].
     /// </summary>
-    /// <param name="nameId">The name identifier.</param>
+    /// <param name="aiId">The name identifier.</param>
     /// <returns>
     ///   <c>true</c> if [contains] [the specified name identifier]; otherwise, <c>false</c>.
     /// </returns>
-    bool Contains(string nameId);
+    bool Contains(string aiId);
 
     /// <summary>
     ///   Gets the ai.
     /// </summary>
-    /// <param name="nameId">The name identifier.</param>
+    /// <param name="aiId">The name identifier.</param>
     /// <returns></returns>
-    IUtilityAi GetAi(string nameId);
+    IUtilityAi GetAi(string aiId);
 
     /// <summary>
     ///   Removes all AIs in this collection.
@@ -79,12 +79,12 @@ namespace Crystal {
     void ClearAll();
 
     /// <summary>
-    ///   Creates a new utility AI instance if the requested AI named nameId exists within
+    ///   Creates a new utility AI instance if the requested AI named aiId exists within
     ///   the AiCollection, otherwise this returns null.
     /// </summary>
-    /// <param name="nameId"></param>
+    /// <param name="aiId"></param>
     /// <returns></returns>
-    IUtilityAi Create(string nameId);
+    IUtilityAi Create(string aiId);
   }
 
 }

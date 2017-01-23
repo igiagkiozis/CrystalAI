@@ -45,8 +45,8 @@ namespace Crystal {
       _considerationsMap.Clear();
     }
 
-    public IConsideration Create(string nameId) {
-      return _considerationsMap.ContainsKey(nameId) ? _considerationsMap[nameId].Clone() : null;
+    public IConsideration Create(string considerationId) {
+      return _considerationsMap.ContainsKey(considerationId) ? _considerationsMap[considerationId].Clone() : null;
     }
 
     public ConsiderationCollection() {

@@ -55,7 +55,7 @@ namespace Crystal.OptionTests {
       // Consider otherwise the machinery in the base 
       // class is never called!
       IOption option = new Option();
-      option.SetAction(new MockAction());
+      (option as Option).SetAction(new MockAction());
       var cd1 = new OptionConsideration1();
       cd1.NameId = "cd1";
       var cd2 = new OptionConsideration2();

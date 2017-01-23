@@ -79,7 +79,7 @@ namespace Crystal.OptionTests {
       var option = new Option() as IOption;
       var measure = new ConstrainedWeightedMetrics();
       option.Measure = measure;
-      option.SetAction(new MockAction());
+      (option as Option).SetAction(new MockAction());
 
       var cd1 = new OptionConsideration1();
       var cd2 = new OptionConsideration2();
@@ -113,7 +113,7 @@ namespace Crystal.OptionTests {
       var measure = new ConstrainedWeightedMetrics();
       measure.LowerBound = threshold;
       option.Measure = measure;
-      option.SetAction(new MockAction());
+      (option as Option).SetAction(new MockAction());
 
       var cd1 = new OptionConsideration1();
       var cd2 = new OptionConsideration2();

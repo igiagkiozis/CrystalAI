@@ -19,28 +19,30 @@
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 namespace Crystal {
 
+  /// <summary>
+  /// AI Actions Interface. This is the "bottom-line" in that all decision making eventually 
+  /// leads to the execution of a class that implements this interface. 
+  /// </summary>
+  /// <seealso cref="Crystal.IAiPrototype{Crystal.IAction}" />
   public interface IAction : IAiPrototype<IAction> {
     /// <summary>
-    ///   Named unique identifier for this action.
+    ///   A unique identifier for this action.
     /// </summary>
     string NameId { get; }
 
     /// <summary>
-    ///   The Time that this action has been running for since it has been started. If the task is currently
-    ///   on pause, this will return the difference pauseTime - startTime.
+    ///   The Time that this action has been running for since it has been started in seconds. 
     /// </summary>
     float ElapsedTime { get; }
 
     /// <summary>
-    ///   The required cooldown Time needed before this action executes again.
+    ///   The required cool-down time, in seconds, needed before this action executes again.
     /// </summary>
-    /// <value>The cooldown.</value>
     float Cooldown { get; set; }
 
     /// <summary>
-    ///   This returns true if the cooldown Time for this action has not elapsed.
+    ///   This returns true if the cool-down time for this action has not yet elapsed.
     /// </summary>
-    /// <value><c>true</c> if in cooldown; otherwise, <c>false</c>.</value>
     bool InCooldown { get; }
 
     /// <summary>

@@ -50,7 +50,7 @@ namespace Crystal.OptionTests {
       // class is never called!
       var option = new Option() as IOption;
       option.Measure = new Chebyshev();
-      option.SetAction(new MockAction());
+      (option as Option).SetAction(new MockAction());
       var cd1 = new OptionConsideration1();
       var cd2 = new OptionConsideration2();
       cd1.NameId = "cd1";

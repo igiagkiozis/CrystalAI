@@ -19,14 +19,48 @@
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 namespace Crystal {
 
+  /// <summary>
+  /// Interface for BehaviourCollections. A behaviour collection contains behaviours and all sub-collections
+  /// required for these behaviours. Namely, options, considerations and actions. 
+  /// </summary>
   public interface IBehaviourCollection {
+    /// <summary>
+    /// The <see cref="T:Crystal.IOptionCollection"/> used to construct this collection. 
+    /// </summary>
     IOptionCollection Options { get; }
 
+    /// <summary>
+    /// Adds the given behaviour to this collection.
+    /// </summary>
+    /// <param name="behaviour">The behaviour.</param>
+    /// <returns>Returns true if the behaviour was successfully added, false otherwise.</returns>
     bool Add(IBehaviour behaviour);
-    bool Contains(string nameId);
+
+    /// <summary>
+    /// Determines whether [contains] [the specified name identifier].
+    /// </summary>
+    /// <param name="behaviourId">The name identifier.</param>
+    /// <returns>
+    ///   <c>true</c> if [contains] [the specified name identifier]; otherwise, <c>false</c>.
+    /// </returns>
+    bool Contains(string behaviourId);
+
+    /// <summary>
+    /// Clears this instance.
+    /// </summary>
     void Clear();
+
+    /// <summary>
+    /// Clears all.
+    /// </summary>
     void ClearAll();
-    IBehaviour Create(string nameId);
+
+    /// <summary>
+    /// Creates the specified name identifier.
+    /// </summary>
+    /// <param name="behaviourId">The name identifier.</param>
+    /// <returns></returns>
+    IBehaviour Create(string behaviourId);
   }
 
 }

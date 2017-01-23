@@ -74,7 +74,7 @@ namespace Crystal.ActorTests {
     [Test]
     public void AddNullBehaviourReturnsFalseTest() {
       var ai = new UtilityAi();
-      Assert.That(ai.Add((Behaviour)null), Is.False);
+      Assert.That(ai.AddBehaviour((Behaviour)null), Is.False);
     }
 
     [Test]
@@ -101,7 +101,7 @@ namespace Crystal.ActorTests {
     [Test]
     public void RemoveNullBehaviourDoesNotThrowTest() {
       var ai = new UtilityAi();
-      Assert.DoesNotThrow(() => ai.Remove((Behaviour)null));
+      Assert.DoesNotThrow(() => ai.RemoveBehaviour((Behaviour)null));
     }
 
     [Test]
@@ -124,8 +124,8 @@ namespace Crystal.ActorTests {
       var ai = new UtilityAi();
       var b = new Behaviour();
       b.NameId = "some";
-      Assert.That(ai.Add(b), Is.True);
-      Assert.That(ai.Add(b), Is.False);
+      Assert.That(ai.AddBehaviour(b), Is.True);
+      Assert.That(ai.AddBehaviour(b), Is.False);
     }
 
     [Test]
@@ -133,9 +133,9 @@ namespace Crystal.ActorTests {
       var ai = new UtilityAi();
       var b = new Behaviour();
       b.NameId = "beh";
-      Assert.That(ai.Add(b), Is.True);
-      Assert.That(ai.Remove(b), Is.True);
-      Assert.That(ai.Remove(b), Is.False);
+      Assert.That(ai.AddBehaviour(b), Is.True);
+      Assert.That(ai.RemoveBehaviour(b), Is.True);
+      Assert.That(ai.RemoveBehaviour(b), Is.False);
     }
 
     [Test]
@@ -169,8 +169,8 @@ namespace Crystal.ActorTests {
       fo2.SetAction(a2);
       b2.AddOption(fo2);
 
-      ai.Add(b1);
-      ai.Add(b2);
+      ai.AddBehaviour(b1);
+      ai.AddBehaviour(b2);
 
       context.Val1 = 1.0f;
       context.Val2 = 0.0f;

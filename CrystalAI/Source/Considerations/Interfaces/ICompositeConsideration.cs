@@ -21,9 +21,9 @@ namespace Crystal {
 
   /// <summary>
   ///   Interface for considerations that themselves calculate a Utility based on the Utility of
-  ///   <see cref="T:Crystal.IConsideration"/>s.
+  ///   <see cref="T:Crystal.IConsideration"/>s. <see cref="T:Crystal.IOption"/> and
+  ///   <see cref="T:Crystal.IBehaviour"/> derive from this interface.
   /// </summary>
-  /// <seealso cref="T:Crystal.Option"/>
   public interface ICompositeConsideration : IConsideration {
     /// <summary>
     ///   The measure to be used to evaluate the utility of this consideration.
@@ -31,12 +31,12 @@ namespace Crystal {
     IMeasure Measure { get; set; }
 
     /// <summary>
-    ///   AddConsideration the specified consideration.
+    ///   Add the specified consideration.
     /// </summary>
     bool AddConsideration(IConsideration consideration);
 
     /// <summary>
-    ///   AddConsideration the consideration associated with the given ID.
+    ///   Add the consideration associated with the given Id.
     /// </summary>
     bool AddConsideration(string considerationId);
   }

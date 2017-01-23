@@ -25,9 +25,9 @@ using System.Linq;
 namespace Crystal {
 
   /// <summary>
-  /// The Utility AI. 
+  ///   The Utility AI.
   /// </summary>
-  /// <seealso cref="Crystal.IUtilityAi" />
+  /// <seealso cref="Crystal.IUtilityAi"/>
   public sealed class UtilityAi : IUtilityAi {
     Dictionary<string, Behaviour> _behaviourMap;
     List<Behaviour> _behaviours;
@@ -37,48 +37,28 @@ namespace Crystal {
     ISelector _selector;
 
     /// <summary>
-    /// A unique name identifier for this AI.
+    ///   A unique name identifier for this AI.
     /// </summary>
     public string NameId { get; set; }
 
     /// <summary>
-    /// Gets or sets the selector.
+    ///   Gets or sets the selector.
     /// </summary>
     /// <value>
-    /// The selector.
+    ///   The selector.
     /// </value>
     public ISelector Selector {
       get { return _selector; }
       set { _selector = value ?? _selector; }
     }
 
-    public bool Add(Behaviour behaviour) {
-      if(behaviour == null)
-        return false;
-      if(_behaviours.Contains(behaviour))
-        return false;
-
-      return InternalAddBehaviour(behaviour);
-    }
-
-    public bool Remove(Behaviour behaviour) {
-      if(string.IsNullOrEmpty(behaviour?.NameId))
-        return false;
-
-      return InternalRemove(behaviour.NameId);
-    }
-
-    public bool InternalRemove(string behaviourId) {
-      if(_behaviourMap.ContainsKey(behaviourId) == false)
-        return false;
-
-      var idx = _behaviours.IndexOf(_behaviourMap[behaviourId]);
-      _behaviourUtilities.RemoveAt(idx);
-      _behaviours.RemoveAt(idx);
-      _behaviourMap.Remove(behaviourId);
-      return true;
-    }
-
+    /// <summary>
+    /// Adds the behaviour associated with behaviourId to the AI.
+    /// </summary>
+    /// <param name="behaviourId">The behaviour identifier.</param>
+    /// <returns>
+    /// Returns true if the requested behaviour was added to the AI, false otherwise.
+    /// </returns>
     public bool AddBehaviour(string behaviourId) {
       if(_collection == null)
         return false;
@@ -90,10 +70,26 @@ namespace Crystal {
       return InternalAddBehaviour(behaviourId);
     }
 
+    /// <summary>
+    /// Removes the behaviour associated with behaviourId from the AI.
+    /// </summary>
+    /// <param name="behaviourId">The behaviour identifier.</param>
+    /// <returns>
+    /// Returns true if the behaviour was removed from the AI, false otherwise.
+    /// </returns>
     public bool RemoveBehaviour(string behaviourId) {
-      return InternalRemove(behaviourId);
+      return InternalRemoveBehaviour(behaviourId);
     }
 
+    /// <summary>
+    /// Enters a selection process that selects one of the contained behaviours. This
+    /// in turn selects one option within the selected behaviour and returns the action
+    /// associated with that option.
+    /// </summary>
+    /// <param name="context">The context.</param>
+    /// <returns>
+    /// The action associated with the selected option.
+    /// </returns>
     public IAction Select(IContext context) {
       if(_behaviours.Count == 0)
         return null;
@@ -104,14 +100,25 @@ namespace Crystal {
       return SelectAction(context);
     }
 
+    /// <summary>
+    /// Clones this instance.
+    /// </summary>
+    /// <returns></returns>
     public IUtilityAi Clone() {
       return new UtilityAi(this);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UtilityAi"/> class.
+    /// </summary>
     public UtilityAi() {
       Initialize();
     }
 
+    /// <summary>
+    /// Copy constructor.
+    /// </summary>
+    /// <param name="other">The other.</param>
     UtilityAi(UtilityAi other) {
       NameId = other.NameId;
       _collection = other._collection;
@@ -125,6 +132,14 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UtilityAi"/> class.
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <param name="collection">The collection.</param>
+    /// <exception cref="Crystal.UtilityAi.NameIdIsNullOrEmptyException"></exception>
+    /// <exception cref="Crystal.UtilityAi.AiCollectionNullException"></exception>
+    /// <exception cref="Crystal.UtilityAi.AiAlreadyExistsInCollectionException"></exception>
     public UtilityAi(string nameId, IAiCollection collection) {
       if(string.IsNullOrEmpty(nameId))
         throw new NameIdIsNullOrEmptyException();
@@ -136,6 +151,17 @@ namespace Crystal {
       Initialize();
       if(_collection.Add(this) == false)
         throw new AiAlreadyExistsInCollectionException(nameId);
+    }
+
+    bool InternalRemoveBehaviour(string behaviourId) {
+      if(_behaviourMap.ContainsKey(behaviourId) == false)
+        return false;
+
+      var idx = _behaviours.IndexOf(_behaviourMap[behaviourId]);
+      _behaviourUtilities.RemoveAt(idx);
+      _behaviours.RemoveAt(idx);
+      _behaviourMap.Remove(behaviourId);
+      return true;
     }
 
     bool InternalAddBehaviour(Behaviour behaviour) {
@@ -178,6 +204,22 @@ namespace Crystal {
       var idx = Selector.Select(_behaviourUtilities);
       IBehaviour selectedBehaviour = idx >= 0 ? _behaviours[idx] : null;
       return selectedBehaviour?.Select(context);
+    }
+
+    internal bool AddBehaviour(Behaviour behaviour) {
+      if(behaviour == null)
+        return false;
+      if(_behaviours.Contains(behaviour))
+        return false;
+
+      return InternalAddBehaviour(behaviour);
+    }
+
+    internal bool RemoveBehaviour(Behaviour behaviour) {
+      if(string.IsNullOrEmpty(behaviour?.NameId))
+        return false;
+
+      return InternalRemoveBehaviour(behaviour.NameId);
     }
 
     internal class AiCollectionNullException : Exception {

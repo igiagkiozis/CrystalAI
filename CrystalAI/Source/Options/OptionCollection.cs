@@ -40,8 +40,8 @@ namespace Crystal {
       return true;
     }
 
-    public bool Contains(string nameId) {
-      return _optionsMap.ContainsKey(nameId);
+    public bool Contains(string optionId) {
+      return _optionsMap.ContainsKey(optionId);
     }
 
     public void Clear() {
@@ -54,8 +54,8 @@ namespace Crystal {
       Considerations.Clear();
     }
 
-    public IOption Create(string nameId) {
-      return _optionsMap.ContainsKey(nameId) ? _optionsMap[nameId].Clone() as IOption : null;
+    public IOption Create(string optionId) {
+      return _optionsMap.ContainsKey(optionId) ? _optionsMap[optionId].Clone() as IOption : null;
     }
 
     public OptionCollection(IActionCollection actionCollection, IConsiderationCollection considerationCollection) {
