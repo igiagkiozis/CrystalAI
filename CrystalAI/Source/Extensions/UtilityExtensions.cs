@@ -31,17 +31,17 @@ namespace Crystal {
     /// <summary>
     ///   Chebyshev norm for the given utility list.
     /// </summary>
-    /// <param name="ulist">Utility list.</param>
-    public static float Chebyshev(this ICollection<Utility> ulist) {
-      if(ulist.Count == 0)
+    /// <param name="this">Utility list.</param>
+    public static float Chebyshev(this ICollection<Utility> @this) {
+      if(@this.Count == 0)
         return 0.0f;
 
-      var wsum = ulist.SumWeights();
+      var wsum = @this.SumWeights();
       if(CrMath.AeqZero(wsum))
         return 0.0f;
 
-      var vlist = new List<float>(ulist.Count);
-      foreach(var util in ulist) {
+      var vlist = new List<float>(@this.Count);
+      foreach(var util in @this) {
         var v = util.Value * (util.Weight / wsum);
         vlist.Add(v);
       }
@@ -54,18 +54,18 @@ namespace Crystal {
     ///   Returns the p-weighted metrics norm for the given Utility list.
     /// </summary>
     /// <returns>The metrics.</returns>
-    /// <param name="ulist">Utility list.</param>
+    /// <param name="this">Utility list.</param>
     /// <param name="p">The norm</param>
-    public static float WeightedMetrics(this ICollection<Utility> ulist, float p = 2.0f) {
+    public static float WeightedMetrics(this ICollection<Utility> @this, float p = 2.0f) {
       if(p < 1.0f)
         throw new PowerLessThanOneInWeightedMetricsException();
 
-      if(ulist.Count == 0)
+      if(@this.Count == 0)
         return 0.0f;
 
-      var wsum = ulist.SumWeights();
-      var vlist = new List<float>(ulist.Count);
-      foreach(var util in ulist) {
+      var wsum = @this.SumWeights();
+      var vlist = new List<float>(@this.Count);
+      foreach(var util in @this) {
         var v = util.Weight / wsum * (float)Math.Pow(util.Value, p);
         vlist.Add(v);
       }
@@ -75,61 +75,61 @@ namespace Crystal {
       return res;
     }
 
-    public static float MultiplyCombined(this ICollection<Utility> ulist) {
-      var count = ulist.Count;
+    public static float MultiplyCombined(this ICollection<Utility> @this) {
+      var count = @this.Count;
       if(count == 0)
         return 0.0f;
 
       var res = 1.0f;
-      foreach(var el in ulist)
+      foreach(var el in @this)
         res *= el.Combined;
 
       return res;
     }
 
-    public static float MultiplyValues(this ICollection<Utility> ulist) {
-      var count = ulist.Count;
+    public static float MultiplyValues(this ICollection<Utility> @this) {
+      var count = @this.Count;
       if(count == 0)
         return 0.0f;
 
       var res = 1.0f;
-      foreach(var el in ulist)
+      foreach(var el in @this)
         res *= el.Value;
 
       return res;
     }
 
-    public static float MultiplyWeights(this ICollection<Utility> ulist) {
-      var count = ulist.Count;
+    public static float MultiplyWeights(this ICollection<Utility> @this) {
+      var count = @this.Count;
       if(count == 0)
         return 0.0f;
 
       var res = 1.0f;
-      foreach(var el in ulist)
+      foreach(var el in @this)
         res *= el.Weight;
 
       return res;
     }
 
-    public static float SumValues(this ICollection<Utility> ulist) {
-      var count = ulist.Count;
+    public static float SumValues(this ICollection<Utility> @this) {
+      var count = @this.Count;
       if(count == 0)
         return 0.0f;
 
       var res = 0.0f;
-      foreach(var el in ulist)
+      foreach(var el in @this)
         res += el.Value;
 
       return res;
     }
 
-    public static float SumWeights(this ICollection<Utility> ulist) {
-      var count = ulist.Count;
+    public static float SumWeights(this ICollection<Utility> @this) {
+      var count = @this.Count;
       if(count == 0)
         return 0.0f;
 
       var res = 0.0f;
-      foreach(var el in ulist)
+      foreach(var el in @this)
         res += el.Weight;
 
       return res;

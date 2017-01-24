@@ -71,14 +71,25 @@ namespace Crystal {
       return new WeightedRandomSelector(Proportion);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="WeightedRandomSelector"/> class.
+    /// </summary>
     public WeightedRandomSelector() {
       _random = new Pcg();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="WeightedRandomSelector"/> class.
+    /// </summary>
+    /// <param name="proportion">The proportion.</param>
     public WeightedRandomSelector(float proportion) {
       Proportion = proportion;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="WeightedRandomSelector"/> class.
+    /// </summary>
+    /// <param name="random">The random.</param>
     public WeightedRandomSelector(Pcg random) {
       _random = random;
     }

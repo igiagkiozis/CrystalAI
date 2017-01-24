@@ -49,6 +49,9 @@ namespace Crystal {
       return _considerationsMap.ContainsKey(considerationId) ? _considerationsMap[considerationId].Clone() : null;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConsiderationCollection"/> class.
+    /// </summary>
     public ConsiderationCollection() {
       _considerationsMap = new Dictionary<string, IConsideration>();
     }

@@ -21,20 +21,23 @@ namespace Crystal {
 
   /// <summary>
   ///   The LinearEvaluator returns a normalized utility value based on a linear function.
+  ///   <see href="https://www.desmos.com/calculator/esibujxim4">Power</see> for an interactive
+  ///   plot.
   /// </summary>
   public class LinearEvaluator : EvaluatorBase {
     float _dyOverDx;
 
     /// <summary>
-    ///   Returns the utility value for the specified x.
+    ///   Returns the value for the specified x.
     /// </summary>
-    /// <param name="x">The x value.</param>
     public override float Evaluate(float x) {
       return (Ya + _dyOverDx * (x - Xa)).Clamp01();
     }
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Crystal.LinearEvaluator"/> class.
+    ///   <see href="https://www.desmos.com/calculator/esibujxim4">Power</see> for an interactive
+    ///   plot.
     /// </summary>
     public LinearEvaluator() {
       Initialize();
@@ -42,6 +45,8 @@ namespace Crystal {
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Crystal.LinearEvaluator"/> class.
+    ///   <see href="https://www.desmos.com/calculator/esibujxim4">Power</see> for an interactive
+    ///   plot.
     /// </summary>
     /// <param name="ptA">Point a.</param>
     /// <param name="ptB">Point b.</param>

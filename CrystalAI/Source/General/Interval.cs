@@ -84,6 +84,13 @@ namespace Crystal {
                           );
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Interval{T}"/> struct.
+    /// </summary>
+    /// <param name="lowerbound">The lowerbound.</param>
+    /// <param name="upperbound">The upperbound.</param>
+    /// <param name="lowerboundIntervalType">Type of the lowerbound interval.</param>
+    /// <param name="upperboundIntervalType">Type of the upperbound interval.</param>
     public Interval(T lowerbound, T upperbound,
                     IntervalType lowerboundIntervalType = IntervalType.Closed,
                     IntervalType upperboundIntervalType = IntervalType.Closed)

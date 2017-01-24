@@ -22,23 +22,51 @@ using System;
 
 namespace Crystal {
 
+  /// <summary>
+  /// AiTransition is an <see cref="T:Crystal.IAction"/> that when executed triggers a selection
+  /// of an action in another AI.
+  /// </summary>
+  /// <seealso cref="Crystal.ActionBase" />
+  /// <seealso cref="Crystal.ITransition" />
   public sealed class AiTransition : ActionBase, ITransition {
     IAiCollection _aiCollection;
     string _aiNameId;
 
     IUtilityAi _targetAi;
 
+    /// <summary>
+    /// Creates a new instance of the implementing class. Note that the semantics here
+    /// are somewhat vague, however, by convention the "Prototype Pattern" uses a "Clone"
+    /// function. Note that this may have very different semantics when compared with either
+    /// shallow or deep cloning. When implementing this remember to include only the defining
+    /// characteristics of the class and not its state!
+    /// </summary>
+    /// <returns></returns>
     public override IAction Clone() {
       return new AiTransition(this);
     }
 
+    /// <summary>
+    /// Triggers the action selection mechanism of the associated <see cref="T:Crystal.IBehaviour" /> or
+    /// <see cref="T:Crystal.IUtilityAi" />.
+    /// </summary>
+    /// <param name="context">The context.</param>
+    /// <returns></returns>
     public IAction Select(IContext context) {
       return TargetAi.Select(context);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AiTransition"/> class.
+    /// </summary>
     internal AiTransition() {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AiTransition"/> class.
+    /// </summary>
+    /// <param name="ai">The ai.</param>
+    /// <exception cref="Crystal.AiTransition.TargetAiNullException"></exception>
     public AiTransition(IUtilityAi ai) {
       if(ai == null)
         throw new TargetAiNullException();
@@ -46,11 +74,23 @@ namespace Crystal {
       _targetAi = ai;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AiTransition"/> class.
+    /// </summary>
+    /// <param name="other">The other.</param>
     AiTransition(AiTransition other) : base(other) {
       _aiNameId = other._aiNameId;
       _aiCollection = other._aiCollection;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AiTransition"/> class.
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <param name="aiNameId">The ai name identifier.</param>
+    /// <param name="collection">The collection.</param>
+    /// <exception cref="Crystal.ActionBase.NameIdEmptyOrNullException">
+    /// </exception>
     public AiTransition(string nameId, string aiNameId, IAiCollection collection) : base(nameId, collection?.Actions) {
       if(string.IsNullOrEmpty(nameId))
         throw new NameIdEmptyOrNullException();

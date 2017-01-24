@@ -75,11 +75,26 @@ namespace Crystal {
     /// <param name="context">The context.</param>
     public abstract void Consider(IContext context);
 
+    /// <summary>
+    /// Creates a new instance of the implementing class. Note that the semantics here
+    /// are somewhat vague, however, by convention the "Prototype Pattern" uses a "Clone"
+    /// function. Note that this may have very different semantics when compared with either
+    /// shallow or deep cloning. When implementing this remember to include only the defining
+    /// characteristics of the class and not its state!
+    /// </summary>
+    /// <returns></returns>
     public abstract IConsideration Clone();
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConsiderationBase"/> class.
+    /// </summary>
     protected ConsiderationBase() {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConsiderationBase"/> class.
+    /// </summary>
+    /// <param name="other">The other.</param>
     protected ConsiderationBase(ConsiderationBase other) {
       _collection = other._collection;
       NameId = other.NameId;
@@ -88,6 +103,13 @@ namespace Crystal {
       Weight = other.Weight;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConsiderationBase"/> class.
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <param name="collection">The collection.</param>
+    /// <exception cref="Crystal.ConsiderationBase.ConsiderationCollectionNullException"></exception>
+    /// <exception cref="Crystal.ConsiderationBase.ConsiderationAlreadyExistsInCollectionException"></exception>
     protected ConsiderationBase(string nameId, IConsiderationCollection collection) {
       if(collection == null)
         throw new ConsiderationCollectionNullException();

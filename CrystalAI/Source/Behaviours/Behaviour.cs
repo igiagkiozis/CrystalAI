@@ -75,10 +75,17 @@ namespace Crystal {
       return new Behaviour(this);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Behaviour"/> class.
+    /// </summary>
     public Behaviour() {
       Initialize();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Behaviour"/> class.
+    /// </summary>
+    /// <param name="other">The other.</param>
     Behaviour(Behaviour other) : base(other) {
       CreateLists();
       _collection = other._collection;
@@ -92,6 +99,13 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Behaviour"/> class.
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <param name="collection">The collection.</param>
+    /// <exception cref="Crystal.Behaviour.BehaviourCollectionNullException"></exception>
+    /// <exception cref="Crystal.Behaviour.BehaviourAlreadyExistsInCollectionException"></exception>
     public Behaviour(string nameId, IBehaviourCollection collection) : base(collection?.Options?.Considerations) {
       if(collection == null)
         throw new BehaviourCollectionNullException();

@@ -22,6 +22,12 @@ using System;
 
 namespace Crystal {
 
+  /// <summary>
+  ///   EvaluatorBase serves as a base class for all evaluators, i.e. functions with arbitrary domain
+  ///   of definition and a range equal to any sub-interval of [0,1].
+  /// </summary>
+  /// <seealso cref="Crystal.IEvaluator"/>
+  /// <seealso cref="System.IComparable{Crystal.IEvaluator}"/>
   public class EvaluatorBase : IEvaluator, IComparable<IEvaluator> {
     protected float Xa;
     protected float Xb;
@@ -29,94 +35,111 @@ namespace Crystal {
     protected float Yb;
 
     /// <summary>
-    ///   The first point in terms of x!
+    ///   The first point of the evaluator. The x-coordinate of this point will always
+    ///   be strictly smaller than that of PtB.
     /// </summary>
     public Pointf PtA {
       get { return new Pointf(Xa, Ya); }
     }
 
     /// <summary>
-    ///   The second point in terms of x!
+    ///   The second point of the evaluator. The x-coordinate of this point will always be
+    ///   strictly larger than that of PtA.
     /// </summary>
     public Pointf PtB {
       get { return new Pointf(Xb, Yb); }
     }
 
     /// <summary>
-    ///   Gets the minimum x.
+    ///   The lower bound of the x-coordinate interval.
     /// </summary>
-    /// <value>The minimum x.</value>
     public float MinX {
       get { return Xa; }
     }
 
     /// <summary>
-    ///   Gets the max x.
+    ///   The upper bound of the x-coordinate interval.
     /// </summary>
-    /// <value>The max x.</value>
     public float MaxX {
       get { return Xb; }
     }
 
     /// <summary>
-    ///   Gets the minimum y.
+    ///   The lower bound of the y-coordinate interval.
     /// </summary>
-    /// <value>The minimum y.</value>
     public float MinY {
       get { return Math.Min(Ya, Yb); }
     }
 
     /// <summary>
-    ///   Gets the max y.
+    ///   The upper bound of the y-coordinate interval.
     /// </summary>
-    /// <value>The max y.</value>
     public float MaxY {
       get { return Math.Max(Ya, Yb); }
     }
 
     /// <summary>
-    ///   Gets the X interval.
+    ///   The x-coordinate interval represents the domain of definition of this evaluator.
     /// </summary>
-    /// <value>The X interval.</value>
     public Interval<float> XInterval {
       get { return new Interval<float>(MinX, MaxX); }
     }
 
     /// <summary>
-    ///   Gets the Y interval.
+    ///   The y-coordinate interval represents the range of this evaluator. Note that this must
+    ///   be a sub-interval (or the entire interval) [0,1].
     /// </summary>
-    /// <value>The Y interval.</value>
     public Interval<float> YInterval {
       get { return new Interval<float>(MinY, MaxY); }
     }
 
     /// <summary>
-    ///   When true, the output of the Evaluate method is equal to 1.0f - (normal output).
+    ///   When true, the output of the Evaluate method is transformed to 1.0f - (normal output).
     /// </summary>
     public bool IsInverted { get; set; }
 
+    /// <summary>
+    ///   Compares the current object with another object of the same type.
+    /// </summary>
+    /// <param name="other">An object to compare with this object.</param>
+    /// <returns>
+    ///   A 32-bit signed integer that indicates the relative order of the objects being compared.
+    ///   The return value has the following meanings: Value Meaning Less than zero This object is
+    ///   less than the <paramref name="other"/> parameter.Zero This object is equal to <paramref name="other"/>.
+    ///   Greater than zero This object is greater than <paramref name="other"/>.
+    /// </returns>
     public int CompareTo(IEvaluator other) {
       return XInterval.CompareTo(other.XInterval);
     }
 
     /// <summary>
-    ///   Returns the utility for the specified value x.
+    ///   Returns the value for the specified x.
     /// </summary>
-    /// <param name="x">The x value.</param>
-    float IEvaluator.Evaluate(float x) {
-      return IsInverted ? 1f - Evaluate(x) : Evaluate(x);
-    }
-
     public virtual float Evaluate(float x) {
       return 0f;
     }
-  
+
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="EvaluatorBase"/> class.
+    /// </summary>
     protected EvaluatorBase() {
       Initialize(0.0f, 0.0f, 1.0f, 1.0f);
     }
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="EvaluatorBase"/> class.
+    /// </summary>
+    /// <param name="ptA">The pt a.</param>
+    /// <param name="ptB">The pt b.</param>
     protected EvaluatorBase(Pointf ptA, Pointf ptB) {
       Initialize(ptA.X, ptA.Y, ptB.X, ptB.Y);
+    }
+
+    /// <summary>
+    ///   Returns the value for the specified x.
+    /// </summary>
+    float IEvaluator.Evaluate(float x) {
+      return IsInverted ? 1f - Evaluate(x) : Evaluate(x);
     }
 
     void Initialize(float xA, float yA, float xB, float yB) {

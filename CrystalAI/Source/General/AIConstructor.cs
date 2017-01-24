@@ -61,6 +61,11 @@ namespace Crystal {
     protected abstract void DefineBehaviours();
     protected abstract void ConfigureAi();
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AiConstructor"/> class.
+    /// </summary>
+    /// <param name="collection">The collection.</param>
+    /// <exception cref="Crystal.AiConstructor.AiCollectionNullException"></exception>
     protected AiConstructor(IAiCollection collection) {
       if(collection == null)
         throw new AiCollectionNullException();

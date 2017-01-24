@@ -34,10 +34,17 @@ namespace Crystal {
       return new RandomSelector();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RandomSelector"/> class.
+    /// </summary>
     public RandomSelector() {
       _random = new Pcg();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RandomSelector"/> class.
+    /// </summary>
+    /// <param name="random">The random.</param>
     public RandomSelector(Pcg random) {
       _random = random;
     }

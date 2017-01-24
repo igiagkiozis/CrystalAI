@@ -43,7 +43,7 @@ namespace Crystal {
     bool Contains(string actionId);
 
     /// <summary>
-    ///   Removes all actions in this collection.
+    ///   Removes all actions from this collection.
     /// </summary>
     void Clear();
 

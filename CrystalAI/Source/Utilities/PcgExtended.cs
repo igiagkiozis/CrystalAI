@@ -387,36 +387,83 @@ namespace Crystal {
       return _increment >> 1;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PcgExtended"/> class.
+    /// </summary>
     public PcgExtended() : this(PcgSeed.GuidBasedSeed(), ShiftedIncrement) {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PcgExtended"/> class.
+    /// </summary>
+    /// <param name="seed">The seed.</param>
     public PcgExtended(int seed) : this((ulong)seed, ShiftedIncrement) {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PcgExtended"/> class.
+    /// </summary>
+    /// <param name="seed">The seed.</param>
     public PcgExtended(ulong seed) : this(seed, ShiftedIncrement) {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PcgExtended"/> class.
+    /// </summary>
+    /// <param name="seed">The seed.</param>
+    /// <param name="sequence">The sequence.</param>
     public PcgExtended(int seed, int sequence) : this((ulong)seed, (ulong)sequence) {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PcgExtended"/> class.
+    /// </summary>
+    /// <param name="seed">The seed.</param>
+    /// <param name="sequence">The sequence.</param>
     public PcgExtended(ulong seed, ulong sequence) {
       Initialize(seed, sequence);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PcgExtended"/> class.
+    /// </summary>
+    /// <param name="seed">The seed.</param>
+    /// <param name="tablePow2">The table pow2.</param>
+    /// <param name="advancePow2">The advance pow2.</param>
     public PcgExtended(int seed, int tablePow2, int advancePow2)
       : this((ulong)seed, tablePow2, advancePow2) {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PcgExtended"/> class.
+    /// </summary>
+    /// <param name="seed">The seed.</param>
+    /// <param name="tablePow2">The table pow2.</param>
+    /// <param name="advancePow2">The advance pow2.</param>
     public PcgExtended(ulong seed, int tablePow2, int advancePow2) {
       _tablePow2 = tablePow2;
       _advancePow2 = advancePow2;
       Initialize(seed, ShiftedIncrement);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PcgExtended"/> class.
+    /// </summary>
+    /// <param name="seed">The seed.</param>
+    /// <param name="sequence">The sequence.</param>
+    /// <param name="tablePow2">The table pow2.</param>
+    /// <param name="advancePow2">The advance pow2.</param>
     public PcgExtended(int seed, int sequence, int tablePow2, int advancePow2)
       : this((ulong)seed, (ulong)sequence, tablePow2, advancePow2) {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PcgExtended"/> class.
+    /// </summary>
+    /// <param name="seed">The seed.</param>
+    /// <param name="sequence">The sequence.</param>
+    /// <param name="tablePow2">The table pow2.</param>
+    /// <param name="advancePow2">The advance pow2.</param>
     public PcgExtended(ulong seed, ulong sequence, int tablePow2, int advancePow2) {
       _tablePow2 = tablePow2;
       _advancePow2 = advancePow2;

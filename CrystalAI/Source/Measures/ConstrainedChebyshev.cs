@@ -46,10 +46,17 @@ namespace Crystal {
       return new ConstrainedChebyshev(LowerBound);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConstrainedChebyshev"/> class.
+    /// </summary>
     public ConstrainedChebyshev() {
       _measure = new Chebyshev();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConstrainedChebyshev"/> class.
+    /// </summary>
+    /// <param name="lowerBound">The lower bound.</param>
     public ConstrainedChebyshev(float lowerBound) {
       LowerBound = lowerBound;
       _measure = new Chebyshev();

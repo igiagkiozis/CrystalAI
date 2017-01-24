@@ -62,11 +62,11 @@ namespace Crystal {
       return new WeightedMetrics(PNorm);
     }
 
-    public WeightedMetrics() {
-      PNorm = 2.0f;
-    }
-
-    public WeightedMetrics(float pNorm) {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="WeightedMetrics"/> class.
+    /// </summary>
+    /// <param name="pNorm">The p norm.</param>
+    public WeightedMetrics(float pNorm = 2f) {
       PNorm = pNorm;
     }
   }

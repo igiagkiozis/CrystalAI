@@ -56,6 +56,11 @@ namespace Crystal {
       return _behavioursMap.ContainsKey(behaviourId) ? _behavioursMap[behaviourId].Clone() as IBehaviour : null;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BehaviourCollection"/> class.
+    /// </summary>
+    /// <param name="optionCollection">The option collection.</param>
+    /// <exception cref="Crystal.BehaviourCollection.OptionCollectionNullException"></exception>
     public BehaviourCollection(IOptionCollection optionCollection) {
       if(optionCollection == null)
         throw new OptionCollectionNullException();

@@ -58,6 +58,13 @@ namespace Crystal {
       return _optionsMap.ContainsKey(optionId) ? _optionsMap[optionId].Clone() as IOption : null;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OptionCollection"/> class.
+    /// </summary>
+    /// <param name="actionCollection">The action collection.</param>
+    /// <param name="considerationCollection">The consideration collection.</param>
+    /// <exception cref="Crystal.OptionCollection.ActionCollectionNullException"></exception>
+    /// <exception cref="Crystal.OptionCollection.ConsiderationCollectionNullException"></exception>
     public OptionCollection(IActionCollection actionCollection, IConsiderationCollection considerationCollection) {
       if(actionCollection == null)
         throw new ActionCollectionNullException();

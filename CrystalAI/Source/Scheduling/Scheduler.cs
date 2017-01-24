@@ -42,6 +42,9 @@ namespace Crystal {
       UpdateStream.Process();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Scheduler"/> class.
+    /// </summary>
     public Scheduler() {
       ThinkStream = new CommandStream(128) {
         MaxProcessingTime = 1

@@ -59,15 +59,19 @@ namespace Crystal {
       return new ConstrainedWeightedMetrics(PNorm, LowerBound);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConstrainedWeightedMetrics"/> class.
+    /// </summary>
     public ConstrainedWeightedMetrics() {
       _measure = new WeightedMetrics();
     }
 
-    public ConstrainedWeightedMetrics(float pNorm) {
-      _measure = new WeightedMetrics(pNorm);
-    }
-
-    public ConstrainedWeightedMetrics(float pNorm, float lowerBound) {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConstrainedWeightedMetrics"/> class.
+    /// </summary>
+    /// <param name="pNorm">The p norm.</param>
+    /// <param name="lowerBound">The lower bound.</param>
+    public ConstrainedWeightedMetrics(float pNorm, float lowerBound = 0f) {
       _measure = new WeightedMetrics(pNorm);
       LowerBound = lowerBound;
     }

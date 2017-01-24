@@ -331,15 +331,32 @@ namespace Crystal {
       return _increment >> 1;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Pcg"/> class.
+    /// </summary>
     public Pcg() : this(PcgSeed.GuidBasedSeed()) {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Pcg"/> class.
+    /// </summary>
+    /// <param name="seed">The seed.</param>
     public Pcg(int seed) : this((ulong)seed) {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Pcg"/> class.
+    /// </summary>
+    /// <param name="seed">The seed.</param>
+    /// <param name="sequence">The sequence.</param>
     public Pcg(int seed, int sequence) : this((ulong)seed, (ulong)sequence) {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Pcg"/> class.
+    /// </summary>
+    /// <param name="seed">The seed.</param>
+    /// <param name="sequence">The sequence.</param>
     public Pcg(ulong seed, ulong sequence = ShiftedIncrement) {
       Initialize(seed, sequence);
     }

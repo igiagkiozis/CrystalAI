@@ -22,11 +22,23 @@ using System;
 
 namespace Crystal {
 
+  /// <summary>
+  /// BehaviourTransition is an <see cref="T:Crystal.IAction"/> which when executed triggers
+  /// the selection of an <see cref="T:Crystal.IAction"/> using a linked 
+  /// <see cref="T:Crystal.IBehaviour"/>.
+  /// </summary>
+  /// <seealso cref="Crystal.ActionBase" />
+  /// <seealso cref="Crystal.ITransition" />
   public sealed class BehaviourTransition : ActionBase, ITransition {
     Behaviour _behaviour;
     IBehaviourCollection _behaviourCollection;
     string _behaviourId;
 
+    /// <summary>
+    /// The <see cref="T:Crystal.IBehaviour"/> used for <see cref="T:Crystal.IAction"/> selection
+    /// when this action is selected. 
+    /// </summary>
+    /// <exception cref="Crystal.BehaviourTransition.BehaviourDoesNotExistException"></exception>
     public Behaviour Behaviour {
       get {
         if(_behaviour != null)
@@ -42,22 +54,48 @@ namespace Crystal {
       set { _behaviour = value ?? _behaviour; }
     }
 
+    /// <summary>
+    /// Triggers the action selection mechanism of the associated <see cref="T:Crystal.IBehaviour" /> or
+    /// <see cref="T:Crystal.IUtilityAi" />.
+    /// </summary>
+    /// <param name="context">The context.</param>
+    /// <returns></returns>
     public IAction Select(IContext context) {
       return Behaviour.Select(context);
     }
 
+    /// <summary>
+    /// Creates a new instance of the implementing class. Note that the semantics here
+    /// are somewhat vague, however, by convention the "Prototype Pattern" uses a "Clone"
+    /// function. Note that this may have very different semantics when compared with either
+    /// shallow or deep cloning. When implementing this remember to include only the defining
+    /// characteristics of the class and not its state!
+    /// </summary>
+    /// <returns></returns>
     public override IAction Clone() {
       return new BehaviourTransition(this);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BehaviourTransition"/> class.
+    /// </summary>
     internal BehaviourTransition() {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BehaviourTransition"/> class.
+    /// </summary>
+    /// <param name="other">The other.</param>
     BehaviourTransition(BehaviourTransition other) : base(other) {
       _behaviourId = other._behaviourId;
       _behaviourCollection = other._behaviourCollection;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BehaviourTransition"/> class.
+    /// </summary>
+    /// <param name="behaviour">The behaviour.</param>
+    /// <exception cref="Crystal.BehaviourTransition.BehaviourNullException"></exception>
     public BehaviourTransition(Behaviour behaviour) {
       if(behaviour == null)
         throw new BehaviourNullException();
@@ -65,6 +103,13 @@ namespace Crystal {
       _behaviour = behaviour;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BehaviourTransition"/> class.
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <param name="behaviourId">The behaviour identifier.</param>
+    /// <param name="collection">The collection.</param>
+    /// <exception cref="Crystal.ActionBase.NameIdEmptyOrNullException"></exception>
     public BehaviourTransition(string nameId, string behaviourId, IBehaviourCollection collection)
       : base(nameId, collection?.Options?.Actions) {
       if(string.IsNullOrEmpty(behaviourId))

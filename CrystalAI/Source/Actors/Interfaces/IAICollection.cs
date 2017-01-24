@@ -62,9 +62,10 @@ namespace Crystal {
     bool Contains(string aiId);
 
     /// <summary>
-    ///   Gets the ai.
+    ///   Returns the AI associated with the given identifier, or <c>null</c> if no
+    ///   such AI exists within the collection.
     /// </summary>
-    /// <param name="aiId">The name identifier.</param>
+    /// <param name="aiId">The AI identifier.</param>
     /// <returns></returns>
     IUtilityAi GetAi(string aiId);
 

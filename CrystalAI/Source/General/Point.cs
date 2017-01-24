@@ -37,6 +37,11 @@ namespace Crystal {
       return string.Format("({0}, {1})", X, Y);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Pointf"/> struct.
+    /// </summary>
+    /// <param name="x">The x.</param>
+    /// <param name="y">The y.</param>
     public Pointf(float x, float y) : this() {
       X = x;
       Y = y;

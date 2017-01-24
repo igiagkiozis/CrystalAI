@@ -24,60 +24,56 @@ namespace Crystal {
   /// </summary>
   public interface IEvaluator {
     /// <summary>
-    ///   The first point in terms of x!
+    ///   The first point of the evaluator. The x-coordinate of this point will always
+    ///   be strictly smaller than that of PtB.
     /// </summary>
     Pointf PtA { get; }
 
     /// <summary>
-    ///   The second point in terms of x!
+    ///   The second point of the evaluator. The x-coordinate of this point will always be
+    ///   strictly larger than that of PtA.
     /// </summary>
     Pointf PtB { get; }
 
     /// <summary>
-    ///   Gets the minimum x.
+    ///   The lower bound of the x-coordinate interval.
     /// </summary>
-    /// <value>The minimum x.</value>
     float MinX { get; }
 
     /// <summary>
-    ///   Gets the max x.
+    ///   The upper bound of the x-coordinate interval.
     /// </summary>
-    /// <value>The max x.</value>
     float MaxX { get; }
 
     /// <summary>
-    ///   Gets the minimum y.
+    ///   The lower bound of the y-coordinate interval.
     /// </summary>
-    /// <value>The minimum y.</value>
     float MinY { get; }
 
     /// <summary>
-    ///   Gets the max y.
+    ///   The upper bound of the y-coordinate interval.
     /// </summary>
-    /// <value>The max y.</value>
     float MaxY { get; }
 
     /// <summary>
-    ///   Gets the X interval.
+    ///   The x-coordinate interval represents the domain of definition of this evaluator.
     /// </summary>
-    /// <value>The X interval.</value>
     Interval<float> XInterval { get; }
 
     /// <summary>
-    ///   Gets the Y interval.
+    ///   The y-coordinate interval represents the range of this evaluator. Note that this must
+    ///   be a sub-interval (or the entire interval) [0,1].
     /// </summary>
-    /// <value>The Y interval.</value>
     Interval<float> YInterval { get; }
 
     /// <summary>
-    ///   When true, the output of the Evaluate method is equal to 1.0f - (normal output).
+    ///   When true, the output of the Evaluate method is transformed to 1.0f - (normal output).
     /// </summary>
     bool IsInverted { get; set; }
 
     /// <summary>
-    ///   Returns the utility value for the specified x.
+    ///   Returns the value for the specified x.
     /// </summary>
-    /// <param name="x">The x value.</param>
     float Evaluate(float x);
   }
 

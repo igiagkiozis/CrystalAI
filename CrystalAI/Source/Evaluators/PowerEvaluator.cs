@@ -26,7 +26,7 @@ namespace Crystal {
   ///   The PowerEvaluator returns a normalized utility based on a power function that has
   ///   effectively 1 parameter ( 0 leq p le 10000 ) bounded by the box defined by PtA and PtB with
   ///   PtA.x being strictly less than PtB.x!
-  ///   <see href="https://www.desmos.com/calculator/jjzwwnn5of">Power</see> for an interactive
+  ///   <see href="https://www.desmos.com/calculator/ok9nse8l3u">Power</see> for an interactive
   ///   plot.
   /// </summary>
   public class PowerEvaluator : EvaluatorBase {
@@ -45,7 +45,7 @@ namespace Crystal {
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Crystal.PowerEvaluator"/> class.
-    ///   <see href="https://www.desmos.com/calculator/jjzwwnn5of">Power</see> for an interactive
+    ///   <see href="https://www.desmos.com/calculator/ok9nse8l3u">Power</see> for an interactive
     ///   plot.
     /// </summary>
     public PowerEvaluator() {
@@ -55,7 +55,7 @@ namespace Crystal {
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Crystal.PowerEvaluator"/> class.
-    ///   <see href="https://www.desmos.com/calculator/jjzwwnn5of">Power</see> for an interactive
+    ///   <see href="https://www.desmos.com/calculator/ok9nse8l3u">Power</see> for an interactive
     ///   plot.
     /// </summary>
     /// <param name="ptA">Point a.</param>
@@ -67,7 +67,7 @@ namespace Crystal {
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Crystal.PowerEvaluator"/> class.
-    ///   <see href="https://www.desmos.com/calculator/jjzwwnn5of">Power</see> for an interactive
+    ///   <see href="https://www.desmos.com/calculator/ok9nse8l3u">Power</see> for an interactive
     ///   plot.
     /// </summary>
     /// <param name="ptA">Point a.</param>
