@@ -19,6 +19,10 @@
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 namespace Crystal {
 
+  /// <summary>
+  /// Uses a circular buffer to adaptively calculate the moving average of the contained 
+  /// elements.
+  /// </summary>
   public class MovingAverage {
     CircularBuffer<float> _buffer;
     bool _latch = true;
@@ -26,6 +30,9 @@ namespace Crystal {
 
     float _oneOverN = 1.0f;
 
+    /// <summary>
+    /// The average. 
+    /// </summary>    
     public float Mean {
       get { return _mean; }
     }

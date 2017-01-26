@@ -24,6 +24,15 @@ using System.Linq;
 
 namespace Crystal {
 
+  /// <summary>
+  /// An aggregate of considerations. Although it is possible to create fully functioning
+  /// AIs using only <see cref="T:Crystal.IConsideration"/>s, this class allows for such
+  /// considerations to be combined. This is quite useful as it can reduce the complexity
+  /// of individual considerations allowing them to be seen as building blocks. 
+  /// </summary>
+  /// <seealso cref="Crystal.ICompositeConsideration" />
+  /// <seealso cref="Crystal.Behaviour"/>
+  /// <seealso cref="Crystal.Option"/>
   public class CompositeConsideration : ICompositeConsideration {
     IConsiderationCollection _collection;
     List<IConsideration> _considerations;
@@ -32,11 +41,10 @@ namespace Crystal {
     Utility _defaultUtility = new Utility(0.0f, 1.0f);
     IMeasure _measure;
     float _weight = 1.0f;
-
     bool _isInverted;
 
     /// <summary>
-    ///   A string alias for ID.
+    ///   An identifier for this consideration.
     /// </summary>
     public string NameId { get; set; }
 
@@ -90,6 +98,11 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    /// Add the specified consideration.
+    /// </summary>
+    /// <param name="consideration"></param>
+    /// <returns></returns>
     public bool AddConsideration(IConsideration consideration) {
       if(consideration == null)
         return false;
@@ -102,6 +115,11 @@ namespace Crystal {
       return true;
     }
 
+    /// <summary>
+    /// Add the consideration associated with the given Id.
+    /// </summary>
+    /// <param name="considerationId"></param>
+    /// <returns></returns>
     public bool AddConsideration(string considerationId) {
       if(_collection == null)
         return false;
@@ -130,6 +148,14 @@ namespace Crystal {
       Utility = new Utility(mValue, Weight);
     }
 
+    /// <summary>
+    /// Creates a new instance of the implementing class. Note that the semantics here
+    /// are somewhat vague, however, by convention the "Prototype Pattern" uses a "Clone"
+    /// function. Note that this may have very different semantics when compared with either
+    /// shallow or deep cloning. When implementing this remember to include only the defining
+    /// characteristics of the class and not its state!
+    /// </summary>
+    /// <returns></returns>
     public virtual IConsideration Clone() {
       return new CompositeConsideration(this);
     }

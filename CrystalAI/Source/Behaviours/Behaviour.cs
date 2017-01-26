@@ -23,6 +23,14 @@ using System.Collections.Generic;
 
 namespace Crystal {
 
+  /// <summary>
+  /// An AI behaviour is a set of <see cref="T:Crystal.IOption"/>s. The behaviour itself
+  /// is a composite consideration and therefore, unless this is the only behaviour in a
+  /// <see cref="T:Crystal.IUtilityAi"/>, it will be selected only if its considerations
+  /// "win" against competing behaviours in the AI.
+  /// </summary>
+  /// <seealso cref="Crystal.CompositeConsideration" />
+  /// <seealso cref="Crystal.IBehaviour" />
   public sealed class Behaviour : CompositeConsideration, IBehaviour {
     IBehaviourCollection _collection;
     List<IOption> _options;
@@ -30,11 +38,24 @@ namespace Crystal {
 
     ISelector _selector;
 
+    /// <summary>
+    ///   <see cref="T:Crystal.ISelector" />
+    /// </summary>
+    /// <value>
+    /// The selector used in this behaviour. Note this cannot be null and because of this
+    /// if a null value set is attempted this is simply ignored and the previous value is
+    /// retained.
+    /// </value>
     public ISelector Selector {
       get { return _selector; }
       set { _selector = value ?? _selector; }
     }
 
+    /// <summary>
+    /// Adds the option.
+    /// </summary>
+    /// <param name="option">The option.</param>
+    /// <returns></returns>
     public bool AddOption(IOption option) {
       if(option == null)
         return false;
@@ -45,6 +66,13 @@ namespace Crystal {
       return true;
     }
 
+    /// <summary>
+    /// Adds the option associated with optionId, if one exists.
+    /// </summary>
+    /// <param name="optionId">The option identifier.</param>
+    /// <returns>
+    /// Returns true if the option was successfully added, false otherwise.
+    /// </returns>
     public bool AddOption(string optionId) {
       if(string.IsNullOrEmpty(optionId))
         return false;
@@ -71,6 +99,14 @@ namespace Crystal {
       return SelectAction();
     }
 
+    /// <summary>
+    /// Creates a new instance of the implementing class. Note that the semantics here
+    /// are somewhat vague, however, by convention the "Prototype Pattern" uses a "Clone"
+    /// function. Note that this may have very different semantics when compared with either
+    /// shallow or deep cloning. When implementing this remember to include only the defining
+    /// characteristics of the class and not its state!
+    /// </summary>
+    /// <returns></returns>
     public override IConsideration Clone() {
       return new Behaviour(this);
     }

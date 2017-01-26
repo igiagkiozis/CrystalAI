@@ -34,16 +34,13 @@ namespace Crystal {
     bool Add(IConsideration consideration);
 
     /// <summary>
-    ///   Determines whether [contains] [the specified name identifier].
+    /// Determines whether this collection contains a consideration associated with the given identifier.
     /// </summary>
-    /// <param name="nameId">The name identifier.</param>
-    /// <c>true</c>
-    /// if a consideration with the specified identifier exists within the collection;
-    /// otherwise,
-    /// <c>false</c>
-    /// .
+    /// <param name="considerationId">The consideration identifier.</param>
+    /// <returns>
+    ///   <c>true</c> if the collection contains a consideration with the given identifier; otherwise <c>false</c>.
     /// </returns>
-    bool Contains(string nameId);
+    bool Contains(string considerationId);
 
     /// <summary>
     ///   Removes all considerations from this collection.

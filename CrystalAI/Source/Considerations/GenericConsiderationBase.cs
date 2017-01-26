@@ -31,10 +31,17 @@ namespace Crystal {
     where TContext : class, IContext {
     IConsiderationCollection _collection;
     float _weight = 1.0f;
+
+    /// <summary>
+    ///   Use this for the internal <see cref="T:Crystal.IEvaluator"/>. Note that if you don't use
+    ///   this field but define and use a variable of your own,
+    ///   then <see cref="P:Crystal.ConsiderationBase`1.IsInverted"/> will not function as intended
+    ///   as there is no way of knowing a-priori what that variable may be.
+    /// </summary>
     protected IEvaluator Evaluator;
 
     /// <summary>
-    ///   A string alias for ID.
+    ///   An identifier for this consideration.
     /// </summary>
     public string NameId { get; set; }
 
@@ -62,9 +69,7 @@ namespace Crystal {
     ///   consideration.
     /// </summary>
     public bool IsInverted {
-      get {
-        return Evaluator != null && Evaluator.IsInverted;
-      }
+      get { return Evaluator != null && Evaluator.IsInverted; }
       set {
         if(Evaluator == null)
           return;
@@ -77,16 +82,24 @@ namespace Crystal {
     /// <param name="context">The context.</param>
     public abstract void Consider(TContext context);
 
+    /// <summary>
+    /// Creates a new instance of the implementing class. Note that the semantics here
+    /// are somewhat vague, however, by convention the "Prototype Pattern" uses a "Clone"
+    /// function. Note that this may have very different semantics when compared with either
+    /// shallow or deep cloning. When implementing this remember to include only the defining
+    /// characteristics of the class and not its state!
+    /// </summary>
+    /// <returns></returns>
     public abstract IConsideration Clone();
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ConsiderationBase{TContext}"/> class.
+    ///   Initializes a new instance of the <see cref="ConsiderationBase{TContext}"/> class.
     /// </summary>
     protected ConsiderationBase() {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ConsiderationBase{TContext}"/> class.
+    ///   Initializes a new instance of the <see cref="ConsiderationBase{TContext}"/> class.
     /// </summary>
     /// <param name="other">The other.</param>
     protected ConsiderationBase(ConsiderationBase<TContext> other) {
@@ -98,7 +111,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ConsiderationBase{TContext}"/> class.
+    ///   Initializes a new instance of the <see cref="ConsiderationBase{TContext}"/> class.
     /// </summary>
     /// <param name="nameId">The name identifier.</param>
     /// <param name="collection">The collection.</param>

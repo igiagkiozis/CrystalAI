@@ -63,10 +63,9 @@ namespace Crystal {
     void Clear();
 
     /// <summary>
-    ///   Indexs the of.
+    ///   Returns the index of the first item equal to the query (item) if such
+    ///   an item exists within the buffer, -1 otherwise.
     /// </summary>
-    /// <returns>The of.</returns>
-    /// <param name="item">Item.</param>
     int IndexOf(T item);
 
     /// <summary>
@@ -76,7 +75,7 @@ namespace Crystal {
     void RemoveAt(int index);
 
     /// <summary>
-    ///   Gets or sets the <see cref="Crystal.ICircularBuffer`1"/> at the specified index.
+    ///   Gets or sets the <see cref="T:Crystal.ICircularBuffer`1"/> at the specified index.
     /// </summary>
     /// <param name="index">Index.</param>
     T this[int index] { get; set; }

@@ -22,9 +22,21 @@ using System.Collections.Generic;
 
 namespace Crystal {
 
+  /// <summary>
+  /// A collection of <see cref="T:Crystal.IConsideration"/>s and 
+  /// <see cref="T:Crystal.ICompositeConsideration"/>s
+  /// </summary>
+  /// <seealso cref="Crystal.IConsiderationCollection" />
   public class ConsiderationCollection : IConsiderationCollection {
     Dictionary<string, IConsideration> _considerationsMap;
 
+    /// <summary>
+    /// Adds the specified consideration.
+    /// </summary>
+    /// <param name="consideration">The consideration.</param>
+    /// <returns>
+    ///   <c>true</c> if the consideration was successfully added to the collection, <c>false</c> otherwise.
+    /// </returns>
     public bool Add(IConsideration consideration) {
       if(consideration == null)
         return false;
@@ -37,14 +49,30 @@ namespace Crystal {
       return true;
     }
 
-    public bool Contains(string nameId) {
-      return _considerationsMap.ContainsKey(nameId);
+    /// <summary>
+    /// Determines whether this collection contains a consideration associated with the given identifier.
+    /// </summary>
+    /// <param name="considerationId">The consideration identifier.</param>
+    /// <returns>
+    ///   <c>true</c> if the collection contains a consideration with the given identifier; otherwise <c>false</c>.
+    /// </returns>
+    public bool Contains(string considerationId) {
+      return _considerationsMap.ContainsKey(considerationId);
     }
 
+    /// <summary>
+    /// Removes all considerations from this collection.
+    /// </summary>
     public void Clear() {
       _considerationsMap.Clear();
     }
 
+    /// <summary>
+    /// Creates a consideration that has the specified identifier, if no such consideration
+    /// exists within this collection <c>null</c> is returned.
+    /// </summary>
+    /// <param name="considerationId">The consideration identifier.</param>
+    /// <returns></returns>
     public IConsideration Create(string considerationId) {
       return _considerationsMap.ContainsKey(considerationId) ? _considerationsMap[considerationId].Clone() : null;
     }

@@ -24,6 +24,12 @@ using System.Collections.Generic;
 
 namespace Crystal {
 
+  /// <summary>
+  ///   A circular buffer <see cref="https://en.wikipedia.org/wiki/Circular_buffer"/>.
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <seealso cref="Crystal.ICircularBuffer{T}"/>
+  /// <seealso cref="System.Collections.Generic.IEnumerable{T}"/>
   public class CircularBuffer<T> : ICircularBuffer<T>, IEnumerable<T> {
     T[] _buffer;
     int _head;
@@ -115,10 +121,9 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Indexs the of.
+    ///   Returns the index of the first item equal to the query (item) if such
+    ///   an item exists within the buffer, -1 otherwise.
     /// </summary>
-    /// <returns>The of.</returns>
-    /// <param name="item">Item.</param>
     public int IndexOf(T item) {
       for(var i = 0; i < Count; i++)
         if(Equals(item, this[i]))
@@ -156,14 +161,14 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Crystal.CircularBuffer`1"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.CircularBuffer`1"/> class.
     /// </summary>
     public CircularBuffer() {
       Initialize(DefaultSize);
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Crystal.CircularBuffer`1"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.CircularBuffer`1"/> class.
     /// </summary>
     /// <param name="size">Size.</param>
     public CircularBuffer(int size) {
@@ -182,7 +187,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Gets or sets the <see cref="Crystal.CircularBuffer`1"/> at the specified index.
+    ///   Gets or sets the <see cref="T:Crystal.CircularBuffer`1"/> at the specified index.
     /// </summary>
     /// <param name="index">Index.</param>
     public T this[int index] {
