@@ -29,10 +29,17 @@ namespace Crystal {
   public abstract class ConsiderationBase : IConsideration {
     IConsiderationCollection _collection;
     float _weight = 1.0f;
+
+    /// <summary>
+    ///   Use this for the internal <see cref="T:Crystal.IEvaluator"/>. Note that if you don't use
+    ///   this field but define and use a variable of your own,
+    ///   then <see cref="P:Crystal.ConsiderationBase.IsInverted"/> will not function as intended
+    ///   as there is no way of knowing a-priori what that variable may be.
+    /// </summary>
     protected IEvaluator Evaluator;
 
     /// <summary>
-    ///   A string alias for ID.
+    ///   An identifier for this consideration.
     /// </summary>
     public string NameId { get; set; }
 

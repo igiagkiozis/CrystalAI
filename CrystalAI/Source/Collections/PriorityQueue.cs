@@ -25,6 +25,9 @@ namespace Crystal {
 
   // The initial version of this file was based on https://github.com/BlueRaja/High-Speed-Priority-Queue-for-C-Sharp.git
 
+  /// <summary>
+  /// Priority queue node.
+  /// </summary>
   public class PriorityQueueNode<TPriority> {
     /// <summary>
     ///   The Priority to insert this node at.  Must be set BEFORE adding a node to the queue
@@ -46,6 +49,12 @@ namespace Crystal {
   }
 
 
+  /// <summary>
+  /// Priority queue.
+  /// </summary>
+  /// <typeparam name="TItem">The type of the item.</typeparam>
+  /// <typeparam name="TPriority">The type of the priority.</typeparam>
+  /// <seealso cref="Crystal.IPriorityQueue{TItem, TPriority}" />
   public class PriorityQueue<TItem, TPriority> : IPriorityQueue<TItem, TPriority>
     where TPriority : IComparable<TPriority> {
     QueueNode[] _nodes;
@@ -198,6 +207,9 @@ namespace Crystal {
       _numNodes = 0;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PriorityQueue{TItem, TPriority}"/> class.
+    /// </summary>
     public PriorityQueue() {
       _numNodes = 0;
       _nodes = new QueueNode[DefaultSize];

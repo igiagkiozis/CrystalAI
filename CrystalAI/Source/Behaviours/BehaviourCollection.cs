@@ -23,10 +23,25 @@ using System.Collections.Generic;
 
 namespace Crystal {
 
+  /// <summary>
+  /// A collection of <see cref="T:Crystal.IBehaviour"/>s.
+  /// </summary>
+  /// <seealso cref="Crystal.IBehaviourCollection" />
   public class BehaviourCollection : IBehaviourCollection {
     Dictionary<string, IBehaviour> _behavioursMap;
+
+    /// <summary>
+    /// The <see cref="T:Crystal.IOptionCollection" /> used to construct this collection.
+    /// </summary>
     public IOptionCollection Options { get; private set; }
 
+    /// <summary>
+    /// Adds the given behaviour to this collection.
+    /// </summary>
+    /// <param name="behaviour">The behaviour.</param>
+    /// <returns>
+    ///   <c>true</c> if the behaviour was added to the collection; otherwise, <c>false</c>.
+    /// </returns>
     public bool Add(IBehaviour behaviour) {
       if(behaviour == null)
         return false;
@@ -39,19 +54,41 @@ namespace Crystal {
       return true;
     }
 
+    /// <summary>
+    /// Determines whether a behaviour with the specified name identifier exists within this collection.
+    /// </summary>
+    /// <param name="behaviourId">The name identifier.</param>
+    /// <returns>
+    /// <c>true</c> if a behaviour with the specified identifier exists within the collection;
+    /// otherwise, <c>false</c>.
+    /// </returns>
     public bool Contains(string behaviourId) {
       return _behavioursMap.ContainsKey(behaviourId);
     }
 
+    /// <summary>
+    /// Removes all behaviours from this collection.
+    /// </summary>
     public void Clear() {
       _behavioursMap.Clear();
     }
 
+    /// <summary>
+    /// Removes all behaviours from this collection. Additionally all options are removed from
+    /// the <see cref="T:Crystal.IOptionCollection" /> used in constructing this collection as well
+    /// as all considerations and actions are removed from their respective collections.
+    /// </summary>
     public void ClearAll() {
       _behavioursMap.Clear();
       Options.ClearAll();
     }
 
+    /// <summary>
+    /// Creates a behaviour with the specified identifier if such a behaviour exists;
+    /// otherwise returns <c>null</c>.
+    /// </summary>
+    /// <param name="behaviourId">The behaviour identifier.</param>
+    /// <returns></returns>
     public IBehaviour Create(string behaviourId) {
       return _behavioursMap.ContainsKey(behaviourId) ? _behavioursMap[behaviourId].Clone() as IBehaviour : null;
     }
