@@ -49,11 +49,22 @@ namespace Crystal {
     /// </summary>
     public static Pcg Default => _defaultInstance ?? (_defaultInstance = new Pcg(PcgSeed.GuidBasedSeed()));
 
+    /// <summary>
+    ///   Random integer in the interval [0, int.MaxValue].
+    /// </summary>
     public virtual int Next() {
       uint result = NextUInt();
       return (int)(result >> 1);
     }
 
+    /// <summary>
+    ///   Random integer in the semi-open interval [0, <paramref name="maxExclusive"/>).
+    /// </summary>
+    /// <param name="maxExclusive">The maximum value; exclusive.</param>
+    /// <exception cref="System.ArgumentException">
+    ///   Max Exclusive must be
+    ///   positive
+    /// </exception>
     public virtual int Next(int maxExclusive) {
       if(maxExclusive <= 0)
         throw new ArgumentException("Max Exclusive must be positive");
@@ -68,6 +79,16 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    ///   Random integer in the interval
+    ///   [<paramref name="minInclusive"/>, <paramref name="maxExclusive"/>).
+    /// </summary>
+    /// <param name="minInclusive">The minimum value; inclusive.</param>
+    /// <param name="maxExclusive">The maximum value; exclusive.</param>
+    /// <exception cref="System.ArgumentException">
+    ///   MaxExclusive must be
+    ///   larger than MinInclusive
+    /// </exception>
     public virtual int Next(int minInclusive, int maxExclusive) {
       if(maxExclusive <= minInclusive)
         throw new ArgumentException("MaxExclusive must be larger than MinInclusive");
@@ -82,6 +103,12 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    ///   Array of size <paramref name="count"/> of random integers in the
+    ///   interval [0, int.MaxValue].
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <exception cref="System.ArgumentException">Zero count</exception>
     public int[] NextInts(int count) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -93,6 +120,13 @@ namespace Crystal {
       return resultA;
     }
 
+    /// <summary>
+    ///   Array of size <paramref name="count"/> of random integers in the
+    ///   interval [0, <paramref name="maxExclusive"/>).
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="maxExclusive">The maximum value; exclusive.</param>
+    /// <exception cref="System.ArgumentException">Zero count</exception>
     public int[] NextInts(int count, int maxExclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -104,6 +138,14 @@ namespace Crystal {
       return resultA;
     }
 
+    /// <summary>
+    ///   Array of size <paramref name="count"/> of random integers in the
+    ///   interval [<paramref name="minInclusive"/>, <paramref name="maxExclusive"/>).
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="minInclusive">The minimum value; inclusive.</param>
+    /// <param name="maxExclusive">The maximum value; exclusive.</param>
+    /// <exception cref="System.ArgumentException">Zero count</exception>
     public int[] NextInts(int count, int minInclusive, int maxExclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -115,6 +157,9 @@ namespace Crystal {
       return resultA;
     }
 
+    /// <summary>
+    ///   Random unsigned integer in the interval [0, uint.MaxValue].
+    /// </summary>
     public uint NextUInt() {
       ulong oldState = _state;
       _state = unchecked(oldState * Multiplier + _increment);
@@ -124,6 +169,10 @@ namespace Crystal {
       return result;
     }
 
+    /// <summary>
+    ///   Random unsigned integer in the interval [0, <paramref name="maxExclusive"/>).
+    /// </summary>
+    /// <param name="maxExclusive">The maximum value; exclusive.</param>
     public uint NextUInt(uint maxExclusive) {
       uint threshold = (uint)-maxExclusive % maxExclusive;
 
@@ -134,6 +183,13 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    ///   Random unsigned integer in the interval
+    ///   [<paramref name="minInclusive"/>, <paramref name="maxExclusive"/>).
+    /// </summary>
+    /// <param name="minInclusive">The minimum value; inclusive.</param>
+    /// <param name="maxExclusive">The maximum value; exclusive.</param>
+    /// <exception cref="System.ArgumentException"></exception>
     public uint NextUInt(uint minInclusive, uint maxExclusive) {
       if(maxExclusive <= minInclusive)
         throw new ArgumentException();
@@ -148,6 +204,12 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    ///   Array of size <paramref name="count"/> of unsigned integers in
+    ///   the interval [0, uint.MaxValue].
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <exception cref="System.ArgumentException">Zero count</exception>
     public uint[] NextUInts(int count) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -159,6 +221,13 @@ namespace Crystal {
       return resultA;
     }
 
+    /// <summary>
+    ///   Array of size <paramref name="count"/> of unsigned integers in the
+    ///   interval [0, <paramref name="maxExclusive"/>).
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="maxExclusive">The maximum exclusive.</param>
+    /// <exception cref="System.ArgumentException">Zero count</exception>
     public uint[] NextUInts(int count, uint maxExclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -170,6 +239,14 @@ namespace Crystal {
       return resultA;
     }
 
+    /// <summary>
+    ///   Array of size <paramref name="count"/> of unsigned integers in the
+    ///   interval [<paramref name="minInclusive"/>, <paramref name="maxExclusive"/>).
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="minInclusive">The minimum inclusive.</param>
+    /// <param name="maxExclusive">The maximum exclusive.</param>
+    /// <exception cref="System.ArgumentException">Zero count</exception>
     public uint[] NextUInts(int count, uint minInclusive, uint maxExclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -181,10 +258,20 @@ namespace Crystal {
       return resultA;
     }
 
+    /// <summary>
+    ///   Random single precision floating point number in the interval
+    ///   [0,1].
+    /// </summary>
     public virtual float NextFloat() {
       return (float)(NextUInt() * ToDouble01);
     }
 
+    /// <summary>
+    ///   Random single precision floating point number in the interval
+    ///   [0, <paramref name="maxInclusive"/>].
+    /// </summary>
+    /// <param name="maxInclusive">The maximum inclusive.</param>
+    /// <exception cref="System.ArgumentException">MaxInclusive must be larger than 0</exception>
     public virtual float NextFloat(float maxInclusive) {
       if(maxInclusive <= 0)
         throw new ArgumentException("MaxInclusive must be larger than 0");
@@ -192,6 +279,13 @@ namespace Crystal {
       return (float)(NextUInt() * ToDouble01) * maxInclusive;
     }
 
+    /// <summary>
+    ///   Random single precision floating point number in the interval
+    ///   [<paramref name="minInclusive"/>, <paramref name="maxInclusive"/>].
+    /// </summary>
+    /// <param name="minInclusive">The minimum inclusive.</param>
+    /// <param name="maxInclusive">The maximum inclusive.</param>
+    /// <exception cref="System.ArgumentException">Max must be larger than min</exception>
     public virtual float NextFloat(float minInclusive, float maxInclusive) {
       if(maxInclusive <= minInclusive)
         throw new ArgumentException("Max must be larger than min");
@@ -199,6 +293,12 @@ namespace Crystal {
       return (float)(NextUInt() * ToDouble01) * (maxInclusive - minInclusive) + minInclusive;
     }
 
+    /// <summary>
+    ///   Array of size <paramref name="count"/> of single precision floating
+    ///   point random numbers in the interval [0,1].
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <exception cref="System.ArgumentException">Zero count</exception>
     public float[] NextFloats(int count) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -210,6 +310,13 @@ namespace Crystal {
       return resultA;
     }
 
+    /// <summary>
+    ///   Array of size <paramref name="count"/> of single precision floating
+    ///   point random numbers in the interval [0, <paramref name="maxInclusive"/>].
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="maxInclusive">The maximum inclusive.</param>
+    /// <exception cref="System.ArgumentException">Zero count</exception>
     public float[] NextFloats(int count, float maxInclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -221,6 +328,14 @@ namespace Crystal {
       return resultA;
     }
 
+    /// <summary>
+    ///   Array of size <paramref name="count"/> of single precision floating
+    ///   point random numbers in the interval [<paramref name="minInclusive"/>, <paramref name="maxInclusive"/>].
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="minInclusive">The minimum inclusive.</param>
+    /// <param name="maxInclusive">The maximum inclusive.</param>
+    /// <exception cref="System.ArgumentException">Zero count</exception>
     public float[] NextFloats(int count, float minInclusive, float maxInclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -232,10 +347,20 @@ namespace Crystal {
       return resultA;
     }
 
+    /// <summary>
+    ///   Random double precision floating point number in the interval
+    ///   [0, 1].
+    /// </summary>
     public virtual double NextDouble() {
       return NextUInt() * ToDouble01;
     }
 
+    /// <summary>
+    ///   Random double precision floating point number in the interval
+    ///   [0, <paramref name="maxInclusive"/>].
+    /// </summary>
+    /// <param name="maxInclusive">The maximum inclusive.</param>
+    /// <exception cref="System.ArgumentException">Max must be larger than 0</exception>
     public virtual double NextDouble(double maxInclusive) {
       if(maxInclusive <= 0)
         throw new ArgumentException("Max must be larger than 0");
@@ -243,6 +368,13 @@ namespace Crystal {
       return NextUInt() * ToDouble01 * maxInclusive;
     }
 
+    /// <summary>
+    ///   Random double precision floating point number in the interval
+    ///   [<paramref name="minInclusive"/>, <paramref name="maxInclusive"/>].
+    /// </summary>
+    /// <param name="minInclusive">The minimum inclusive.</param>
+    /// <param name="maxInclusive">The maximum inclusive.</param>
+    /// <exception cref="System.ArgumentException">Max must be larger than min</exception>
     public virtual double NextDouble(double minInclusive, double maxInclusive) {
       if(maxInclusive <= minInclusive)
         throw new ArgumentException("Max must be larger than min");
@@ -250,6 +382,12 @@ namespace Crystal {
       return NextUInt() * ToDouble01 * (maxInclusive - minInclusive) + minInclusive;
     }
 
+    /// <summary>
+    ///   Array of size <paramref name="count"/> of double precision floating point
+    ///   random numbers in the interval [0, 1].
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <exception cref="System.ArgumentException">Zero count</exception>
     public double[] NextDoubles(int count) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -261,6 +399,13 @@ namespace Crystal {
       return resultA;
     }
 
+    /// <summary>
+    ///   Array of size <paramref name="count"/> of double precision floating point
+    ///   random numbers in the interval [0, <paramref name="maxInclusive"/>.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="maxInclusive">The maximum inclusive.</param>
+    /// <exception cref="System.ArgumentException">Zero count</exception>
     public double[] NextDoubles(int count, double maxInclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -272,6 +417,14 @@ namespace Crystal {
       return resultA;
     }
 
+    /// <summary>
+    ///   Array of size <paramref name="count"/> of double precision floating point
+    ///   random numbers in the interval [<paramref name="minInclusive"/>, <paramref name="maxInclusive"/>].
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="minInclusive">The minimum inclusive.</param>
+    /// <param name="maxInclusive">The maximum inclusive.</param>
+    /// <exception cref="System.ArgumentException">Zero count</exception>
     public double[] NextDoubles(int count, double minInclusive, double maxInclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -283,11 +436,19 @@ namespace Crystal {
       return resultA;
     }
 
+    /// <summary>
+    ///   Random byte.
+    /// </summary>
     public byte NextByte() {
       var result = NextUInt();
       return (byte)(result % 256);
     }
 
+    /// <summary>
+    ///   Array of size <paramref name="count"/> of random bytes.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <exception cref="System.ArgumentException">Zero count</exception>
     public byte[] NextBytes(int count) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -299,11 +460,19 @@ namespace Crystal {
       return resultA;
     }
 
+    /// <summary>
+    ///   Random boolean.
+    /// </summary>
     public bool NextBool() {
       var result = NextUInt();
       return result % 2 == 1;
     }
 
+    /// <summary>
+    ///   Array of size <paramref name="count"/> of random booleans.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <exception cref="System.ArgumentException">Zero count</exception>
     public bool[] NextBools(int count) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -315,31 +484,62 @@ namespace Crystal {
       return resultA;
     }
 
+    /// <summary>
+    ///   Base 2 exponent of the period of this generator, i.e. Period of Generator = 2^PeriodPow2().
+    /// </summary>
     public int PeriodPow2() {
       return 64;
     }
 
+    /// <summary>
+    ///   Set the stream for this generator.
+    /// </summary>
+    /// <param name="sequence">The sequence.</param>
     public void SetStream(int sequence) {
       SetStream((ulong)sequence);
     }
 
+    /// <summary>
+    ///   Set the stream for this generator.
+    /// </summary>
+    /// <param name="sequence">The sequence.</param>
     public void SetStream(ulong sequence) {
       _increment = (sequence << 1) | 1;
     }
 
+    /// <summary>
+    ///   Query the current stream used by this generator.
+    /// </summary>
     public ulong CurrentStream() {
       return _increment >> 1;
     }
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="Pcg"/> class.
+    /// </summary>
     public Pcg() : this(PcgSeed.GuidBasedSeed()) {
     }
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="Pcg"/> class.
+    /// </summary>
+    /// <param name="seed">The seed.</param>
     public Pcg(int seed) : this((ulong)seed) {
     }
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="Pcg"/> class.
+    /// </summary>
+    /// <param name="seed">The seed.</param>
+    /// <param name="sequence">The sequence.</param>
     public Pcg(int seed, int sequence) : this((ulong)seed, (ulong)sequence) {
     }
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="Pcg"/> class.
+    /// </summary>
+    /// <param name="seed">The seed.</param>
+    /// <param name="sequence">The sequence.</param>
     public Pcg(ulong seed, ulong sequence = ShiftedIncrement) {
       Initialize(seed, sequence);
     }
@@ -353,6 +553,8 @@ namespace Crystal {
     }
 
     // This shifted to the left and or'ed with 1ul results in the default increment.
+    // The reason for the bitwise or operation is that there is a restriction in Pcg and 
+    // PcgExtended that the increment be an odd number and 2*n+1 is always odd.
     const ulong ShiftedIncrement = 721347520444481703ul;
     const ulong Multiplier = 6364136223846793005ul;
     const double ToDouble01 = 1.0 / 4294967296.0;

@@ -61,7 +61,7 @@ namespace Crystal.ActorTests {
       _eatOption.Measure = new WeightedMetrics(1.4f);
       var eatAction = new EatAction();
       var hungerConsideration = new HungerConsideration();
-      _eatOption.SetAction(eatAction);
+      (_eatOption as Option).SetAction(eatAction);
       _eatOption.AddConsideration(hungerConsideration);
       _eatOption.AddConsideration(new InverseBladderConsideration());
       coreBehaviour.AddConsideration(_eatOption);
@@ -71,7 +71,7 @@ namespace Crystal.ActorTests {
       _drinkOption.Measure = new WeightedMetrics(3.0f);
       var drinkAction = new DrinkAction();
       var thirstConsideration = new ThirstConsideration();
-      _drinkOption.SetAction(drinkAction);
+      (_drinkOption as Option).SetAction(drinkAction);
       _drinkOption.AddConsideration(thirstConsideration);
       _drinkOption.AddConsideration(new InverseBladderConsideration());
 
@@ -80,7 +80,7 @@ namespace Crystal.ActorTests {
       _toiletOption.Measure = new WeightedMetrics();
       var toiletAction = new ToiletAction();
       var bladderConsideration = new BladderConsideration();
-      _toiletOption.SetAction(toiletAction);
+      (_toiletOption as Option).SetAction(toiletAction);
       _toiletOption.AddConsideration(bladderConsideration);
 
       coreBehaviour.AddConsideration(_eatOption);

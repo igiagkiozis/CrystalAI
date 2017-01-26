@@ -75,6 +75,10 @@ namespace Crystal {
       Initialize();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Option"/> class.
+    /// </summary>
+    /// <param name="other">The other.</param>
     protected Option(Option other) : base(other) {
       _collection = other._collection;
       Weight = other.Weight;
@@ -82,6 +86,12 @@ namespace Crystal {
       Action = other.Action?.Clone();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Option"/> class.
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <param name="collection">The collection.</param>
+    /// <exception cref="Crystal.Option.OptionAlreadyExistsInCollectionException"></exception>
     public Option(string nameId, IOptionCollection collection) : base(collection?.Considerations) {
       _collection = collection;
       NameId = nameId;

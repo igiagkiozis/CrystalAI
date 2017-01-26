@@ -27,6 +27,10 @@ namespace Crystal {
   /// </summary>
   public delegate void CommandAction();
 
+  /// <summary>
+  ///   DeferredCommand is a command whose execution is delegated to a future time and/or executes
+  ///   repeatedly.
+  /// </summary>
   public class DeferredCommand {
     float _executionDelayMax;
     float _executionDelayMin;

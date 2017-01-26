@@ -26,7 +26,7 @@ namespace Crystal {
   ///   The SigmoidEvaluator returns a normalized utility based on a sigmoid function that has
   ///   effectively 1 parameter ( -0.99999f leq k leq 0.99999f ) bounded by the box defined by PtA and PtB with
   ///   PtA.x being strictly less than PtB.x!
-  ///   <see href="https://www.desmos.com/calculator/rf8mrgolws">Parametrised Sigmoid</see> for an interactive
+  ///   <see href="https://www.desmos.com/calculator/u4qmty3ffk">Parametrised Sigmoid</see> for an interactive
   ///   plot.
   /// </summary>
   public class SigmoidEvaluator : EvaluatorBase {
@@ -51,7 +51,7 @@ namespace Crystal {
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Crystal.SigmoidEvaluator"/> class.
-    ///   <see href="https://www.desmos.com/calculator/rf8mrgolws">Parametrised Sigmoid</see> for an interactive
+    ///   <see href="https://www.desmos.com/calculator/u4qmty3ffk">Parametrised Sigmoid</see> for an interactive
     ///   plot.
     /// </summary>
     public SigmoidEvaluator() {
@@ -61,7 +61,7 @@ namespace Crystal {
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Crystal.SigmoidEvaluator"/> class.
-    ///   <see href="https://www.desmos.com/calculator/rf8mrgolws">Parametrised Sigmoid</see> for an interactive
+    ///   <see href="https://www.desmos.com/calculator/u4qmty3ffk">Parametrised Sigmoid</see> for an interactive
     ///   plot.
     /// </summary>
     /// <param name="ptA">Point a.</param>
@@ -73,7 +73,7 @@ namespace Crystal {
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Crystal.SigmoidEvaluator"/> class.
-    ///   <see href="https://www.desmos.com/calculator/rf8mrgolws">Parametrised Sigmoid</see> for an interactive
+    ///   <see href="https://www.desmos.com/calculator/u4qmty3ffk">Parametrised Sigmoid</see> for an interactive
     ///   plot.
     /// </summary>
     /// <param name="ptA">Point a.</param>

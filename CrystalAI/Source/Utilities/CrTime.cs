@@ -37,6 +37,9 @@ namespace Crystal {
       get { return (float)Clock.Elapsed.TotalSeconds; }
     }
 
+    /// <summary>
+    /// Initializes the <see cref="CrTime"/> class.
+    /// </summary>
     static CrTime() {
       Clock = new Stopwatch();
       Clock.Start();

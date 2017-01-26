@@ -39,8 +39,8 @@ namespace Crystal {
       return true;
     }
 
-    public bool Contains(string nameId) {
-      return _behavioursMap.ContainsKey(nameId);
+    public bool Contains(string behaviourId) {
+      return _behavioursMap.ContainsKey(behaviourId);
     }
 
     public void Clear() {
@@ -52,10 +52,15 @@ namespace Crystal {
       Options.ClearAll();
     }
 
-    public IBehaviour Create(string nameId) {
-      return _behavioursMap.ContainsKey(nameId) ? _behavioursMap[nameId].Clone() as IBehaviour : null;
+    public IBehaviour Create(string behaviourId) {
+      return _behavioursMap.ContainsKey(behaviourId) ? _behavioursMap[behaviourId].Clone() as IBehaviour : null;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BehaviourCollection"/> class.
+    /// </summary>
+    /// <param name="optionCollection">The option collection.</param>
+    /// <exception cref="Crystal.BehaviourCollection.OptionCollectionNullException"></exception>
     public BehaviourCollection(IOptionCollection optionCollection) {
       if(optionCollection == null)
         throw new OptionCollectionNullException();

@@ -22,6 +22,9 @@ using System;
 
 namespace Crystal {
 
+  /// <summary>
+  /// Crystal extensions for value types.
+  /// </summary>
   public static class ValueTypeExtensions {
     /// <summary>
     ///   Returns true if val is within the given interval. Note that unqualified intervals are assumed

@@ -22,10 +22,25 @@ using System.Collections.Generic;
 
 namespace Crystal {
 
+  /// <summary>
+  ///   This selector returns all indices in sequence from the given <see cref="T:System.Collections.ICollection"/>
+  ///   of <see cref="T:Crystal.Utility"/>. The assumption here is that every time the collection size is the same.
+  ///   If that is not the case, then the count is reset and starts from 0.
+  /// </summary>
+  /// <seealso cref="Crystal.ISelector"/>
   public sealed class SequentialSelector : ISelector {
     int _count;
     int _curIdx;
 
+    /// <summary>
+    ///   Selects a <see cref="T:Crystal.Utility"/> from the given set and returns its
+    ///   index.
+    /// </summary>
+    /// <param name="elements">The elements.</param>
+    /// <returns>
+    ///   The index of the selected utility. This returns -1 no selection
+    ///   was made or if the count of elements was 0.
+    /// </returns>
     public int Select(ICollection<Utility> elements) {
       var count = elements.Count;
       if(count == 0)
@@ -42,6 +57,14 @@ namespace Crystal {
       return _curIdx;
     }
 
+    /// <summary>
+    ///   Creates a new instance of the implementing class. Note that the semantics here
+    ///   are somewhat vague, however, by convention the "Prototype Pattern" uses a "Clone"
+    ///   function. Note that this may have very different semantics when compared with either
+    ///   shallow or deep cloning. When implementing this remember to include only the defining
+    ///   characteristics of the class and not its state!
+    /// </summary>
+    /// <returns></returns>
     public ISelector Clone() {
       return new SequentialSelector();
     }

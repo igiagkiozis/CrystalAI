@@ -19,7 +19,18 @@
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 namespace Crystal {
 
+  /// <summary>
+  /// Interface to Transitions. A transition is an <see cref="T:Crystal.IAction"/> that transfers control
+  /// to a behaviour or another AI.
+  /// </summary>
+  /// <seealso cref="Crystal.IAction" />
   public interface ITransition : IAction {
+
+    /// <summary>
+    /// Triggers the action selection mechanism of the associated <see cref="T:Crystal.IBehaviour"/> or 
+    /// <see cref="T:Crystal.IUtilityAi"/>.
+    /// </summary>
+    /// <param name="context">The context.</param>
     IAction Select(IContext context);
   }
 

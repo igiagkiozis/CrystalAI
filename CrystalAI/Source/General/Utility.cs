@@ -22,6 +22,12 @@ using System;
 
 namespace Crystal {
 
+  /// <summary>
+  /// This struct is used throughout Crystal AI to communicate the utility (or usefulness)
+  /// of a particular option, consideration or behaviour.
+  /// </summary>
+  /// <seealso cref="System.IEquatable{Crystal.Utility}" />
+  /// <seealso cref="System.IComparable{Crystal.Utility}" />
   [Serializable]
   public struct Utility : IEquatable<Utility>, IComparable<Utility> {
     float _value;
@@ -48,7 +54,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Returns the Value*Weight of this Utiliity.
+    ///   Returns the Value*Weight of this Utility.
     /// </summary>
     public float Combined {
       get { return Value * Weight; }
@@ -83,6 +89,13 @@ namespace Crystal {
       return CrMath.AeqB(Value, other.Value) && CrMath.AeqB(Weight, other.Weight);
     }
 
+    /// <summary>
+    /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+    /// </summary>
+    /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+    /// <returns>
+    ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+    /// </returns>
     public override bool Equals(object obj) {
       if(obj == null)
         return false;
@@ -91,6 +104,12 @@ namespace Crystal {
       return Equals(util);
     }
 
+    /// <summary>
+    /// Returns a hash code for this instance.
+    /// </summary>
+    /// <returns>
+    /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+    /// </returns>
     public override int GetHashCode() {
       return Combined.GetHashCode();
     }

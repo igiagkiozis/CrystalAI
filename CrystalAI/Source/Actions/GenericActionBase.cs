@@ -23,6 +23,12 @@ using System.Diagnostics;
 
 namespace Crystal {
 
+  /// <summary>
+  ///   Base class for generic <see cref="T:Crystal.IAction"/>s. All actions should derive either from
+  ///   this class or its non-generic version <see cref="T:Crystal.ActionBase"/>.
+  /// </summary>
+  /// <typeparam name="TContext">The type of the context.</typeparam>
+  /// <seealso cref="Crystal.IAction"/>
   public class ActionBase<TContext> : IAction where TContext : class, IContext {
     readonly IActionCollection _collection;
     readonly Stopwatch _cooldownTimer = new Stopwatch();
@@ -31,13 +37,12 @@ namespace Crystal {
     ActionStatus _actionStatus = ActionStatus.Idle;
 
     /// <summary>
-    ///   A string alias for ID.
+    ///   A unique identifier for this action.
     /// </summary>
     public string NameId { get; }
 
     /// <summary>
-    ///   The Time that this action has been running for since it has been started. If the task is currently
-    ///   on pause, this will return the difference pauseTime - startTime.
+    ///   The Time that this action has been running for since it has been started in seconds.
     /// </summary>
     public float ElapsedTime {
       get {
@@ -49,18 +54,16 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   The required cooldown Time needed before this action executes again.
+    ///   The required cool-down time, in seconds, needed before this action executes again.
     /// </summary>
-    /// <value>The cooldown.</value>
     public float Cooldown {
       get { return _cooldown; }
       set { _cooldown = value.ClampToLowerBound(0.0f); }
     }
 
     /// <summary>
-    ///   This returns true if the cooldown Time for this action has not elapsed.
+    ///   This returns true if the cool-down time for this action has not yet elapsed.
     /// </summary>
-    /// <value><c>true</c> if in cooldown; otherwise, <c>false</c>.</value>
     public bool InCooldown {
       get {
         if(ActionStatus == ActionStatus.Running ||
@@ -74,13 +77,14 @@ namespace Crystal {
     /// <summary>
     ///   Gets the action status.
     /// </summary>
-    /// <value>The action status.</value>
     public ActionStatus ActionStatus {
       get { return _actionStatus; }
       protected set { _actionStatus = value; }
     }
 
-    /// <summary>Executes the action.</summary>
+    /// <summary>
+    ///   Executes the specified context.
+    /// </summary>
     /// <param name="context">The context.</param>
     public void Execute(TContext context) {
       if(CanExecute() == false)
@@ -93,22 +97,38 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    ///   Creates a new instance of the implementing class. Note that the semantics here
+    ///   are somewhat vague, however, by convention the "Prototype Pattern" uses a "Clone"
+    ///   function. Note that this may have very different semantics when compared with either
+    ///   shallow or deep cloning. When implementing this remember to include only the defining
+    ///   characteristics of the class and not its state!
+    /// </summary>
+    /// <returns></returns>
     public virtual IAction Clone() {
       return new ActionBase<TContext>(this);
     }
 
+    /// <summary>
+    ///   Ends the action and sets its status to <see cref="F:Crystal.ActionStatus.Success"/>.
+    /// </summary>
+    /// <param name="context">The context.</param>
     protected void EndInSuccess(IContext context) {
       EndInSuccess((TContext)context);
     }
 
+    /// <summary>
+    ///   Ends the action and sets its status to <see cref="F:Crystal.ActionStatus.Failure"/>.
+    /// </summary>
+    /// <param name="context">The context.</param>
     protected void EndInFailure(IContext context) {
       EndInFailure((TContext)context);
     }
 
     /// <summary>
-    ///   End the action and sets its state to ActionState.Success.
+    ///   Ends the action and sets its status to <see cref="F:Crystal.ActionStatus.Success"/>.
     /// </summary>
-    /// <param name="context">Context.</param>
+    /// <param name="context">The context.</param>
     protected void EndInSuccess(TContext context) {
       if(ActionStatus != ActionStatus.Running)
         return;
@@ -118,9 +138,9 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   End the action and sets its state to ActionState.Failure.
+    ///   Ends the action and sets its status to <see cref="F:Crystal.ActionStatus.Failure"/>.
     /// </summary>
-    /// <param name="context">Context.</param>
+    /// <param name="context">The context.</param>
     protected void EndInFailure(TContext context) {
       if(ActionStatus != ActionStatus.Running)
         return;
@@ -130,7 +150,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Executed once when the action starts.
+    ///   Executes once when the action starts.
     /// </summary>
     /// <param name="context">Context.</param>
     protected virtual void OnExecute(TContext context) {
@@ -138,7 +158,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Executed on every action update, until <see cref="ActionBase.EndInSuccess"/> or
+    ///   Executes on every action update, until <see cref="ActionBase.EndInSuccess"/> or
     ///   <see cref="ActionBase.EndInFailure"/> is called.
     /// </summary>
     /// <param name="context">Context.</param>
@@ -153,9 +173,16 @@ namespace Crystal {
     protected virtual void OnStop(TContext context) {
     }
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="ActionBase{TContext}"/> class.
+    /// </summary>
     public ActionBase() {
     }
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="ActionBase{TContext}"/> class.
+    /// </summary>
+    /// <param name="other">The other.</param>
     protected ActionBase(ActionBase<TContext> other) {
       NameId = other.NameId;
       _collection = other._collection;
@@ -163,6 +190,13 @@ namespace Crystal {
       _cooldownTimer = new Stopwatch();
     }
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="ActionBase{TContext}"/> class.
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <param name="collection">The collection.</param>
+    /// <exception cref="Crystal.ActionBase`1.NameIdEmptyOrNullException"></exception>
+    /// <exception cref="Crystal.ActionBase`1.ActionCollectionNullException"></exception>
     public ActionBase(string nameId, IActionCollection collection) {
       if(string.IsNullOrEmpty(nameId))
         throw new NameIdEmptyOrNullException();

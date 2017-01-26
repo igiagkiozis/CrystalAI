@@ -141,6 +141,10 @@ namespace Crystal {
       Initialize();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CompositeConsideration"/> class.
+    /// </summary>
+    /// <param name="other">The other.</param>
     protected CompositeConsideration(CompositeConsideration other) {
       CreateLists();
       NameId = other.NameId;
@@ -156,6 +160,11 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CompositeConsideration"/> class.
+    /// </summary>
+    /// <param name="collection">The collection.</param>
+    /// <exception cref="Crystal.CompositeConsideration.ConsiderationCollectionNullException"></exception>
     protected CompositeConsideration(IConsiderationCollection collection) {
       if(collection == null)
         throw new ConsiderationCollectionNullException();
@@ -164,6 +173,14 @@ namespace Crystal {
       Initialize();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CompositeConsideration"/> class.
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <param name="collection">The collection.</param>
+    /// <exception cref="Crystal.CompositeConsideration.NameIdIsNullOrEmptyException"></exception>
+    /// <exception cref="Crystal.CompositeConsideration.ConsiderationCollectionNullException"></exception>
+    /// <exception cref="Crystal.CompositeConsideration.NameIdAlreadyExistsInCollectionException"></exception>
     public CompositeConsideration(string nameId, IConsiderationCollection collection) {
       if(string.IsNullOrEmpty(nameId))
         throw new NameIdIsNullOrEmptyException();

@@ -44,10 +44,18 @@ namespace Crystal {
       get { return _deps; }
     }
 
+    /// <summary>
+    /// Updates the eps estimate using the given centre.
+    /// </summary>
+    /// <param name="centre">The centre.</param>
     public static void UpdateEps(float centre = 1.0f) {
       EstimateEps(centre);
     }
 
+    /// <summary>
+    /// Updates the double precision eps estimate using the given centre.
+    /// </summary>
+    /// <param name="centre">The centre.</param>
     public static void UpdateDeps(double centre = 1.0) {
       EstimateDeps(centre);
     }
@@ -186,6 +194,9 @@ namespace Crystal {
       return (number & 0x1) == 0x1;
     }
 
+    /// <summary>
+    /// Initializes the <see cref="CrMath"/> class.
+    /// </summary>
     static CrMath() {
       UpdateEps();
       UpdateDeps();

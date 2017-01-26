@@ -27,46 +27,46 @@ namespace Crystal.GeneralTests {
   public class IntervalTests {
     static readonly object[] ContainsTestCases = {
       // Closed interval: [a, b]
-      new object[] {Interval.Range(1, 10), 1, true},
-      new object[] {Interval.Range(1, 10), 10, true},
-      new object[] {Interval.Range(1, 10), 11, false},
-      new object[] {Interval.Range(1, 10), 0, false},
+      new object[] {Interval.Create(1, 10), 1, true},
+      new object[] {Interval.Create(1, 10), 10, true},
+      new object[] {Interval.Create(1, 10), 11, false},
+      new object[] {Interval.Create(1, 10), 0, false},
 
       // Empty interval: (a, a], [a, a), (a, a)
-      new object[] {Interval.Range(1, 1, IntervalType.Open), 1, false},
-      new object[] {Interval.Range(1, 1, IntervalType.Open, IntervalType.Open), 1, false},
+      new object[] {Interval.Create(1, 1, IntervalType.Open), 1, false},
+      new object[] {Interval.Create(1, 1, IntervalType.Open, IntervalType.Open), 1, false},
 
       // Degernate interval: [a, a] = {a}
-      new object[] {Interval.Range(1, 1), 1, true},
+      new object[] {Interval.Create(1, 1), 1, true},
 
       // Lower bounded interval: (a, +∞), [a, +∞), (a, +∞], [a, +∞]
-      new object[] {Interval.Range(-100d, double.PositiveInfinity), double.PositiveInfinity, true}, // []
-      new object[] {Interval.Range(-100d, double.PositiveInfinity), 1d, true}, // []
-      new object[] {Interval.Range(-100d, double.PositiveInfinity), -100d, true}, // []
-      new object[] {Interval.Range(-100d, double.PositiveInfinity), -101d, false}, // []
-      new object[] {Interval.Range(-100d, double.PositiveInfinity, IntervalType.Open), 1d, true}, // (]
-      new object[] {Interval.Range(-100d, double.PositiveInfinity, IntervalType.Open), -100d, false}, // (]
+      new object[] {Interval.Create(-100d, double.PositiveInfinity), double.PositiveInfinity, true}, // []
+      new object[] {Interval.Create(-100d, double.PositiveInfinity), 1d, true}, // []
+      new object[] {Interval.Create(-100d, double.PositiveInfinity), -100d, true}, // []
+      new object[] {Interval.Create(-100d, double.PositiveInfinity), -101d, false}, // []
+      new object[] {Interval.Create(-100d, double.PositiveInfinity, IntervalType.Open), 1d, true}, // (]
+      new object[] {Interval.Create(-100d, double.PositiveInfinity, IntervalType.Open), -100d, false}, // (]
       new object[] {
-        Interval.Range(-100d, double.PositiveInfinity, IntervalType.Closed, IntervalType.Open),
+        Interval.Create(-100d, double.PositiveInfinity, IntervalType.Closed, IntervalType.Open),
         double.PositiveInfinity,
         false
       }, // [)
-      new object[] {Interval.Range(-100d, double.PositiveInfinity, IntervalType.Closed, IntervalType.Open), 1d, true},
+      new object[] {Interval.Create(-100d, double.PositiveInfinity, IntervalType.Closed, IntervalType.Open), 1d, true},
       // [)
-      new object[] {Interval.Range(-100d, double.PositiveInfinity, IntervalType.Open, IntervalType.Open), 1d, true},
+      new object[] {Interval.Create(-100d, double.PositiveInfinity, IntervalType.Open, IntervalType.Open), 1d, true},
       // ()
 
       // Upper bounded interval: (-∞, b), [-∞, b), (-∞, b], [-∞, b]
-      new object[] {Interval.Range(double.NegativeInfinity, 0), -1d, true},
-      new object[] {Interval.Range(double.NegativeInfinity, 0), double.NegativeInfinity, true},
-      new object[] {Interval.Range(double.NegativeInfinity, 0, IntervalType.Open), double.NegativeInfinity, false},
+      new object[] {Interval.Create(double.NegativeInfinity, 0), -1d, true},
+      new object[] {Interval.Create(double.NegativeInfinity, 0), double.NegativeInfinity, true},
+      new object[] {Interval.Create(double.NegativeInfinity, 0, IntervalType.Open), double.NegativeInfinity, false},
 
       // Unbounded interval: (-∞, +∞), [-∞, +∞] etc
-      new object[] {Interval.Range(double.NegativeInfinity, double.PositiveInfinity), 1d, true},
-      new object[] {Interval.Range(double.NegativeInfinity, double.PositiveInfinity), double.NegativeInfinity, true},
-      new object[] {Interval.Range(double.NegativeInfinity, double.PositiveInfinity), double.PositiveInfinity, true},
+      new object[] {Interval.Create(double.NegativeInfinity, double.PositiveInfinity), 1d, true},
+      new object[] {Interval.Create(double.NegativeInfinity, double.PositiveInfinity), double.NegativeInfinity, true},
+      new object[] {Interval.Create(double.NegativeInfinity, double.PositiveInfinity), double.PositiveInfinity, true},
       new object[] {
-        Interval.Range(
+        Interval.Create(
                        double.NegativeInfinity,
                        double.PositiveInfinity,
                        IntervalType.Open,
@@ -75,7 +75,7 @@ namespace Crystal.GeneralTests {
         true
       },
       new object[] {
-        Interval.Range(
+        Interval.Create(
                        double.NegativeInfinity,
                        double.PositiveInfinity,
                        IntervalType.Open,
@@ -84,7 +84,7 @@ namespace Crystal.GeneralTests {
         false
       },
       new object[] {
-        Interval.Range(
+        Interval.Create(
                        double.NegativeInfinity,
                        double.PositiveInfinity,
                        IntervalType.Open,
@@ -94,9 +94,9 @@ namespace Crystal.GeneralTests {
       },
 
       // Implicit swapping of a and b, i.e., when b < a
-      new object[] {Interval.Range(10, 1), 1, true},
-      new object[] {Interval.Range(10, 1), 0, false},
-      new object[] {Interval.Range(10, 1), 11, false}
+      new object[] {Interval.Create(10, 1), 1, true},
+      new object[] {Interval.Create(10, 1), 0, false},
+      new object[] {Interval.Create(10, 1), 11, false}
     };
 
     static readonly object[] IntIntervalLengthCases = {
@@ -127,7 +127,7 @@ namespace Crystal.GeneralTests {
      TestCase(-42.423f, float.PositiveInfinity), TestCase(float.NegativeInfinity, 34.4f), TestCase(1.0f, 1.0f),
      TestCase(-1.0f, -1.0f)]
     public void BoundsTests(float lowerBound, float upperBound) {
-      var interval = Interval.Range(lowerBound, upperBound);
+      var interval = Interval.Create(lowerBound, upperBound);
       float cLowerBound = Math.Min(lowerBound, upperBound);
       float cUpperBound = Math.Max(lowerBound, upperBound);
       Assert.That(interval.LowerBound, Is.EqualTo(cLowerBound));

@@ -51,7 +51,7 @@ namespace Crystal.OptionTests {
       IOption option = new Option();
       option.Measure = new MultiplicativePseudoMeasure();
 
-      option.SetAction(new MockAction());
+      (option as Option).SetAction(new MockAction());
       var cd1 = new OptionConsideration1();
       cd1.NameId = "cd1";
       var cd2 = new OptionConsideration2();

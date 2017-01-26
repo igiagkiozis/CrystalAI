@@ -23,6 +23,11 @@ using System.Linq;
 
 namespace Crystal {
 
+  /// <summary>
+  /// Calculates the Chebyshev measure <see cref="https://en.wikipedia.org/wiki/Chebyshev_distance"/> for all 
+  /// elements whose <see cref="P:Crystal.Utility.Combined"/> is above the set lower bound. 
+  /// </summary>
+  /// <seealso cref="Crystal.IMeasure" />
   public sealed class ConstrainedChebyshev : IMeasure {
     float _lowerBound;
     Chebyshev _measure;
@@ -35,6 +40,11 @@ namespace Crystal {
       set { _lowerBound = value.Clamp01(); }
     }
 
+    /// <summary>
+    /// Calculate the constrained Chebyshev measure for the given set of elements.
+    /// </summary>
+    /// <param name="elements"></param>
+    /// <returns></returns>
     public float Calculate(ICollection<Utility> elements) {
       if(elements.Any(el => el.Combined < LowerBound))
         return 0.0f;
@@ -42,14 +52,29 @@ namespace Crystal {
       return _measure.Calculate(elements);
     }
 
+    /// <summary>
+    /// Creates a new instance of the implementing class. Note that the semantics here
+    /// are somewhat vague, however, by convention the "Prototype Pattern" uses a "Clone"
+    /// function. Note that this may have very different semantics when compared with either
+    /// shallow or deep cloning. When implementing this remember to include only the defining
+    /// characteristics of the class and not its state!
+    /// </summary>
+    /// <returns></returns>
     public IMeasure Clone() {
       return new ConstrainedChebyshev(LowerBound);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConstrainedChebyshev"/> class.
+    /// </summary>
     public ConstrainedChebyshev() {
       _measure = new Chebyshev();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConstrainedChebyshev"/> class.
+    /// </summary>
+    /// <param name="lowerBound">The lower bound.</param>
     public ConstrainedChebyshev(float lowerBound) {
       LowerBound = lowerBound;
       _measure = new Chebyshev();

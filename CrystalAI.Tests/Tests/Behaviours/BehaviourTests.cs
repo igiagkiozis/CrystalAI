@@ -152,7 +152,7 @@ namespace Crystal.BehaviourTests {
     }
 
     void CreateConsiderations() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       _c1 = new OptionConsideration1("c1", _aiConstructor.Considerations);
       _c2 = new OptionConsideration3("c2", _aiConstructor.Considerations);
       _c3 = new OptionConsideration5("c3", _aiConstructor.Considerations);

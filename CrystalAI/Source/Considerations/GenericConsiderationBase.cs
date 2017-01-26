@@ -79,9 +79,16 @@ namespace Crystal {
 
     public abstract IConsideration Clone();
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConsiderationBase{TContext}"/> class.
+    /// </summary>
     protected ConsiderationBase() {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConsiderationBase{TContext}"/> class.
+    /// </summary>
+    /// <param name="other">The other.</param>
     protected ConsiderationBase(ConsiderationBase<TContext> other) {
       _collection = other._collection;
       NameId = other.NameId;
@@ -90,6 +97,13 @@ namespace Crystal {
       Weight = other.Weight;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConsiderationBase{TContext}"/> class.
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <param name="collection">The collection.</param>
+    /// <exception cref="Crystal.ConsiderationBase`1.ConsiderationCollectionNullException"></exception>
+    /// <exception cref="Crystal.ConsiderationBase`1.ConsiderationAlreadyExistsInCollectionException"></exception>
     protected ConsiderationBase(string nameId, IConsiderationCollection collection) {
       if(collection == null)
         throw new ConsiderationCollectionNullException();

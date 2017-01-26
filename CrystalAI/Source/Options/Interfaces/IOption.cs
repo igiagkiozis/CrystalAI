@@ -28,7 +28,12 @@ namespace Crystal {
     /// </summary>
     IAction Action { get; }
 
-    bool SetAction(IAction action);
+    /// <summary>
+    /// Sets the action to be executed when this option is selected to the action 
+    /// associated with actionId. 
+    /// </summary>
+    /// <param name="actionId">The action identifier.</param>
+    /// <returns>Returns true if the action was successfully set, false otherwise.</returns>
     bool SetAction(string actionId);
   }
 

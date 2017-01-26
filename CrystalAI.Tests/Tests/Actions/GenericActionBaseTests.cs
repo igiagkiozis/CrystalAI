@@ -44,7 +44,7 @@ namespace Crystal.ActionTests {
 
     [Test]
     public void NameConstructorTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       var a = new ActionBase<MockContext>("name", _aiConstructor.Actions);
       Assert.IsNotNull(a);
       Assert.That(_aiConstructor.Actions.Contains("name"));
@@ -52,7 +52,7 @@ namespace Crystal.ActionTests {
 
     [Test]
     public void NameOrCollectionNullThrowsTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
 
       Assert.Throws<ActionBase<MockContext>.NameIdEmptyOrNullException>
         (() => new ActionBase<MockContext>(null, _aiConstructor.Actions));
@@ -66,7 +66,7 @@ namespace Crystal.ActionTests {
 
     [Test]
     public void CloneTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       var a = new ActionBase<MockContext>("name", _aiConstructor.Actions);
       a.Execute(_context);
       var ac = a.Clone();

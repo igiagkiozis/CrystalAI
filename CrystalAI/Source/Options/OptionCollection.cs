@@ -23,11 +23,33 @@ using System.Collections.Generic;
 
 namespace Crystal {
 
+  /// <summary>
+  /// A collection of AI <see cref="T:Crystal.IOption"/>s.
+  /// </summary>
+  /// <seealso cref="Crystal.IOptionCollection" />
   public class OptionCollection : IOptionCollection {
     Dictionary<string, IOption> _optionsMap;
+
+    /// <summary>
+    /// The <see cref="T:Crystal.IActionCollection" /> used to construct this
+    /// <see cref="T:Crystal.IOptionCollection." />.
+    /// </summary>
     public IActionCollection Actions { get; private set; }
+
+    /// <summary>
+    /// The <see cref="T:Crystal.IConsiderationCollection" /> used to construct this
+    /// <see cref="T:Crystal.IOptionCollection." />.
+    /// </summary>
     public IConsiderationCollection Considerations { get; private set; }
 
+    /// <summary>
+    /// Adds the specified option to this collection.
+    /// </summary>
+    /// <param name="option">The option.</param>
+    /// <returns>
+    /// <c>true</c> if the <see cref="T:Crystal.IOption" /> was successfully added to this collection;
+    /// otherwise, <c>false</c>.
+    /// </returns>
     public bool Add(IOption option) {
       if(option == null)
         return false;
@@ -39,25 +61,55 @@ namespace Crystal {
       _optionsMap.Add(option.NameId, option);
       return true;
     }
-
-    public bool Contains(string nameId) {
-      return _optionsMap.ContainsKey(nameId);
+    
+    /// <summary>
+    /// Determines whether this collection contains the option associated with the
+    /// specified identifier.
+    /// </summary>
+    /// <param name="optionId">The option identifier.</param>
+    /// <returns>
+    /// <c>true</c> if this collection contains an option with the specified identifier;
+    /// otherwise, <c>false</c>.
+    /// </returns>
+    public bool Contains(string optionId) {
+      return _optionsMap.ContainsKey(optionId);
     }
 
+    /// <summary>
+    /// Clears all <see cref="T:Crystal.IOption" />s from this collection.
+    /// </summary>
     public void Clear() {
       _optionsMap.Clear();
     }
 
+    /// <summary>
+    /// Clears all <see cref="T:Crystal.IOption" />s from this collection. Additionally all
+    /// considerations are cleared from <see cref="P:Crystal.IOptionCollection.Considerations" /> and
+    /// all actions are cleared from <see cref="P:Crystal.IOptionCollection.Actions" />.
+    /// </summary>
     public void ClearAll() {
       _optionsMap.Clear();
       Actions.Clear();
       Considerations.Clear();
     }
 
-    public IOption Create(string nameId) {
-      return _optionsMap.ContainsKey(nameId) ? _optionsMap[nameId].Clone() as IOption : null;
+    /// <summary>
+    /// Creates an instance of the option that is associated with the given identifier. If such an option
+    /// does not exist <c>null</c> is returned.f
+    /// </summary>
+    /// <param name="optionId">The option identifier.</param>
+    /// <returns></returns>
+    public IOption Create(string optionId) {
+      return _optionsMap.ContainsKey(optionId) ? _optionsMap[optionId].Clone() as IOption : null;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OptionCollection"/> class.
+    /// </summary>
+    /// <param name="actionCollection">The action collection.</param>
+    /// <param name="considerationCollection">The consideration collection.</param>
+    /// <exception cref="Crystal.OptionCollection.ActionCollectionNullException"></exception>
+    /// <exception cref="Crystal.OptionCollection.ConsiderationCollectionNullException"></exception>
     public OptionCollection(IActionCollection actionCollection, IConsiderationCollection considerationCollection) {
       if(actionCollection == null)
         throw new ActionCollectionNullException();

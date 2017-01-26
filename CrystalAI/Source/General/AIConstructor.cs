@@ -22,50 +22,150 @@ using System;
 
 namespace Crystal {
 
+  /// <summary>
+  ///   A convenience class used to streamline the process of creating a utility AI.
+  /// </summary>
   public abstract class AiConstructor {
-    public IAiCollection Collection { get; protected set; }
+    /// <summary>
+    ///   Convenience variable for <see cref="T:Crystal.IAction"/>s. This should only be used
+    ///   as a temporary variable and nothing more.
+    /// </summary>
+    protected IAction A;
+    /// <summary>
+    ///   Convenience variable for <see cref="T:Crystal.IConsideration"/>s. This should only be used
+    ///   as a temporary variable and nothing more.
+    /// </summary>
+    protected IConsideration C;
+    /// <summary>
+    ///   Convenience variable for <see cref="T:Crystal.ICompositeConsideration"/>s. This should only be used
+    ///   as a temporary variable and nothing more.
+    /// </summary>
+    protected ICompositeConsideration Cc;
+    /// <summary>
+    ///   Convenience variable for <see cref="T:Crystal.IOption"/>s. This should only be used
+    ///   as a temporary variable and nothing more.
+    /// </summary>
+    protected IOption O;
+    /// <summary>
+    ///   Convenience variable for <see cref="T:Crystal.IBehaviour"/>s. This should only be used
+    ///   as a temporary variable and nothing more.
+    /// </summary>
+    protected IBehaviour B;
+    /// <summary>
+    ///   Convenience variable for <see cref="T:Crystal.IUtilityAI"/>s. This should only be used
+    ///   as a temporary variable and nothing more.
+    /// </summary>
+    protected IUtilityAi Ai;
 
+    /// <summary>
+    ///   A collection that contains all available <see cref="T:Crystal.IAction"/>s to this
+    ///   instance.
+    /// </summary>
     public IActionCollection Actions {
-      get { return Collection.Actions; }
+      get { return AIs.Actions; }
     }
 
+    /// <summary>
+    ///   A collection that contains all available <see cref="T:Crystal.IConsideration"/>s to
+    ///   this instance.
+    /// </summary>
     public IConsiderationCollection Considerations {
-      get { return Collection.Considerations; }
+      get { return AIs.Considerations; }
     }
 
+    /// <summary>
+    ///   A collection that contains all available <see cref="T:Crystal.IOption"/>s to
+    ///   this instance.
+    /// </summary>
     public IOptionCollection Options {
-      get { return Collection.Options; }
+      get { return AIs.Options; }
     }
 
+    /// <summary>
+    ///   A collection that contains all available <see cref="T:Crystal.IBehaviour"/>s to
+    ///   this instance.
+    /// </summary>
     public IBehaviourCollection Behaviours {
-      get { return Collection.Behaviours; }
+      get { return AIs.Behaviours; }
     }
 
-    public IAiCollection AIs {
-      get { return Collection; }
+    /// <summary>
+    ///   A collection that contains all available <see cref="T:Crystal.IUtilityAi"/>s to
+    ///   this instance.
+    /// </summary>
+    public IAiCollection AIs { get; protected set; }
+
+
+    /// <summary>
+    ///   Creates the AI associated with the given identifier; if such an AI does not
+    ///   exist this returns <c>null</c>.
+    /// </summary>
+    /// <param name="aiId">The AI identifier.</param>
+    public IUtilityAi Create(string aiId) {
+      return AIs.Create(aiId);
     }
 
-
-    public IUtilityAi Create(string name) {
-      return AIs.Create(name);
-    }
-
+    /// <summary>
+    ///   Determines whether the specified expression is okay.
+    /// </summary>
+    /// <param name="expression">if set to <c>true</c> [expression].</param>
+    /// <exception cref="AiConfigurationxception"></exception>
     protected void IsOkay(bool expression) {
       if(expression == false)
         throw new AiConfigurationxception();
     }
 
+    /// <summary>
+    ///   Instantiate all <see cref="T:Crystal.IAction"/>s used in your AI here.
+    ///   Use <see cref="P:Crystal.AiConstructor.Actions"/> to register the newly
+    ///   instantiated <see cref="T:Crystal.IAction"/>s to the <see cref="T:Crystal.IActionCollection"/>
+    ///   of this <see cref="T:Crystal.AiConsturctor"/>.
+    /// </summary>
     protected abstract void DefineActions();
+
+    /// <summary>
+    ///   Instantiate all <see cref="T:Crystal.IConsideration"/>s and
+    ///   <see cref="T:Crystal.ICompositeConsideration"/>s used in your AI here.
+    ///   Use <see cref="P:Crystal.AiConstructor.Considerations"/> to register the newly
+    ///   instantiated <see cref="T:Crystal.IConsideration"/>s (or <see cref="T:Crystal.ICompositeConsideration"/>s)
+    ///   to the <see cref="T:Crystal.IConsiderationCollection"/> of this <see cref="T:Crystal.AiConsturctor"/>.
+    /// </summary>
     protected abstract void DefineConsiderations();
+
+    /// <summary>
+    ///   Instantiate all <see cref="T:Crystal.IOption"/>s used in your AI here.
+    ///   Use <see cref="P:Crystal.AiConstructor.Options"/> to register the newly
+    ///   instantiated <see cref="T:Crystal.IOption"/>s to the <see cref="T:Crystal.IOptionCollection"/>
+    ///   of this <see cref="T:Crystal.AiConsturctor"/>.
+    /// </summary>
     protected abstract void DefineOptions();
+
+    /// <summary>
+    ///   Instantiate all <see cref="T:Crystal.IBehaviour"/>s used in your AI here.
+    ///   Use <see cref="P:Crystal.AiConstructor.Behaviours"/> to register the newly
+    ///   instantiated <see cref="T:Crystal.IBehaviour"/>s to the <see cref="T:Crystal.IBehaviourCollection"/>
+    ///   of this <see cref="T:Crystal.AiConsturctor"/>.
+    /// </summary>
     protected abstract void DefineBehaviours();
+
+    /// <summary>
+    ///   Instantiate all <see cref="T:Crystal.IUtilityAI"/>s here.
+    ///   Use <see cref="P:Crystal.AiConstructor.AIs"/> to register the newly
+    ///   instantiated <see cref="T:Crystal.IUtilityAI"/>s to the <see cref="T:Crystal.IAiCollection"/>
+    ///   of this <see cref="T:Crystal.AiConsturctor"/>.
+    /// </summary>
     protected abstract void ConfigureAi();
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="AiConstructor"/> class.
+    /// </summary>
+    /// <param name="collection">The collection.</param>
+    /// <exception cref="Crystal.AiConstructor.AiCollectionNullException"></exception>
     protected AiConstructor(IAiCollection collection) {
       if(collection == null)
         throw new AiCollectionNullException();
 
-      Collection = collection;
+      AIs = collection;
       Initialize();
     }
 
@@ -76,13 +176,6 @@ namespace Crystal {
       DefineBehaviours();
       ConfigureAi();
     }
-
-    protected IAction A;
-    protected IConsideration C;
-    protected ICompositeConsideration Cc;
-    protected IOption O;
-    protected IBehaviour B;
-    protected IUtilityAi Ai;
 
     internal class AiCollectionNullException : Exception {
     }

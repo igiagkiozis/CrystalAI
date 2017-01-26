@@ -46,7 +46,7 @@ namespace Crystal.ActionTests {
 
     [Test]
     public void CloneTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       var b = new Behaviour("targetBehaviour", _aiConstructor.Behaviours);
       var t = new BehaviourTransition("b", "targetBehaviour", _aiConstructor.Behaviours);
       Assert.IsNotNull(t);
@@ -64,23 +64,23 @@ namespace Crystal.ActionTests {
 
     [Test]
     public void ConstructorThrowsNameIdEmptyOrNullTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       Assert.Throws<ActionBase.NameIdEmptyOrNullException>(
                                                            () =>
                                                              new BehaviourTransition("", "a", _aiConstructor.Behaviours));
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       Assert.Throws<ActionBase.NameIdEmptyOrNullException>(
                                                            () =>
                                                              new BehaviourTransition(null,
                                                                                      "a",
                                                                                      _aiConstructor.Behaviours));
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       Assert.Throws<ActionBase.NameIdEmptyOrNullException>(
                                                            () =>
                                                              new BehaviourTransition("some",
                                                                                      "",
                                                                                      _aiConstructor.Behaviours));
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       Assert.Throws<ActionBase.NameIdEmptyOrNullException>(
                                                            () =>
                                                              new BehaviourTransition("some",
@@ -90,13 +90,13 @@ namespace Crystal.ActionTests {
 
     [Test]
     public void ConstructorThrowsActionCollectionNullTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       Assert.Throws<ActionBase.ActionCollectionNullException>(() => new BehaviourTransition("la", "lida", null));
     }
 
     [Test]
     public void TargetAiDoesNotExistExceptionTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       var t = new BehaviourTransition("transition", "behaviour5", _aiConstructor.Behaviours);
       Assert.Throws<BehaviourTransition.BehaviourDoesNotExistException>(() => {
         var s = t.Behaviour;

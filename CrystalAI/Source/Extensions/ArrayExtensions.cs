@@ -26,14 +26,14 @@ namespace Crystal {
   ///   Array extensions.
   /// </summary>
   public static class ArrayExtensions {
-    /// <summary>Gets the index of a value in an array.</summary>
-    /// <typeparam name="T">The type of items in the array</typeparam>
-    /// <param name="array">The array.</param>
+    /// <summary>Gets the index of a value in an @this.</summary>
+    /// <typeparam name="T">The type of items in the @this</typeparam>
+    /// <param name="this">The @this.</param>
     /// <param name="value">The value to look for.</param>
     /// <returns>The index of the value, or -1 if not found</returns>
-    public static int IndexOf<T>(this T[] array, T value) where T : IEquatable<T> {
-      for(var i = 0; i < array.Length; i++)
-        if(array[i].Equals(value))
+    public static int IndexOf<T>(this T[] @this, T value) where T : IEquatable<T> {
+      for(var i = 0; i < @this.Length; i++)
+        if(@this[i].Equals(value))
           return i;
 
       return -1;

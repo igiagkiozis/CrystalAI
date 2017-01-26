@@ -19,11 +19,43 @@
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 namespace Crystal {
 
+  /// <summary>
+  ///   Interface for a collection that contains <see cref="T:Crystal.IConsideration"/>s
+  ///   and <see cref="T:Crystal.ICompositeConsideration"/>s.
+  /// </summary>
   public interface IConsiderationCollection {
+    /// <summary>
+    ///   Adds the specified consideration.
+    /// </summary>
+    /// <param name="consideration">The consideration.</param>
+    /// <returns>
+    ///   <c>true</c> if the consideration was successfully added to the collection, <c>false</c> otherwise.
+    /// </returns>
     bool Add(IConsideration consideration);
+
+    /// <summary>
+    ///   Determines whether [contains] [the specified name identifier].
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <c>true</c>
+    /// if a consideration with the specified identifier exists within the collection;
+    /// otherwise,
+    /// <c>false</c>
+    /// .
+    /// </returns>
     bool Contains(string nameId);
+
+    /// <summary>
+    ///   Removes all considerations from this collection.
+    /// </summary>
     void Clear();
-    IConsideration Create(string nameId);
+
+    /// <summary>
+    ///   Creates a consideration that has the specified identifier, if no such consideration
+    ///   exists within this collection <c>null</c> is returned.
+    /// </summary>
+    /// <param name="considerationId">The consideration identifier.</param>
+    IConsideration Create(string considerationId);
   }
 
 }

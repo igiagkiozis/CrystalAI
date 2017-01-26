@@ -22,19 +22,40 @@ using System.Collections.Generic;
 
 namespace Crystal {
 
+  /// <summary>
+  ///   The CompositeEvaluator class allows the composition, or combination, of one or
+  ///   more <see cref="T:Crystal.IEvaluator"/>s whose domain of definition does not overlap!
+  ///   Note that addition of an <see cref="T:Crystal.IEvaluator"/> that has a domain of definition
+  ///   that is covered (even in part) by another <see cref="T:Crystal.IEvaluator"/> already
+  ///   added to the CompositeEvaluator, will not be added and will have no effect in the
+  ///   evaluation process.
+  /// </summary>
+  /// <seealso cref="Crystal.EvaluatorBase"/>
   public class CompositeEvaluator : EvaluatorBase {
     /// <summary>
-    ///   Returns the utility for the specified value x.
+    ///   Returns the value for the specified x. Note that if the given x value does not fall
+    ///   within the domain of definition of any of the <see cref="T:Crystal.IEvaluator"/>s of this
+    ///   <see cref="T:Crystal.CompositeEvaluator"/> then one of two things will happen depending
+    ///   on the value x itself.
+    ///   1. If x is within the extended interval defined by the evaluator's lower and upper bounds,
+    ///   then the return value will be linearly interpolated using the values of the <see cref="T:Crystal.IEvaluator"/>
+    ///   whose domain is to the "left" (i.e. all values of the domain are smaller than x) of the
+    ///   value x and the <see cref="T:Crystal.IEvaluator"/> to the "right" of x.
+    ///   2. If x is outside the extended interval defined by the evaluator's lower and upper bounds,
+    ///   then the Evaluate method will derive its output from the <see cref="T:Crystal.IEvaluator"/>
+    ///   whose lower or upper bound is closest to the value x.
     /// </summary>
-    /// <param name="x">The x value.</param>
     public override float Evaluate(float x) {
       var ev = FindEvaluator(x);
-      // if ev is null then there is a "hole" in the XInterval.
+      // if ev is null then there is a "hole" in the XInterval, in which case linear 
+      // interpolation is used.
       return ev != null ? ev.Evaluate(x) : LinearHoleInterpolator(x);
     }
 
     /// <summary>
-    ///   AddConsideration the specified Evaluator.
+    ///   Adds the specified <see cref="T:Crystal.IEvaluator"/> to this <see cref="T:Crystal.CompositeEvaluator"/>
+    ///   if the new evaluator has a domain that does not overlap the domains of definition of the
+    ///   <see cref="T:Crystal.IEvaluator"/> already added to this <see cref="T:Crystal.CompositeEvaluator"/>.
     /// </summary>
     /// <param name="ev">Ev.</param>
     public void Add(IEvaluator ev) {
@@ -45,6 +66,9 @@ namespace Crystal {
       UpdateXyPoints();
     }
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="CompositeEvaluator"/> class.
+    /// </summary>
     public CompositeEvaluator() {
       Evaluators = new List<IEvaluator>();
     }
@@ -93,8 +117,6 @@ namespace Crystal {
     ///   the value x is within the XInterval of the composite evaluator but there is
     ///   no evaluator within the interval that contains x.
     /// </summary>
-    /// <returns>The evaluator.</returns>
-    /// <param name="x">X.</param>
     IEvaluator FindEvaluator(float x) {
       int evCount = Evaluators.Count;
       if(x.InInterval(XInterval))

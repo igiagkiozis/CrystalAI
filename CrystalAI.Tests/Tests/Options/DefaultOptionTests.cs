@@ -49,7 +49,7 @@ namespace Crystal.OptionTests {
       // class is never called!
       IOption option = new ConstantUtilityOption();
       option.DefaultUtility = xval1;
-      option.SetAction(new MockAction());
+      (option as Option).SetAction(new MockAction());
       var cd1 = new OptionConsideration1();
       var cd2 = new OptionConsideration2();
       option.AddConsideration(cd1);

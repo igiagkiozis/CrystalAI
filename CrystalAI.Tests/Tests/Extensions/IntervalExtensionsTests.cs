@@ -44,8 +44,8 @@ namespace Crystal.ExtensionsTests {
      TestCase(0.5f, 1.5f, 0f, 1f, Open, Open, Open, Open, true)]
     public void OverlapTest(float a, float b, float c, float d,
                             IntervalType at, IntervalType bt, IntervalType ct, IntervalType dt, bool expected) {
-      var interval1 = Interval.Range(a, b, at, bt);
-      var interval2 = Interval.Range(c, d, ct, dt);
+      var interval1 = Interval.Create(a, b, at, bt);
+      var interval2 = Interval.Create(c, d, ct, dt);
       Assert.That(interval1.Overlaps(interval2), Is.EqualTo(expected));
     }
 
@@ -67,8 +67,8 @@ namespace Crystal.ExtensionsTests {
      TestCase(0.5f, 1.5f, 0f, 1f, Open, Open, Open, Open, false)]
     public void AdjacentTest(float a, float b, float c, float d,
                              IntervalType at, IntervalType bt, IntervalType ct, IntervalType dt, bool expected) {
-      var interval1 = Interval.Range(a, b, at, bt);
-      var interval2 = Interval.Range(c, d, ct, dt);
+      var interval1 = Interval.Create(a, b, at, bt);
+      var interval2 = Interval.Create(c, d, ct, dt);
       Assert.That(interval1.Adjacent(interval2), Is.EqualTo(expected));
     }
 
@@ -84,8 +84,8 @@ namespace Crystal.ExtensionsTests {
      TestCase(1f, 2f, 0f, 1f, Open, Closed, Closed, Open, false)]
     public void LeftAdjacentTest(float a, float b, float c, float d,
                                  IntervalType at, IntervalType bt, IntervalType ct, IntervalType dt, bool expected) {
-      var interval1 = Interval.Range(a, b, at, bt);
-      var interval2 = Interval.Range(c, d, ct, dt);
+      var interval1 = Interval.Create(a, b, at, bt);
+      var interval2 = Interval.Create(c, d, ct, dt);
       Assert.That(interval1.LeftAdjacent(interval2), Is.EqualTo(expected));
     }
 
@@ -101,8 +101,8 @@ namespace Crystal.ExtensionsTests {
      TestCase(1f, 2f, 0f, 1f, Open, Closed, Closed, Open, false)]
     public void RightAdjacentTest(float a, float b, float c, float d,
                                   IntervalType at, IntervalType bt, IntervalType ct, IntervalType dt, bool expected) {
-      var interval1 = Interval.Range(a, b, at, bt);
-      var interval2 = Interval.Range(c, d, ct, dt);
+      var interval1 = Interval.Create(a, b, at, bt);
+      var interval2 = Interval.Create(c, d, ct, dt);
       Assert.That(interval1.RightAdjacent(interval2), Is.EqualTo(expected));
     }
 

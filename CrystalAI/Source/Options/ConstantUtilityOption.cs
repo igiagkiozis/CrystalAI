@@ -32,6 +32,10 @@ namespace Crystal {
     public override void Consider(IContext context) {
     }
 
+    /// <summary>
+    /// Clones this instance.
+    /// </summary>
+    /// <returns></returns>
     public override IConsideration Clone() {
       return new ConstantUtilityOption(this);
     }
@@ -44,11 +48,20 @@ namespace Crystal {
       DefaultUtility = new Utility(0.0f, Weight);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConstantUtilityOption"/> class.
+    /// </summary>
+    /// <param name="other">The other.</param>
     ConstantUtilityOption(ConstantUtilityOption other) : base(other) {
       Weight = other.Weight;
       DefaultUtility = other.DefaultUtility;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConstantUtilityOption"/> class.
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <param name="collection">The collection.</param>
     public ConstantUtilityOption(string nameId, IOptionCollection collection) : base(nameId, collection) {
     }
   }

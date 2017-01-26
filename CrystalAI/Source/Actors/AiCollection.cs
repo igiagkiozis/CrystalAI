@@ -78,31 +78,31 @@ namespace Crystal {
     /// <summary>
     ///   Determines whether [contains] [the specified name identifier].
     /// </summary>
-    /// <param name="nameId">The name identifier.</param>
+    /// <param name="aiId">The name identifier.</param>
     /// <returns>
     ///   <c>true</c> if [contains] [the specified name identifier]; otherwise, <c>false</c>.
     /// </returns>
-    public bool Contains(string nameId) {
-      return _aiMap.ContainsKey(nameId);
+    public bool Contains(string aiId) {
+      return _aiMap.ContainsKey(aiId);
     }
 
     /// <summary>
     ///   Gets the AI.
     /// </summary>
-    /// <param name="nameId">The name identifier.</param>
+    /// <param name="aiId">The name identifier.</param>
     /// <returns></returns>
-    public IUtilityAi GetAi(string nameId) {
-      return _aiMap.ContainsKey(nameId) ? _aiMap[nameId] : null;
+    public IUtilityAi GetAi(string aiId) {
+      return _aiMap.ContainsKey(aiId) ? _aiMap[aiId] : null;
     }
 
     /// <summary>
-    ///   Creates a new utility AI instance if the requested AI named nameId exists within
+    ///   Creates a new utility AI instance if the requested AI named aiId exists within
     ///   the AiCollection, otherwise this returns null.
     /// </summary>
-    /// <param name="nameId"></param>
+    /// <param name="aiId"></param>
     /// <returns></returns>
-    public IUtilityAi Create(string nameId) {
-      return _aiMap.ContainsKey(nameId) ? _aiMap[nameId].Clone() : null;
+    public IUtilityAi Create(string aiId) {
+      return _aiMap.ContainsKey(aiId) ? _aiMap[aiId].Clone() : null;
     }
 
     /// <summary>

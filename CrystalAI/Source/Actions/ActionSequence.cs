@@ -38,6 +38,14 @@ namespace Crystal {
       get { return _actions; }
     }
 
+    /// <summary>
+    /// Creates a new instance of the implementing class. Note that the semantics here
+    /// are somewhat vague, however, by convention the "Prototype Pattern" uses a "Clone"
+    /// function. Note that this may have very different semantics when compared with either
+    /// shallow or deep cloning. When implementing this remember to include only the defining
+    /// characteristics of the class and not its state!
+    /// </summary>
+    /// <returns></returns>
     public override IAction Clone() {
       return new ActionSequence(this);
     }
@@ -73,9 +81,16 @@ namespace Crystal {
       ResolveActionStatusesThenEnd(context);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ActionSequence"/> class.
+    /// </summary>
     public ActionSequence() {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ActionSequence"/> class.
+    /// </summary>
+    /// <param name="other">The other.</param>
     ActionSequence(ActionSequence other) : base(other) {
       _actions = new List<IAction>();
       _actionStatusMap = new Dictionary<int, ActionStatus>();
@@ -87,6 +102,11 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ActionSequence"/> class.
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <param name="collection">The collection.</param>
     public ActionSequence(string nameId, IActionCollection collection) : base(nameId, collection) {
     }
 
