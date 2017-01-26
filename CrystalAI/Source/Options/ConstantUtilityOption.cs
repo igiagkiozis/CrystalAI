@@ -32,6 +32,10 @@ namespace Crystal {
     public override void Consider(IContext context) {
     }
 
+    /// <summary>
+    /// Clones this instance.
+    /// </summary>
+    /// <returns></returns>
     public override IConsideration Clone() {
       return new ConstantUtilityOption(this);
     }

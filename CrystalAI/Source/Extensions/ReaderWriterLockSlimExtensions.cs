@@ -23,11 +23,20 @@ using System.Threading;
 
 namespace Crystal {
 
+  /// <summary>
+  /// ReaderWriterLockSlim extensions.
+  /// </summary>
   public static class ReaderWriterLockSlimExtensions {
+    /// <summary>
+    /// Acquires a new read lock token.
+    /// </summary>
     public static IDisposable Read(this ReaderWriterLockSlim @this) {
       return new ReadLockToken(@this);
     }
 
+    /// <summary>
+    /// Acquires a new write lock token.
+    /// </summary
     public static IDisposable Write(this ReaderWriterLockSlim @this) {
       return new WriteLockToken(@this);
     }

@@ -46,7 +46,8 @@ namespace Crystal {
     bool Add(IOption option);
 
     /// <summary>
-    ///   Determines whether [contains] [the specified option identifier].
+    ///   Determines whether this collection contains the option associated with the
+    ///   specified identifier.
     /// </summary>
     /// <param name="optionId">The option identifier.</param>
     /// <returns>

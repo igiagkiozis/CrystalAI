@@ -25,7 +25,7 @@ using System.Linq;
 namespace Crystal {
 
   /// <summary>
-  ///   Utility extensions.
+  ///   Crystal <see cref="T:Crystal.Utility"/> extensions.
   /// </summary>
   public static class UtilityExtensions {
     /// <summary>
@@ -75,6 +75,9 @@ namespace Crystal {
       return res;
     }
 
+    /// <summary>
+    /// Returns the product of the utilities combined value in the collection.
+    /// </summary>
     public static float MultiplyCombined(this ICollection<Utility> @this) {
       var count = @this.Count;
       if(count == 0)
@@ -87,6 +90,9 @@ namespace Crystal {
       return res;
     }
 
+    /// <summary>
+    /// Returns the product of the utility values in the collection.
+    /// </summary>
     public static float MultiplyValues(this ICollection<Utility> @this) {
       var count = @this.Count;
       if(count == 0)
@@ -99,6 +105,9 @@ namespace Crystal {
       return res;
     }
 
+    /// <summary>
+    /// Returns the product of the utility weights in the collection.
+    /// </summary>
     public static float MultiplyWeights(this ICollection<Utility> @this) {
       var count = @this.Count;
       if(count == 0)
@@ -111,6 +120,9 @@ namespace Crystal {
       return res;
     }
 
+    /// <summary>
+    /// Returns the sum of the utility values in the collection.
+    /// </summary>
     public static float SumValues(this ICollection<Utility> @this) {
       var count = @this.Count;
       if(count == 0)
@@ -123,6 +135,9 @@ namespace Crystal {
       return res;
     }
 
+    /// <summary>
+    /// Returns the sum of the utility weights of the utilities in the collection.
+    /// </summary>
     public static float SumWeights(this ICollection<Utility> @this) {
       var count = @this.Count;
       if(count == 0)

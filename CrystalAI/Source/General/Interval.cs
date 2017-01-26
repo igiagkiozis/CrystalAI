@@ -27,25 +27,45 @@ namespace Crystal {
   ///   end.
   /// </summary>
   public enum IntervalType {
+    /// <summary>
+    /// Represents an open bound.
+    /// </summary>
     Open,
+    /// <summary>
+    /// Represents a closed bound.
+    /// </summary>
     Closed
   }
 
   /// <summary>
-  ///   Represents vectorless interval of the form [a, b] or (a, b) or any
+  ///   Represents an interval of the form [a, b] or (a, b) or any
   ///   combination of exclusive and inclusive end points.
   /// </summary>
-  /// <typeparam name="T">Any comparent type</typeparam>
   /// <remarks>
-  ///   This is a vectorless interval, therefore if end component is larger
-  ///   than start component, the interval will swap the two ends around
+  ///   This is a vector-less interval, therefore if the end element is larger
+  ///   than the start element, the interval will swap the two ends around
   ///   such that a is always %lt; b.
   /// </remarks>
   public struct Interval<T> where T : struct, IComparable {
+    /// <summary>
+    /// Lower bound of the interval.
+    /// </summary>
     public T LowerBound { get; }
+
+    /// <summary>
+    /// Upper bound of the interval.
+    /// </summary>
     public T UpperBound { get; }
 
+    /// <summary>
+    /// The type of the lower bound of this interval. This can either be 
+    /// <see cref="F:Crystal.IntervalType.Open"/> or <see cref="F:Crystal.IntervalType.Closed"/>.
+    /// </summary>
     public IntervalType LowerBoundType { get; }
+    /// <summary>
+    /// The type of the upper bound of this interval. This can either be 
+    /// <see cref="F:Crystal.IntervalType.Open"/> or <see cref="F:Crystal.IntervalType.Closed"/>.
+    /// </summary>
     public IntervalType UpperBoundType { get; }
 
     /// <summary>
@@ -87,10 +107,10 @@ namespace Crystal {
     /// <summary>
     /// Initializes a new instance of the <see cref="Interval{T}"/> struct.
     /// </summary>
-    /// <param name="lowerbound">The lowerbound.</param>
-    /// <param name="upperbound">The upperbound.</param>
-    /// <param name="lowerboundIntervalType">Type of the lowerbound interval.</param>
-    /// <param name="upperboundIntervalType">Type of the upperbound interval.</param>
+    /// <param name="lowerbound">The lower bound.</param>
+    /// <param name="upperbound">The upper bound.</param>
+    /// <param name="lowerboundIntervalType">Type of the lower bound of the interval.</param>
+    /// <param name="upperboundIntervalType">Type of the upper bound of the interval.</param>
     public Interval(T lowerbound, T upperbound,
                     IntervalType lowerboundIntervalType = IntervalType.Closed,
                     IntervalType upperboundIntervalType = IntervalType.Closed)
@@ -115,19 +135,43 @@ namespace Crystal {
   ///   Static class to generate regular Intervals using common types.
   /// </summary>
   public static class Interval {
-    public static Interval<int> Range(int lowerbound, int upperbound,
+    /// <summary>
+    /// Creates an interval of integers.
+    /// </summary>
+    /// <param name="lowerbound">The lower bound.</param>
+    /// <param name="upperbound">The upper bound.</param>
+    /// <param name="lowerboundIntervalType">Type of the lower bound of the interval.</param>
+    /// <param name="upperboundIntervalType">Type of the upper bound of the interval.</param>
+    /// <returns></returns>
+    public static Interval<int> Create(int lowerbound, int upperbound,
                                       IntervalType lowerboundIntervalType = IntervalType.Closed,
                                       IntervalType upperboundIntervalType = IntervalType.Closed) {
       return new Interval<int>(lowerbound, upperbound, lowerboundIntervalType, upperboundIntervalType);
     }
 
-    public static Interval<float> Range(float lowerbound, float upperbound,
+    /// <summary>
+    /// Creates an interval of single precision floating point numbers.
+    /// </summary>
+    /// <param name="lowerbound">The lower bound.</param>
+    /// <param name="upperbound">The upper bound.</param>
+    /// <param name="lowerboundIntervalType">Type of the lower bound of the interval.</param>
+    /// <param name="upperboundIntervalType">Type of the upper bound of the interval.</param>
+    /// <returns></returns>
+    public static Interval<float> Create(float lowerbound, float upperbound,
                                         IntervalType lowerboundIntervalType = IntervalType.Closed,
                                         IntervalType upperboundIntervalType = IntervalType.Closed) {
       return new Interval<float>(lowerbound, upperbound, lowerboundIntervalType, upperboundIntervalType);
     }
 
-    public static Interval<double> Range(double lowerbound, double upperbound,
+    /// <summary>
+    /// Creates an interval of double precision floating point numbers.
+    /// </summary>
+    /// <param name="lowerbound">The lower bound.</param>
+    /// <param name="upperbound">The upper bound.</param>
+    /// <param name="lowerboundIntervalType">Type of the lower bound of the interval.</param>
+    /// <param name="upperboundIntervalType">Type of the upper bound of the interval.</param>
+    /// <returns></returns>
+    public static Interval<double> Create(double lowerbound, double upperbound,
                                          IntervalType lowerboundIntervalType = IntervalType.Closed,
                                          IntervalType upperboundIntervalType = IntervalType.Closed) {
       return new Interval<double>(lowerbound, upperbound, lowerboundIntervalType, upperboundIntervalType);

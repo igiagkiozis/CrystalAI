@@ -22,6 +22,12 @@ using System;
 
 namespace Crystal {
 
+  /// <summary>
+  /// This struct is used throughout Crystal AI to communicate the utility (or usefulness)
+  /// of a particular option, consideration or behaviour.
+  /// </summary>
+  /// <seealso cref="System.IEquatable{Crystal.Utility}" />
+  /// <seealso cref="System.IComparable{Crystal.Utility}" />
   [Serializable]
   public struct Utility : IEquatable<Utility>, IComparable<Utility> {
     float _value;
@@ -48,7 +54,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Returns the Value*Weight of this Utiliity.
+    ///   Returns the Value*Weight of this Utility.
     /// </summary>
     public float Combined {
       get { return Value * Weight; }

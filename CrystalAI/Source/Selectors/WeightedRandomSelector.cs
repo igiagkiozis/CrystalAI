@@ -24,15 +24,35 @@ using System.Linq;
 
 namespace Crystal {
 
+  /// <summary>
+  ///   This selector uses roulette wheel selection of the top <see cref="P:Crystal.WeightedRandomSelector.Proportion"/>
+  ///   percent utilities in the given <see cref="T:System.Collections.ICollection"/> of utilities.
+  /// </summary>
+  /// <seealso cref="Crystal.ISelector"/>
   public sealed class WeightedRandomSelector : ISelector {
     float _proportion = 0.2f;
     Pcg _random;
 
+    /// <summary>
+    ///   Gets or sets the proportion.
+    /// </summary>
+    /// <value>
+    ///   The proportion.
+    /// </value>
     public float Proportion {
       get { return _proportion; }
       set { _proportion = value.Clamp01(); }
     }
 
+    /// <summary>
+    ///   Selects a <see cref="T:Crystal.Utility"/> from the given set and returns its
+    ///   index.
+    /// </summary>
+    /// <param name="elements">The elements.</param>
+    /// <returns>
+    ///   The index of the selected utility. This returns -1 no selection
+    ///   was made or if the count of elements was 0.
+    /// </returns>
     public int Select(ICollection<Utility> elements) {
       var count = elements.Count;
       if(count == 0)
@@ -67,19 +87,27 @@ namespace Crystal {
       return sortedUtilIndices[index];
     }
 
+    /// <summary>
+    ///   Creates a new instance of the implementing class. Note that the semantics here
+    ///   are somewhat vague, however, by convention the "Prototype Pattern" uses a "Clone"
+    ///   function. Note that this may have very different semantics when compared with either
+    ///   shallow or deep cloning. When implementing this remember to include only the defining
+    ///   characteristics of the class and not its state!
+    /// </summary>
+    /// <returns></returns>
     public ISelector Clone() {
       return new WeightedRandomSelector(Proportion);
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="WeightedRandomSelector"/> class.
+    ///   Initializes a new instance of the <see cref="WeightedRandomSelector"/> class.
     /// </summary>
     public WeightedRandomSelector() {
       _random = new Pcg();
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="WeightedRandomSelector"/> class.
+    ///   Initializes a new instance of the <see cref="WeightedRandomSelector"/> class.
     /// </summary>
     /// <param name="proportion">The proportion.</param>
     public WeightedRandomSelector(float proportion) {
@@ -87,7 +115,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="WeightedRandomSelector"/> class.
+    ///   Initializes a new instance of the <see cref="WeightedRandomSelector"/> class.
     /// </summary>
     /// <param name="random">The random.</param>
     public WeightedRandomSelector(Pcg random) {

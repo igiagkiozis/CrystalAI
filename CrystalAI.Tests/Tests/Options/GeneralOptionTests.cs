@@ -39,7 +39,7 @@ namespace Crystal.OptionTests {
 
     [Test]
     public void NameConstructorThrowsIfOptionWithNameAlreadyExistsTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       var o = new Option("name", _aiConstructor.Options);
       Assert.Throws<Option.OptionAlreadyExistsInCollectionException>(() => new Option("name", _aiConstructor.Options));
     }
@@ -64,14 +64,14 @@ namespace Crystal.OptionTests {
 
     [Test]
     public void SetActionStringNonExistentFalseTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       var o = new Option("name", _aiConstructor.Options);
       Assert.That(o.SetAction("nonexistent"), Is.False);
     }
 
     [Test]
     public void CanAddExistingActionTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       SetupActionsAndConsiderations();
       var o = new Option("o1", _aiConstructor.Options);
       Assert.That(o.SetAction("a1"));
@@ -79,28 +79,28 @@ namespace Crystal.OptionTests {
 
     [Test]
     public void RefusesToAddNonExistentActionTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       var o = new Option("o1", _aiConstructor.Options);
       Assert.That(o.SetAction("NonExistentAction"), Is.False);
     }
 
     [Test]
     public void DoesNotAddEmptyActionTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       var o = new Option("o1", _aiConstructor.Options);
       Assert.That(o.SetAction(""), Is.False);
     }
 
     [Test]
     public void DoesNotAddNullStringActionTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       var o = new Option("o1", _aiConstructor.Options);
       Assert.That(o.SetAction((string)null), Is.False);
     }
 
     [Test]
     public void ClonedOptionHasPreviousActionTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       SetupActionsAndConsiderations();
       var o = new Option("o1", _aiConstructor.Options);
       o.SetAction("a1");
@@ -111,7 +111,7 @@ namespace Crystal.OptionTests {
 
     [Test]
     public void ClonedOptionHasAllPreviousConsiderationsTest() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       SetupActionsAndConsiderations();
       var o = new Option("o1", _aiConstructor.Options);
       o.AddConsideration("c1");
@@ -129,7 +129,7 @@ namespace Crystal.OptionTests {
 
     [Test]
     public void EnsureClonedOptionHasResultsInSameUtilityTest([Range(0.0f, 10.0f, 1f)] float util) {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
       SetupActionsAndConsiderations();
       var context = new OptionContext();
       var o = new Option("o1", _aiConstructor.Options);
@@ -148,7 +148,7 @@ namespace Crystal.OptionTests {
     }
 
     void SetupActionsAndConsiderations() {
-      _aiConstructor.Collection.ClearAll();
+      _aiConstructor.AIs.ClearAll();
 
       var tmpa = new MockAction("a1", _aiConstructor.Actions);
       tmpa = new MockAction("a2", _aiConstructor.Actions);

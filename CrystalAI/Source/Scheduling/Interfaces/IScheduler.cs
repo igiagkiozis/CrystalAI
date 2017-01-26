@@ -19,6 +19,9 @@
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 namespace Crystal {
 
+  /// <summary>
+  /// AI Scheduler interface.
+  /// </summary>
   public interface IScheduler {
     /// <summary>
     ///   The Think cycle.

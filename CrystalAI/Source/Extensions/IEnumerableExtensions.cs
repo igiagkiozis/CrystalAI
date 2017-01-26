@@ -26,6 +26,9 @@ namespace Crystal {
   ///   IEnumerable extensions.
   /// </summary>
   public static class EnumerableExtensions {
+    /// <summary>
+    /// Returns the mean value. 
+    /// </summary>
     public static float Mean(this IEnumerable<float> @this) {
       var sum = 0.0f;
       var count = 0;

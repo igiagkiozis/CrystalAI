@@ -23,18 +23,31 @@ using System.Linq;
 
 namespace Crystal {
 
+  /// <summary>
+  /// Calculates a constrained version of the l-p weighted metrics <see cref="https://en.wikipedia.org/wiki/Lp_space"/>. 
+  /// </summary>
+  /// <seealso cref="Crystal.IMeasure" />
   public sealed class ConstrainedWeightedMetrics : IMeasure {
     float _lowerBound;
     WeightedMetrics _measure;
 
+    /// <summary>
+    /// The minimum value for <see cref="T:Crystal.ConstrainedWeightedMetrics.PNorm"/>.
+    /// </summary>
     public float PNormMin {
       get { return _measure.PNormMin; }
     }
 
+    /// <summary>
+    /// The maximum value for <see cref="T:Crystal.ConstrainedWeightedMetrics.PNorm"/>.
+    /// </summary>
     public float PNormMax {
       get { return _measure.PNormMax; }
     }
 
+    /// <summary>
+    /// Gets or sets the p norm used in this instance.
+    /// </summary>
     public float PNorm {
       get { return _measure.PNorm; }
       set { _measure.PNorm = value; }
@@ -48,6 +61,11 @@ namespace Crystal {
       set { _lowerBound = value.Clamp01(); }
     }
 
+    /// <summary>
+    /// Calculate the l-p weighted metrics measure for the given set of elements.
+    /// </summary>
+    /// <param name="elements"></param>
+    /// <returns></returns>
     public float Calculate(ICollection<Utility> elements) {
       if(elements.Any(el => el.Combined < LowerBound))
         return 0.0f;
@@ -55,6 +73,14 @@ namespace Crystal {
       return _measure.Calculate(elements);
     }
 
+    /// <summary>
+    /// Creates a new instance of the implementing class. Note that the semantics here
+    /// are somewhat vague, however, by convention the "Prototype Pattern" uses a "Clone"
+    /// function. Note that this may have very different semantics when compared with either
+    /// shallow or deep cloning. When implementing this remember to include only the defining
+    /// characteristics of the class and not its state!
+    /// </summary>
+    /// <returns></returns>
     public IMeasure Clone() {
       return new ConstrainedWeightedMetrics(PNorm, LowerBound);
     }

@@ -19,6 +19,9 @@
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 namespace Crystal {
 
+  /// <summary>
+  /// <see cref="T:Crystal.Interval"/> extensions.
+  /// </summary>
   public static class IntervalExtensions {
     static readonly IntervalType Open = IntervalType.Open;
     static readonly IntervalType Closed = IntervalType.Closed;

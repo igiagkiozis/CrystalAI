@@ -26,13 +26,32 @@ namespace Crystal {
   ///   Represents a point in 2D space.
   /// </summary>
   public struct Pointf : IEquatable<Pointf> {
+    /// <summary>
+    /// The x-coordinate.
+    /// </summary>
     public float X { get; private set; }
+    /// <summary>
+    /// The y-coordinate.
+    /// </summary>
     public float Y { get; private set; }
 
+    /// <summary>
+    /// Indicates whether the current object is equal to another object of the same type.
+    /// </summary>
+    /// <param name="other">An object to compare with this object.</param>
+    /// <returns>
+    /// true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.
+    /// </returns>
     public bool Equals(Pointf other) {
       return X.Equals(other.X) && Y.Equals(other.Y);
     }
 
+    /// <summary>
+    /// Returns a <see cref="System.String" /> that represents this instance.
+    /// </summary>
+    /// <returns>
+    /// A <see cref="System.String" /> that represents this instance.
+    /// </returns>
     public override string ToString() {
       return string.Format("({0}, {1})", X, Y);
     }

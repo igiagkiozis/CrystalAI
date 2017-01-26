@@ -23,7 +23,17 @@ using System.Linq;
 
 namespace Crystal {
 
+  /// <summary>
+  /// Calculates the Chebyshev measure <see cref="https://en.wikipedia.org/wiki/Chebyshev_distance"/>.
+  /// </summary>
+  /// <seealso cref="Crystal.IMeasure" />
   public sealed class Chebyshev : IMeasure {
+
+    /// <summary>
+    /// Calculate the Chebyshev measure for the given set of elements.
+    /// </summary>
+    /// <param name="elements"></param>
+    /// <returns></returns>
     public float Calculate(ICollection<Utility> elements) {
       var wsum = 0.0f;
       int count = elements.Count;
@@ -45,6 +55,14 @@ namespace Crystal {
       return ret;
     }
 
+    /// <summary>
+    /// Creates a new instance of the implementing class. Note that the semantics here
+    /// are somewhat vague, however, by convention the "Prototype Pattern" uses a "Clone"
+    /// function. Note that this may have very different semantics when compared with either
+    /// shallow or deep cloning. When implementing this remember to include only the defining
+    /// characteristics of the class and not its state!
+    /// </summary>
+    /// <returns></returns>
     public IMeasure Clone() {
       return new Chebyshev();
     }
