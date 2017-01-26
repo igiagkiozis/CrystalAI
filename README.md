@@ -16,6 +16,7 @@ To get started check out the [Crystal AI pages](https://theldoctor.github.io/Cry
 - [Unity](https://unity3d.com/)
 
 ## History
+- v0.9.6 Completed in-code documenation (exported as XML). Simplified the API.
 - v0.7.2 Changed a portion of the API to make it more intuitive. Added a basic example project showcasing the AI. 
 - v0.7.1 First public version containing only the library and the test suite.
 
