@@ -22,7 +22,7 @@ namespace Crystal {
   /// <summary>
   ///   Interface to Behaviours.
   /// </summary>
-  /// <seealso cref="Crystal.ICompositeConsideration"/>
+  /// <seealso cref="T:Crystal.ICompositeConsideration"/>
   public interface IBehaviour : ICompositeConsideration {
     /// <summary>
     ///   <see cref="T:Crystal.ISelector"/>

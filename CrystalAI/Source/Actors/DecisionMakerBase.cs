@@ -25,7 +25,7 @@ namespace Crystal {
   /// <summary>
   ///   The decision maker, every agent will have one or more of these to execute different AIs.
   /// </summary>
-  /// <seealso cref="Crystal.IDecisionMaker"/>
+  /// <seealso cref="T:Crystal.IDecisionMaker"/>
   public abstract class DecisionMakerBase : IDecisionMaker {
     IUtilityAi _ai;
     IContextProvider _contextProvider;

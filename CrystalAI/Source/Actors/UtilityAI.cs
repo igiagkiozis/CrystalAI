@@ -27,7 +27,7 @@ namespace Crystal {
   /// <summary>
   ///   The Utility AI.
   /// </summary>
-  /// <seealso cref="Crystal.IUtilityAi"/>
+  /// <seealso cref="T:Crystal.IUtilityAi"/>
   public sealed class UtilityAi : IUtilityAi {
     Dictionary<string, Behaviour> _behaviourMap;
     List<Behaviour> _behaviours;

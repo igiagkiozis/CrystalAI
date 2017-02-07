@@ -42,7 +42,7 @@ namespace Crystal {
   /// an implementation is available for completeness. If you have insights on the reasons behind 
   /// the use of this particular pseudo-measure in the game development industry I would love to hear them!
   /// </summary>
-  /// <seealso cref="Crystal.IMeasure" />
+  /// <seealso cref="T:Crystal.IMeasure" />
   public sealed class MultiplicativePseudoMeasure : IMeasure {
     /// <summary>
     /// Calculate the measure for the given set of elements.

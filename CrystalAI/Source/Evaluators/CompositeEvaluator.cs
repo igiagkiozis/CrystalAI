@@ -67,7 +67,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="CompositeEvaluator"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.CompositeEvaluator"/> class.
     /// </summary>
     public CompositeEvaluator() {
       Evaluators = new List<IEvaluator>();

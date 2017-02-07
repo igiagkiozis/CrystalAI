@@ -23,7 +23,7 @@ namespace Crystal {
   /// Interface to Transitions. A transition is an <see cref="T:Crystal.IAction"/> that transfers control
   /// to a behaviour or another AI.
   /// </summary>
-  /// <seealso cref="Crystal.IAction" />
+  /// <seealso cref="T:Crystal.IAction" />
   public interface ITransition : IAction {
 
     /// <summary>

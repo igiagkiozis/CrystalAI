@@ -26,12 +26,25 @@ namespace Crystal {
   ///   EvaluatorBase serves as a base class for all evaluators, i.e. functions with arbitrary domain
   ///   of definition and a range equal to any sub-interval of [0,1].
   /// </summary>
-  /// <seealso cref="Crystal.IEvaluator"/>
-  /// <seealso cref="System.IComparable{Crystal.IEvaluator}"/>
+  /// <seealso cref="T:Crystal.IEvaluator"/>
+  /// <seealso cref="T:System.IComparable`1"/>
   public class EvaluatorBase : IEvaluator, IComparable<IEvaluator> {
+
+    /// <summary>
+    /// The x-coordinate of point A. Note, this can have any value in the real interval (-inf, +inf).
+    /// </summary>
     protected float Xa;
+    /// <summary>
+    /// The x-coordinate of point B. Note, this can have any value in the real interval (-inf, +inf).
+    /// </summary>
     protected float Xb;
+    /// <summary>
+    /// The y-coordinate of point A. Note, this can have a value within the interval [0, 1].
+    /// </summary>
     protected float Ya;
+    /// <summary>
+    /// The y-coordinate of point B. Note, this can have a value within the interval [0, 1].
+    /// </summary>
     protected float Yb;
 
     /// <summary>
@@ -120,14 +133,14 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="EvaluatorBase"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.EvaluatorBase"/> class.
     /// </summary>
     protected EvaluatorBase() {
       Initialize(0.0f, 0.0f, 1.0f, 1.0f);
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="EvaluatorBase"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.EvaluatorBase"/> class.
     /// </summary>
     /// <param name="ptA">The pt a.</param>
     /// <param name="ptB">The pt b.</param>

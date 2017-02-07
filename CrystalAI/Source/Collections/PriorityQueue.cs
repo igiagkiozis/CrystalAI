@@ -54,7 +54,7 @@ namespace Crystal {
   /// </summary>
   /// <typeparam name="TItem">The type of the item.</typeparam>
   /// <typeparam name="TPriority">The type of the priority.</typeparam>
-  /// <seealso cref="Crystal.IPriorityQueue{TItem, TPriority}" />
+  /// <seealso cref="T:Crystal.IPriorityQueue`2" />
   public class PriorityQueue<TItem, TPriority> : IPriorityQueue<TItem, TPriority>
     where TPriority : IComparable<TPriority> {
     QueueNode[] _nodes;
@@ -80,7 +80,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Verifies if the heap is in a valid state. Use only for debuging.
+    ///   Verifies if the heap is in a valid state. Use only for debugging.
     /// </summary>
     /// <returns><c>true</c> if this instance is binary heap valid; otherwise, <c>false</c>.</returns>
     public bool IsBinaryHeapValid() {
@@ -143,7 +143,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Returns true if the queue has 1 or more of the secified items.
+    ///   Returns true if the queue has 1 or more of the specified items.
     /// </summary>
     /// <param name="item">Item.</param>
     public bool Contains(TItem item) {
@@ -208,7 +208,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="PriorityQueue{TItem, TPriority}"/> class.
+    /// Initializes a new instance of the <see cref="T:PriorityQueue`2"/> class.
     /// </summary>
     public PriorityQueue() {
       _numNodes = 0;
@@ -217,7 +217,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Crystal.PriorityQueue`2"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.PriorityQueue`2"/> class.
     /// </summary>
     /// <param name="maxNodes">Max nodes.</param>
     public PriorityQueue(int maxNodes) {
@@ -349,7 +349,7 @@ namespace Crystal {
 
     /// <summary>
     ///   Returns true if 'higher' has higher priority than 'lower', false otherwise.
-    ///   Note that calling HasHigherPriority(node, node) (ie. both arguments the same node) will return false
+    ///   Note that calling HasHigherPriority(node, node) (i.e. both arguments the same node) will return false
     /// </summary>
     bool HasHigherPriority(QueueNode higher, QueueNode lower) {
       var cmp = higher.Priority.CompareTo(lower.Priority);

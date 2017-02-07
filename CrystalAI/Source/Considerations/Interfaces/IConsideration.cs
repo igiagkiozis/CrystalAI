@@ -19,6 +19,10 @@
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 namespace Crystal {
 
+  /// <summary>
+  /// Interface to a consideration.
+  /// </summary>
+  /// <seealso cref="T:Crystal.IAiPrototype`1" />
   public interface IConsideration : IAiPrototype<IConsideration> {
     /// <summary>
     ///   A unique named identifier for this consideration.

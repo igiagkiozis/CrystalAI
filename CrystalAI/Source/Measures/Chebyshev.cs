@@ -26,7 +26,7 @@ namespace Crystal {
   /// <summary>
   /// Calculates the Chebyshev measure <see cref="https://en.wikipedia.org/wiki/Chebyshev_distance"/>.
   /// </summary>
-  /// <seealso cref="Crystal.IMeasure" />
+  /// <seealso cref="T:Crystal.IMeasure" />
   public sealed class Chebyshev : IMeasure {
 
     /// <summary>

@@ -27,7 +27,7 @@ namespace Crystal {
   ///   of <see cref="T:Crystal.Utility"/>. The assumption here is that every time the collection size is the same.
   ///   If that is not the case, then the count is reset and starts from 0.
   /// </summary>
-  /// <seealso cref="Crystal.ISelector"/>
+  /// <seealso cref="T:Crystal.ISelector"/>
   public sealed class SequentialSelector : ISelector {
     int _count;
     int _curIdx;

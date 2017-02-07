@@ -26,8 +26,8 @@ namespace Crystal {
   /// This struct is used throughout Crystal AI to communicate the utility (or usefulness)
   /// of a particular option, consideration or behaviour.
   /// </summary>
-  /// <seealso cref="System.IEquatable{Crystal.Utility}" />
-  /// <seealso cref="System.IComparable{Crystal.Utility}" />
+  /// <seealso cref="T:System.IEquatable`1" />
+  /// <seealso cref="T:System.IComparable`1" />
   [Serializable]
   public struct Utility : IEquatable<Utility>, IComparable<Utility> {
     float _value;
@@ -77,24 +77,24 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Determines whether the specified <see cref="Utility"/> is equal to the current
-    ///   <see cref="Utility"/>.
+    ///   Determines whether the specified <see cref="T:Crystal.Utility"/> is equal to the current
+    ///   <see cref="T:Crystal.Utility"/>.
     /// </summary>
-    /// <param name="other">The <see cref="Utility"/> to compare with the current <see cref="Utility"/>.</param>
+    /// <param name="other">The <see cref="T:Crystal.Utility"/> to compare with the current <see cref="T:Crystal.Utility"/>.</param>
     /// <returns>
-    ///   <c>true</c> if the specified <see cref="Utility"/> is equal to the current
-    ///   <see cref="Utility"/>; otherwise, <c>false</c>.
+    ///   <c>true</c> if the specified <see cref="T:Crystal.Utility"/> is equal to the current
+    ///   <see cref="T:Crystal.Utility"/>; otherwise, <c>false</c>.
     /// </returns>
     public bool Equals(Utility other) {
       return CrMath.AeqB(Value, other.Value) && CrMath.AeqB(Weight, other.Weight);
     }
 
     /// <summary>
-    /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+    /// Determines whether the specified <see cref="T:System.Object" />, is equal to this instance.
     /// </summary>
-    /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+    /// <param name="obj">The <see cref="T:System.Object" /> to compare with this instance.</param>
     /// <returns>
-    ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+    ///   <c>true</c> if the specified <see cref="T:System.Object" /> is equal to this instance; otherwise, <c>false</c>.
     /// </returns>
     public override bool Equals(object obj) {
       if(obj == null)
@@ -165,15 +165,15 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Returns a <see cref="string"/> that represents the current <see cref="Utility"/>.
+    ///   Returns a <see cref="string"/> that represents the current <see cref="T:Crystal.Utility"/>.
     /// </summary>
-    /// <returns>A <see cref="string"/> that represents the current <see cref="Utility"/>.</returns>
+    /// <returns>A <see cref="string"/> that represents the current <see cref="T:Crystal.Utility"/>.</returns>
     public override string ToString() {
       return string.Format("[Utility: Value={0}, Weight={1}, Combined={2}]", Value, Weight, Combined);
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Utility"/> struct.
+    ///   Initializes a new instance of the <see cref="T:Crystal.Utility"/> struct.
     /// </summary>
     /// <param name="value">Value.</param>
     public Utility(float value) {
@@ -182,7 +182,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Utility"/> struct.
+    ///   Initializes a new instance of the <see cref="T:Crystal.Utility"/> struct.
     /// </summary>
     /// <param name="value">Value.</param>
     /// <param name="weight">Weight.</param>

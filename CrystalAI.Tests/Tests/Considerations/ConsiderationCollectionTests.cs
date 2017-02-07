@@ -17,6 +17,7 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
+using System.Runtime.InteropServices;
 using NUnit.Framework;
 
 
@@ -70,6 +71,16 @@ namespace Crystal.ConsiderationTests {
     }
 
     [Test]
+    public void NoDuplicateConsiderationsAllowedTest() {
+      var collection = new ConsiderationCollection();
+      var consideration = new BasicConsideration("name", collection);
+      Assert.That(collection.Contains("name"));
+      Assert.Throws<ConsiderationBase.ConsiderationAlreadyExistsInCollectionException>(() => {
+        var nc = new BasicConsideration("name", collection);
+      });
+    }
+
+  [Test]
     public void ClearTest() {
       var collection = new ConsiderationCollection();
       var consideration = new BasicConsideration("name", collection);

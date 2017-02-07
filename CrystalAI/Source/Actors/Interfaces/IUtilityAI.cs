@@ -22,7 +22,7 @@ namespace Crystal {
   /// <summary>
   /// Interface for all utility based AIs. 
   /// </summary>
-  /// <seealso cref="Crystal.IAiPrototype{Crystal.IUtilityAi}" />
+  /// <seealso cref="T:Crystal.IAiPrototype`1" />
   public interface IUtilityAi : IAiPrototype<IUtilityAi> {
     /// <summary>
     ///   A unique name identifier for this AI.

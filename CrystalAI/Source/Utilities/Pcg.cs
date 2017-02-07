@@ -61,7 +61,7 @@ namespace Crystal {
     ///   Random integer in the semi-open interval [0, <paramref name="maxExclusive"/>).
     /// </summary>
     /// <param name="maxExclusive">The maximum value; exclusive.</param>
-    /// <exception cref="System.ArgumentException">
+    /// <exception cref="T:System.ArgumentException">
     ///   Max Exclusive must be
     ///   positive
     /// </exception>
@@ -85,7 +85,7 @@ namespace Crystal {
     /// </summary>
     /// <param name="minInclusive">The minimum value; inclusive.</param>
     /// <param name="maxExclusive">The maximum value; exclusive.</param>
-    /// <exception cref="System.ArgumentException">
+    /// <exception cref="T:System.ArgumentException">
     ///   MaxExclusive must be
     ///   larger than MinInclusive
     /// </exception>
@@ -108,7 +108,7 @@ namespace Crystal {
     ///   interval [0, int.MaxValue].
     /// </summary>
     /// <param name="count">The count.</param>
-    /// <exception cref="System.ArgumentException">Zero count</exception>
+    /// <exception cref="T:System.ArgumentException">Zero count</exception>
     public int[] NextInts(int count) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -126,7 +126,7 @@ namespace Crystal {
     /// </summary>
     /// <param name="count">The count.</param>
     /// <param name="maxExclusive">The maximum value; exclusive.</param>
-    /// <exception cref="System.ArgumentException">Zero count</exception>
+    /// <exception cref="T:System.ArgumentException">Zero count</exception>
     public int[] NextInts(int count, int maxExclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -145,7 +145,7 @@ namespace Crystal {
     /// <param name="count">The count.</param>
     /// <param name="minInclusive">The minimum value; inclusive.</param>
     /// <param name="maxExclusive">The maximum value; exclusive.</param>
-    /// <exception cref="System.ArgumentException">Zero count</exception>
+    /// <exception cref="T:System.ArgumentException">Zero count</exception>
     public int[] NextInts(int count, int minInclusive, int maxExclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -189,7 +189,7 @@ namespace Crystal {
     /// </summary>
     /// <param name="minInclusive">The minimum value; inclusive.</param>
     /// <param name="maxExclusive">The maximum value; exclusive.</param>
-    /// <exception cref="System.ArgumentException"></exception>
+    /// <exception cref="T:System.ArgumentException"></exception>
     public uint NextUInt(uint minInclusive, uint maxExclusive) {
       if(maxExclusive <= minInclusive)
         throw new ArgumentException();
@@ -209,7 +209,7 @@ namespace Crystal {
     ///   the interval [0, uint.MaxValue].
     /// </summary>
     /// <param name="count">The count.</param>
-    /// <exception cref="System.ArgumentException">Zero count</exception>
+    /// <exception cref="T:System.ArgumentException">Zero count</exception>
     public uint[] NextUInts(int count) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -227,7 +227,7 @@ namespace Crystal {
     /// </summary>
     /// <param name="count">The count.</param>
     /// <param name="maxExclusive">The maximum exclusive.</param>
-    /// <exception cref="System.ArgumentException">Zero count</exception>
+    /// <exception cref="T:System.ArgumentException">Zero count</exception>
     public uint[] NextUInts(int count, uint maxExclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -246,7 +246,7 @@ namespace Crystal {
     /// <param name="count">The count.</param>
     /// <param name="minInclusive">The minimum inclusive.</param>
     /// <param name="maxExclusive">The maximum exclusive.</param>
-    /// <exception cref="System.ArgumentException">Zero count</exception>
+    /// <exception cref="T:System.ArgumentException">Zero count</exception>
     public uint[] NextUInts(int count, uint minInclusive, uint maxExclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -271,7 +271,7 @@ namespace Crystal {
     ///   [0, <paramref name="maxInclusive"/>].
     /// </summary>
     /// <param name="maxInclusive">The maximum inclusive.</param>
-    /// <exception cref="System.ArgumentException">MaxInclusive must be larger than 0</exception>
+    /// <exception cref="T:System.ArgumentException">MaxInclusive must be larger than 0</exception>
     public virtual float NextFloat(float maxInclusive) {
       if(maxInclusive <= 0)
         throw new ArgumentException("MaxInclusive must be larger than 0");
@@ -285,7 +285,7 @@ namespace Crystal {
     /// </summary>
     /// <param name="minInclusive">The minimum inclusive.</param>
     /// <param name="maxInclusive">The maximum inclusive.</param>
-    /// <exception cref="System.ArgumentException">Max must be larger than min</exception>
+    /// <exception cref="T:System.ArgumentException">Max must be larger than min</exception>
     public virtual float NextFloat(float minInclusive, float maxInclusive) {
       if(maxInclusive <= minInclusive)
         throw new ArgumentException("Max must be larger than min");
@@ -298,7 +298,7 @@ namespace Crystal {
     ///   point random numbers in the interval [0,1].
     /// </summary>
     /// <param name="count">The count.</param>
-    /// <exception cref="System.ArgumentException">Zero count</exception>
+    /// <exception cref="T:System.ArgumentException">Zero count</exception>
     public float[] NextFloats(int count) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -316,7 +316,7 @@ namespace Crystal {
     /// </summary>
     /// <param name="count">The count.</param>
     /// <param name="maxInclusive">The maximum inclusive.</param>
-    /// <exception cref="System.ArgumentException">Zero count</exception>
+    /// <exception cref="T:System.ArgumentException">Zero count</exception>
     public float[] NextFloats(int count, float maxInclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -335,7 +335,7 @@ namespace Crystal {
     /// <param name="count">The count.</param>
     /// <param name="minInclusive">The minimum inclusive.</param>
     /// <param name="maxInclusive">The maximum inclusive.</param>
-    /// <exception cref="System.ArgumentException">Zero count</exception>
+    /// <exception cref="T:System.ArgumentException">Zero count</exception>
     public float[] NextFloats(int count, float minInclusive, float maxInclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -360,7 +360,7 @@ namespace Crystal {
     ///   [0, <paramref name="maxInclusive"/>].
     /// </summary>
     /// <param name="maxInclusive">The maximum inclusive.</param>
-    /// <exception cref="System.ArgumentException">Max must be larger than 0</exception>
+    /// <exception cref="T:System.ArgumentException">Max must be larger than 0</exception>
     public virtual double NextDouble(double maxInclusive) {
       if(maxInclusive <= 0)
         throw new ArgumentException("Max must be larger than 0");
@@ -374,7 +374,7 @@ namespace Crystal {
     /// </summary>
     /// <param name="minInclusive">The minimum inclusive.</param>
     /// <param name="maxInclusive">The maximum inclusive.</param>
-    /// <exception cref="System.ArgumentException">Max must be larger than min</exception>
+    /// <exception cref="T:System.ArgumentException">Max must be larger than min</exception>
     public virtual double NextDouble(double minInclusive, double maxInclusive) {
       if(maxInclusive <= minInclusive)
         throw new ArgumentException("Max must be larger than min");
@@ -387,7 +387,7 @@ namespace Crystal {
     ///   random numbers in the interval [0, 1].
     /// </summary>
     /// <param name="count">The count.</param>
-    /// <exception cref="System.ArgumentException">Zero count</exception>
+    /// <exception cref="T:System.ArgumentException">Zero count</exception>
     public double[] NextDoubles(int count) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -405,7 +405,7 @@ namespace Crystal {
     /// </summary>
     /// <param name="count">The count.</param>
     /// <param name="maxInclusive">The maximum inclusive.</param>
-    /// <exception cref="System.ArgumentException">Zero count</exception>
+    /// <exception cref="T:System.ArgumentException">Zero count</exception>
     public double[] NextDoubles(int count, double maxInclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -424,7 +424,7 @@ namespace Crystal {
     /// <param name="count">The count.</param>
     /// <param name="minInclusive">The minimum inclusive.</param>
     /// <param name="maxInclusive">The maximum inclusive.</param>
-    /// <exception cref="System.ArgumentException">Zero count</exception>
+    /// <exception cref="T:System.ArgumentException">Zero count</exception>
     public double[] NextDoubles(int count, double minInclusive, double maxInclusive) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -448,7 +448,7 @@ namespace Crystal {
     ///   Array of size <paramref name="count"/> of random bytes.
     /// </summary>
     /// <param name="count">The count.</param>
-    /// <exception cref="System.ArgumentException">Zero count</exception>
+    /// <exception cref="T:System.ArgumentException">Zero count</exception>
     public byte[] NextBytes(int count) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -472,7 +472,7 @@ namespace Crystal {
     ///   Array of size <paramref name="count"/> of random booleans.
     /// </summary>
     /// <param name="count">The count.</param>
-    /// <exception cref="System.ArgumentException">Zero count</exception>
+    /// <exception cref="T:System.ArgumentException">Zero count</exception>
     public bool[] NextBools(int count) {
       if(count <= 0)
         throw new ArgumentException("Zero count");
@@ -515,20 +515,20 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Pcg"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.Pcg"/> class.
     /// </summary>
     public Pcg() : this(PcgSeed.GuidBasedSeed()) {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Pcg"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.Pcg"/> class.
     /// </summary>
     /// <param name="seed">The seed.</param>
     public Pcg(int seed) : this((ulong)seed) {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Pcg"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.Pcg"/> class.
     /// </summary>
     /// <param name="seed">The seed.</param>
     /// <param name="sequence">The sequence.</param>
@@ -536,7 +536,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Pcg"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.Pcg"/> class.
     /// </summary>
     /// <param name="seed">The seed.</param>
     /// <param name="sequence">The sequence.</param>

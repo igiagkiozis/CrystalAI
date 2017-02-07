@@ -28,7 +28,7 @@ namespace Crystal {
   /// An AiCollection is a container of all AI building blocks necessary for the construction
   /// of utility AI instances.
   /// </summary>
-  /// <seealso cref="Crystal.IAiCollection" />
+  /// <seealso cref="T:Crystal.IAiCollection" />
   public class AiCollection : IAiCollection {
     Dictionary<string, IUtilityAi> _aiMap;
 

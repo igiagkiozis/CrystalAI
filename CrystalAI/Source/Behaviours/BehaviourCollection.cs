@@ -26,7 +26,7 @@ namespace Crystal {
   /// <summary>
   /// A collection of <see cref="T:Crystal.IBehaviour"/>s.
   /// </summary>
-  /// <seealso cref="Crystal.IBehaviourCollection" />
+  /// <seealso cref="T:Crystal.IBehaviourCollection" />
   public class BehaviourCollection : IBehaviourCollection {
     Dictionary<string, IBehaviour> _behavioursMap;
 

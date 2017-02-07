@@ -23,7 +23,7 @@ namespace Crystal {
   /// AI Actions Interface. This is the "bottom-line" in that all decision making eventually 
   /// leads to the execution of a class that implements this interface. 
   /// </summary>
-  /// <seealso cref="Crystal.IAiPrototype{Crystal.IAction}" />
+  /// <seealso cref="T:Crystal.IAiPrototype`1" />
   public interface IAction : IAiPrototype<IAction> {
     /// <summary>
     ///   A unique identifier for this action.

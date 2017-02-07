@@ -28,7 +28,7 @@ namespace Crystal {
   ///   This selector uses roulette wheel selection of the top <see cref="P:Crystal.WeightedRandomSelector.Proportion"/>
   ///   percent utilities in the given <see cref="T:System.Collections.ICollection"/> of utilities.
   /// </summary>
-  /// <seealso cref="Crystal.ISelector"/>
+  /// <seealso cref="T:Crystal.ISelector"/>
   public sealed class WeightedRandomSelector : ISelector {
     float _proportion = 0.2f;
     Pcg _random;
@@ -100,14 +100,14 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="WeightedRandomSelector"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.WeightedRandomSelector"/> class.
     /// </summary>
     public WeightedRandomSelector() {
       _random = new Pcg();
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="WeightedRandomSelector"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.WeightedRandomSelector"/> class.
     /// </summary>
     /// <param name="proportion">The proportion.</param>
     public WeightedRandomSelector(float proportion) {
@@ -115,7 +115,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="WeightedRandomSelector"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.WeightedRandomSelector"/> class.
     /// </summary>
     /// <param name="random">The random.</param>
     public WeightedRandomSelector(Pcg random) {

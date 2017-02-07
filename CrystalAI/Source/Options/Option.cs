@@ -33,6 +33,11 @@ namespace Crystal {
     /// </summary>
     public IAction Action { get; private set; }
 
+    /// <summary>
+    /// Sets the action.
+    /// </summary>
+    /// <param name="action">The action.</param>
+    /// <returns></returns>
     public bool SetAction(IAction action) {
       if(action == null)
         return false;
@@ -41,6 +46,14 @@ namespace Crystal {
       return true;
     }
 
+    /// <summary>
+    /// Sets the action to be executed when this option is selected to the action
+    /// associated with actionId.
+    /// </summary>
+    /// <param name="actionId">The action identifier.</param>
+    /// <returns>
+    /// Returns true if the action was successfully set, false otherwise.
+    /// </returns>
     public bool SetAction(string actionId) {
       if(string.IsNullOrEmpty(actionId))
         return false;
@@ -64,6 +77,14 @@ namespace Crystal {
       base.Consider(context);
     }
 
+    /// <summary>
+    /// Creates a new instance of the implementing class. Note that the semantics here
+    /// are somewhat vague, however, by convention the "Prototype Pattern" uses a "Clone"
+    /// function. Note that this may have very different semantics when compared with either
+    /// shallow or deep cloning. When implementing this remember to include only the defining
+    /// characteristics of the class and not its state!
+    /// </summary>
+    /// <returns></returns>
     public override IConsideration Clone() {
       return new Option(this);
     }
@@ -76,7 +97,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Option"/> class.
+    /// Initializes a new instance of the <see cref="T:Crystal.Option"/> class.
     /// </summary>
     /// <param name="other">The other.</param>
     protected Option(Option other) : base(other) {
@@ -87,11 +108,11 @@ namespace Crystal {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Option"/> class.
+    /// Initializes a new instance of the <see cref="T:Crystal.Option"/> class.
     /// </summary>
     /// <param name="nameId">The name identifier.</param>
     /// <param name="collection">The collection.</param>
-    /// <exception cref="Crystal.Option.OptionAlreadyExistsInCollectionException"></exception>
+    /// <exception cref="T:Crystal.Option.OptionAlreadyExistsInCollectionException"></exception>
     public Option(string nameId, IOptionCollection collection) : base(collection?.Considerations) {
       _collection = collection;
       NameId = nameId;

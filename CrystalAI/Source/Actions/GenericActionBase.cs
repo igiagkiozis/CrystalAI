@@ -28,7 +28,7 @@ namespace Crystal {
   ///   this class or its non-generic version <see cref="T:Crystal.ActionBase"/>.
   /// </summary>
   /// <typeparam name="TContext">The type of the context.</typeparam>
-  /// <seealso cref="Crystal.IAction"/>
+  /// <seealso cref="T:Crystal.IAction"/>
   public class ActionBase<TContext> : IAction where TContext : class, IContext {
     readonly IActionCollection _collection;
     readonly Stopwatch _cooldownTimer = new Stopwatch();
@@ -195,8 +195,8 @@ namespace Crystal {
     /// </summary>
     /// <param name="nameId">The name identifier.</param>
     /// <param name="collection">The collection.</param>
-    /// <exception cref="Crystal.ActionBase`1.NameIdEmptyOrNullException"></exception>
-    /// <exception cref="Crystal.ActionBase`1.ActionCollectionNullException"></exception>
+    /// <exception cref="T:Crystal.ActionBase`1.NameIdEmptyOrNullException"></exception>
+    /// <exception cref="T:Crystal.ActionBase`1.ActionCollectionNullException"></exception>
     public ActionBase(string nameId, IActionCollection collection) {
       if(string.IsNullOrEmpty(nameId))
         throw new NameIdEmptyOrNullException();

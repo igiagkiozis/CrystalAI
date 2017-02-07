@@ -34,5 +34,5 @@ using System.Runtime.CompilerServices;
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-[assembly:AssemblyVersion("0.9.6.*")]
+[assembly:AssemblyVersion("1.0.0.*")]
 [assembly:InternalsVisibleTo("CrystalAI.Tests")]

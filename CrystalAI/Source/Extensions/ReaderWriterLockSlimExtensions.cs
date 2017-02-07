@@ -36,7 +36,7 @@ namespace Crystal {
 
     /// <summary>
     /// Acquires a new write lock token.
-    /// </summary
+    /// </summary>
     public static IDisposable Write(this ReaderWriterLockSlim @this) {
       return new WriteLockToken(@this);
     }

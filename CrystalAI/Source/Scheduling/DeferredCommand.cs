@@ -36,7 +36,7 @@ namespace Crystal {
     float _executionDelayMin;
     float _firstExecutionDelayMax;
     float _firstExecutionDelayMin;
-    // This is by far the most common use.
+    // This is by and far the most common use.
     bool _isRepeating = true;
     CommandAction _process;
     long _timesExecuted;
@@ -138,6 +138,9 @@ namespace Crystal {
       get { return _lastUpdateDeltaTime; }
     }
 
+    /// <summary>
+    /// Executes this command.
+    /// </summary>
     public void Execute() {
       _process();
       var lastExecOld = _lastExecutionTime;
@@ -149,7 +152,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="DeferredCommand"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.DeferredCommand"/> class.
     /// </summary>
     /// <param name="process">Process.</param>
     public DeferredCommand(CommandAction process) {

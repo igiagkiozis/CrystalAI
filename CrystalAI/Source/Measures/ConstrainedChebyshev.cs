@@ -27,7 +27,7 @@ namespace Crystal {
   /// Calculates the Chebyshev measure <see cref="https://en.wikipedia.org/wiki/Chebyshev_distance"/> for all 
   /// elements whose <see cref="P:Crystal.Utility.Combined"/> is above the set lower bound. 
   /// </summary>
-  /// <seealso cref="Crystal.IMeasure" />
+  /// <seealso cref="T:Crystal.IMeasure" />
   public sealed class ConstrainedChebyshev : IMeasure {
     float _lowerBound;
     Chebyshev _measure;

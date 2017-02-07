@@ -44,7 +44,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Scheduler"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.Scheduler"/> class.
     /// </summary>
     public Scheduler() {
       ThinkStream = new CommandStream(128) {

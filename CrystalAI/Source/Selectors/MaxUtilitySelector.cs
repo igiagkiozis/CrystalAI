@@ -28,7 +28,7 @@ namespace Crystal {
   ///   <see cref="P:Crystal.Utility.Combined"/> value is highest compared to any
   ///   <see cref="T:Crystal.Utility"/> in the supplied <see cref="T:System.Collections.Generic.ICollection"/>.
   /// </summary>
-  /// <seealso cref="Crystal.ISelector"/>
+  /// <seealso cref="T:Crystal.ISelector"/>
   public sealed class MaxUtilitySelector : ISelector {
     /// <summary>
     ///   Selects a <see cref="T:Crystal.Utility"/> from the given set and returns its

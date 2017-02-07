@@ -141,7 +141,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Crystal.ThreadSafePriorityQueue`2"/>
+    ///   Initializes a new instance of the <see cref="T:Crystal.ThreadSafePriorityQueue`2"/>
     ///   class.
     /// </summary>
     public ThreadSafePriorityQueue() {
@@ -149,7 +149,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Crystal.ThreadSafePriorityQueue`2"/>
+    ///   Initializes a new instance of the <see cref="T:Crystal.ThreadSafePriorityQueue`2"/>
     ///   class.
     /// </summary>
     /// <param name="size">Size.</param>
