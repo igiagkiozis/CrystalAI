@@ -1,8 +1,7 @@
 var class_crystal_1_1_constrained_weighted_metrics =
 [
     [ "ConstrainedWeightedMetrics", "class_crystal_1_1_constrained_weighted_metrics.html#a149044ae46be0069991eb7ece9eb6e9e", null ],
-    [ "ConstrainedWeightedMetrics", "class_crystal_1_1_constrained_weighted_metrics.html#a99f35e25802dc1338ffb00b640f5cc27", null ],
-    [ "ConstrainedWeightedMetrics", "class_crystal_1_1_constrained_weighted_metrics.html#a85c5632bf234c1118fbecee2b12e6f83", null ],
+    [ "ConstrainedWeightedMetrics", "class_crystal_1_1_constrained_weighted_metrics.html#ae92139ce9005d6e193226db8055ca79e", null ],
     [ "Calculate", "class_crystal_1_1_constrained_weighted_metrics.html#a18b7a57bee4bea67ecec160c94ec911b", null ],
     [ "Clone", "class_crystal_1_1_constrained_weighted_metrics.html#a1d229324df387554d385eedfdaeda825", null ],
     [ "LowerBound", "class_crystal_1_1_constrained_weighted_metrics.html#a4993bde4017141864c7ed924429f7040", null ],

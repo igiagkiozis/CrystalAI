@@ -1,7 +1,8 @@
 var NAVTREE =
 [
   [ "Crystal AI", "index.html", [
-    [ "Crystal AI Documentation version 0.7.2", "index.html", null ],
+    [ "Crystal AI Documentation version 1.0.0", "index.html", null ],
+    [ "mainpage", "md_Source_mainpage.html", null ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -16,7 +17,7 @@ var NAVTREE =
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
-        [ "Functions", "functions_func.html", null ],
+        [ "Functions", "functions_func.html", "functions_func" ],
         [ "Variables", "functions_vars.html", null ],
         [ "Properties", "functions_prop.html", null ]
       ] ]
@@ -27,8 +28,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"class_crystal_1_1_pcg.html#a4a711e6f30346c0f170747329fbc7028",
-"interface_crystal_1_1_i_context_provider.html"
+"class_crystal_1_1_pcg.html#a3b8a9ece6892ed5dfe30a1287834802e",
+"interface_crystal_1_1_i_consideration.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

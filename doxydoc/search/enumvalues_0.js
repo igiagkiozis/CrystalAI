@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['failure',['Failure',['../namespace_crystal.html#aef9a5fc58e0a8db54a2496d59b042f91ae139a585510a502bbf1841cf589f5086',1,'Crystal']]]
+  ['closed',['Closed',['../namespace_crystal.html#a898c1b4b2037eaed339a4ea8422f8e70a03f4a47830f97377a35321051685071e',1,'Crystal']]]
 ];

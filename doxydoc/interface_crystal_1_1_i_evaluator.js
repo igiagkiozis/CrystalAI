@@ -1,6 +1,7 @@
 var interface_crystal_1_1_i_evaluator =
 [
     [ "Evaluate", "interface_crystal_1_1_i_evaluator.html#ac47a7226f43467cc7dce890577a50394", null ],
+    [ "IsInverted", "interface_crystal_1_1_i_evaluator.html#ab7e0dc1f0d903c94c66fb111f7d6fcd4", null ],
     [ "MaxX", "interface_crystal_1_1_i_evaluator.html#a72396e713b2fac4580445d19aa9b7eb8", null ],
     [ "MaxY", "interface_crystal_1_1_i_evaluator.html#a7b4e1bb8c4caaff0f2ead8114c9ca5e7", null ],
     [ "MinX", "interface_crystal_1_1_i_evaluator.html#af06817e91451b31f7bb19d473074d3be", null ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['crystal_20ai_20documentation_20version_200_2e7_2e2',['Crystal AI Documentation version 0.7.2',['../index.html',1,'']]]
+  ['crystal_20ai_20documentation_20version_201_2e0_2e0',['Crystal AI Documentation version 1.0.0',['../index.html',1,'']]]
 ];

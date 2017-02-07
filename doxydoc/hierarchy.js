@@ -7,7 +7,9 @@ var hierarchy =
     ] ],
     [ "Crystal.AiConstructor", "class_crystal_1_1_ai_constructor.html", null ],
     [ "Crystal.CircularBuffer< float >", "class_crystal_1_1_circular_buffer.html", null ],
+    [ "Crystal.CommandStream", "class_crystal_1_1_command_stream.html", null ],
     [ "Crystal.ConsiderationBase", "class_crystal_1_1_consideration_base.html", null ],
+    [ "Crystal.DeferredCommand", "class_crystal_1_1_deferred_command.html", null ],
     [ "Exception", null, [
       [ "Crystal.MinEqualMaxException", "class_crystal_1_1_min_equal_max_exception.html", null ],
       [ "Crystal.MinGreaterThanMaxException", "class_crystal_1_1_min_greater_than_max_exception.html", null ]
@@ -77,9 +79,6 @@ var hierarchy =
     [ "Crystal.ICircularBuffer< T >", "interface_crystal_1_1_i_circular_buffer.html", [
       [ "Crystal.CircularBuffer< T >", "class_crystal_1_1_circular_buffer.html", null ]
     ] ],
-    [ "Crystal.ICommandStream", "interface_crystal_1_1_i_command_stream.html", [
-      [ "Crystal.CommandStream", "class_crystal_1_1_command_stream.html", null ]
-    ] ],
     [ "IComparable", null, [
       [ "Crystal.EvaluatorBase", "class_crystal_1_1_evaluator_base.html", [
         [ "Crystal.CompositeEvaluator", "class_crystal_1_1_composite_evaluator.html", null ],
@@ -98,9 +97,6 @@ var hierarchy =
       [ "Crystal.DecisionMakerBase", "class_crystal_1_1_decision_maker_base.html", [
         [ "Crystal.DecisionMaker", "class_crystal_1_1_decision_maker.html", null ]
       ] ]
-    ] ],
-    [ "Crystal.IDeferredCommand", "interface_crystal_1_1_i_deferred_command.html", [
-      [ "Crystal.DeferredCommand", "class_crystal_1_1_deferred_command.html", null ]
     ] ],
     [ "Crystal.IDeferredCommandHandle", "interface_crystal_1_1_i_deferred_command_handle.html", null ],
     [ "IEnumerable", null, [

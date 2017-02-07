@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['movingaverage',['MovingAverage',['../class_crystal_1_1_moving_average.html#a25ac6399b607e41891abfb76844407fa',1,'Crystal.MovingAverage.MovingAverage()'],['../class_crystal_1_1_moving_average.html#a46157193d5320389cc003369e68c6a53',1,'Crystal.MovingAverage.MovingAverage(int length)']]]
+  ['linearevaluator',['LinearEvaluator',['../class_crystal_1_1_linear_evaluator.html#ae9d3b4150fb3fc6b26723c7dc1a36a5d',1,'Crystal.LinearEvaluator.LinearEvaluator()'],['../class_crystal_1_1_linear_evaluator.html#a7d49ced4596098846c0900aece5d2087',1,'Crystal.LinearEvaluator.LinearEvaluator(Pointf ptA, Pointf ptB)']]]
 ];
