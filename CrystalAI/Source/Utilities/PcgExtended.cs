@@ -51,6 +51,16 @@ namespace Crystal {
   ///   its weight into a black hole.
   /// </summary>
   public class PcgExtended {
+    // This shifted to the left and or'ed with 1ul results in the default increment.
+    const ulong ShiftedIncrement = 721347520444481703ul;
+    const ulong Multiplier = 6364136223846793005ul;
+    const uint PcgMultiplier = 747796405u;
+    const uint PcgIncrement = 2891336453u;
+    const uint McgMultiplier = 277803737u;
+    const uint McgUnmultiplier = 2897767785u;
+    // 1 / (uint.MaxValue + 1)
+    const double ToDouble01 = 1.0 / 4294967296.0;
+
     // This attribute ensures that every thread will get its own instance of PCG.
     // An alternative, since PCG supports streams, is to use a different stream per
     // thread. 
@@ -532,14 +542,14 @@ namespace Crystal {
     }
 
     /// <summary>
-    /// Equidistribution this generator.
+    ///   Equidistribution this generator.
     /// </summary>
     public int Equidistribution() {
       return 1 << _tablePow2;
     }
 
     /// <summary>
-    /// Power of two exponent of the equidistribution of this generator.
+    ///   Power of two exponent of the equidistribution of this generator.
     /// </summary>
     /// <returns></returns>
     public int EquidistributionPow2() {
@@ -729,17 +739,6 @@ namespace Crystal {
       bottom2 &= lowmask1;
       return top1 | bottom2;
     }
-
-    // This shifted to the left and or'ed with 1ul results in the default increment.
-    const ulong ShiftedIncrement = 721347520444481703ul;
-    const ulong Multiplier = 6364136223846793005ul;
-    const uint PcgMultiplier = 747796405u;
-    const uint PcgIncrement = 2891336453u;
-    const uint McgMultiplier = 277803737u;
-    const uint McgUnmultiplier = 2897767785u;
-
-    // 1 / (uint.MaxValue + 1)
-    const double ToDouble01 = 1.0 / 4294967296.0;
   }
 
 }
