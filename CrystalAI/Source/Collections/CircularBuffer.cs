@@ -28,8 +28,8 @@ namespace Crystal {
   ///   A circular buffer <see cref="https://en.wikipedia.org/wiki/Circular_buffer"/>.
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <seealso cref="Crystal.ICircularBuffer{T}"/>
-  /// <seealso cref="System.Collections.Generic.IEnumerable{T}"/>
+  /// <seealso cref="T:Crystal.ICircularBuffer`1"/>
+  /// <seealso cref="T:System.Collections.Generic.IEnumerable`1"/>
   public class CircularBuffer<T> : ICircularBuffer<T>, IEnumerable<T> {
     T[] _buffer;
     int _head;

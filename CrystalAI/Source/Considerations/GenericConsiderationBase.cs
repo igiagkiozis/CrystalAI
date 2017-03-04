@@ -93,13 +93,13 @@ namespace Crystal {
     public abstract IConsideration Clone();
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ConsiderationBase{TContext}"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.ConsiderationBase`1"/> class.
     /// </summary>
     protected ConsiderationBase() {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ConsiderationBase{TContext}"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.ConsiderationBase`1"/> class.
     /// </summary>
     /// <param name="other">The other.</param>
     protected ConsiderationBase(ConsiderationBase<TContext> other) {
@@ -111,12 +111,12 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ConsiderationBase{TContext}"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.ConsiderationBase`1"/> class.
     /// </summary>
     /// <param name="nameId">The name identifier.</param>
     /// <param name="collection">The collection.</param>
-    /// <exception cref="Crystal.ConsiderationBase`1.ConsiderationCollectionNullException"></exception>
-    /// <exception cref="Crystal.ConsiderationBase`1.ConsiderationAlreadyExistsInCollectionException"></exception>
+    /// <exception cref="T:Crystal.ConsiderationBase`1.ConsiderationCollectionNullException"></exception>
+    /// <exception cref="T:Crystal.ConsiderationBase`1.ConsiderationAlreadyExistsInCollectionException"></exception>
     protected ConsiderationBase(string nameId, IConsiderationCollection collection) {
       if(collection == null)
         throw new ConsiderationCollectionNullException();

@@ -27,7 +27,7 @@ namespace Crystal {
   /// of <see cref="T:Crystal.Utility"/>s and return an index that corresponds
   /// to the selected <see cref="T:Crystal.Utility"/>.
   /// </summary>
-  /// <seealso cref="Crystal.IAiPrototype{Crystal.ISelector}" />
+  /// <seealso cref="T:Crystal.IAiPrototype`1" />
   public interface ISelector : IAiPrototype<ISelector> {
     /// <summary>
     /// Selects a <see cref="T:Crystal.Utility"/> from the given set and returns its

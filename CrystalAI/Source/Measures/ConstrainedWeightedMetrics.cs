@@ -26,7 +26,7 @@ namespace Crystal {
   /// <summary>
   /// Calculates a constrained version of the l-p weighted metrics <see cref="https://en.wikipedia.org/wiki/Lp_space"/>. 
   /// </summary>
-  /// <seealso cref="Crystal.IMeasure" />
+  /// <seealso cref="T:Crystal.IMeasure" />
   public sealed class ConstrainedWeightedMetrics : IMeasure {
     float _lowerBound;
     WeightedMetrics _measure;
@@ -86,14 +86,14 @@ namespace Crystal {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ConstrainedWeightedMetrics"/> class.
+    /// Initializes a new instance of the <see cref="T:Crystal.ConstrainedWeightedMetrics"/> class.
     /// </summary>
     public ConstrainedWeightedMetrics() {
       _measure = new WeightedMetrics();
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ConstrainedWeightedMetrics"/> class.
+    /// Initializes a new instance of the <see cref="T:Crystal.ConstrainedWeightedMetrics"/> class.
     /// </summary>
     /// <param name="pNorm">The p norm.</param>
     /// <param name="lowerBound">The lower bound.</param>

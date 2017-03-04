@@ -29,8 +29,8 @@ namespace Crystal {
   /// <see cref="T:Crystal.IUtilityAi"/>, it will be selected only if its considerations
   /// "win" against competing behaviours in the AI.
   /// </summary>
-  /// <seealso cref="Crystal.CompositeConsideration" />
-  /// <seealso cref="Crystal.IBehaviour" />
+  /// <seealso cref="T:Crystal.CompositeConsideration" />
+  /// <seealso cref="T:Crystal.IBehaviour" />
   public sealed class Behaviour : CompositeConsideration, IBehaviour {
     IBehaviourCollection _collection;
     List<IOption> _options;

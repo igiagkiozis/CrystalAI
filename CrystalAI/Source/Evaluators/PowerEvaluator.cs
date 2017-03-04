@@ -44,7 +44,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Crystal.PowerEvaluator"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.PowerEvaluator"/> class.
     ///   <see href="https://www.desmos.com/calculator/ok9nse8l3u">Power</see> for an interactive
     ///   plot.
     /// </summary>
@@ -54,7 +54,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Crystal.PowerEvaluator"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.PowerEvaluator"/> class.
     ///   <see href="https://www.desmos.com/calculator/ok9nse8l3u">Power</see> for an interactive
     ///   plot.
     /// </summary>
@@ -66,7 +66,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Crystal.PowerEvaluator"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.PowerEvaluator"/> class.
     ///   <see href="https://www.desmos.com/calculator/ok9nse8l3u">Power</see> for an interactive
     ///   plot.
     /// </summary>

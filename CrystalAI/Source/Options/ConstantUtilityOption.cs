@@ -41,7 +41,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ConstantUtilityOption"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.ConstantUtilityOption"/> class.
     /// </summary>
     public ConstantUtilityOption() {
       Weight = 1.0f;
@@ -49,7 +49,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ConstantUtilityOption"/> class.
+    /// Initializes a new instance of the <see cref="T:Crystal.ConstantUtilityOption"/> class.
     /// </summary>
     /// <param name="other">The other.</param>
     ConstantUtilityOption(ConstantUtilityOption other) : base(other) {

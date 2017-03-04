@@ -35,7 +35,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Crystal.LinearEvaluator"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.LinearEvaluator"/> class.
     ///   <see href="https://www.desmos.com/calculator/esibujxim4">Power</see> for an interactive
     ///   plot.
     /// </summary>
@@ -44,7 +44,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Crystal.LinearEvaluator"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.LinearEvaluator"/> class.
     ///   <see href="https://www.desmos.com/calculator/esibujxim4">Power</see> for an interactive
     ///   plot.
     /// </summary>

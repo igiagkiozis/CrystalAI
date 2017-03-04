@@ -26,7 +26,7 @@ namespace Crystal {
   /// <summary>
   /// A collection of AI <see cref="T:Crystal.IOption"/>s.
   /// </summary>
-  /// <seealso cref="Crystal.IOptionCollection" />
+  /// <seealso cref="T:Crystal.IOptionCollection" />
   public class OptionCollection : IOptionCollection {
     Dictionary<string, IOption> _optionsMap;
 
@@ -108,8 +108,8 @@ namespace Crystal {
     /// </summary>
     /// <param name="actionCollection">The action collection.</param>
     /// <param name="considerationCollection">The consideration collection.</param>
-    /// <exception cref="Crystal.OptionCollection.ActionCollectionNullException"></exception>
-    /// <exception cref="Crystal.OptionCollection.ConsiderationCollectionNullException"></exception>
+    /// <exception cref="T:Crystal.OptionCollection.ActionCollectionNullException"></exception>
+    /// <exception cref="T:Crystal.OptionCollection.ConsiderationCollectionNullException"></exception>
     public OptionCollection(IActionCollection actionCollection, IConsiderationCollection considerationCollection) {
       if(actionCollection == null)
         throw new ActionCollectionNullException();

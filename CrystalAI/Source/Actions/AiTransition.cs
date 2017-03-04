@@ -26,8 +26,8 @@ namespace Crystal {
   /// AiTransition is an <see cref="T:Crystal.IAction"/> that when executed triggers a selection
   /// of an action in another AI.
   /// </summary>
-  /// <seealso cref="Crystal.ActionBase" />
-  /// <seealso cref="Crystal.ITransition" />
+  /// <seealso cref="T:Crystal.ActionBase" />
+  /// <seealso cref="T:Crystal.ITransition" />
   public sealed class AiTransition : ActionBase, ITransition {
     IAiCollection _aiCollection;
     string _aiNameId;

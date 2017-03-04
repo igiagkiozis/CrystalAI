@@ -30,9 +30,9 @@ namespace Crystal {
   /// considerations to be combined. This is quite useful as it can reduce the complexity
   /// of individual considerations allowing them to be seen as building blocks. 
   /// </summary>
-  /// <seealso cref="Crystal.ICompositeConsideration" />
-  /// <seealso cref="Crystal.Behaviour"/>
-  /// <seealso cref="Crystal.Option"/>
+  /// <seealso cref="T:Crystal.ICompositeConsideration" />
+  /// <seealso cref="T:Crystal.Behaviour"/>
+  /// <seealso cref="T:Crystal.Option"/>
   public class CompositeConsideration : ICompositeConsideration {
     IConsiderationCollection _collection;
     List<IConsideration> _considerations;
@@ -95,6 +95,8 @@ namespace Crystal {
 
         foreach(var c in _considerations)
           c.IsInverted = value;
+
+        _isInverted = value;
       }
     }
 
@@ -161,14 +163,14 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Crystal.CompositeConsideration"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.CompositeConsideration"/> class.
     /// </summary>
     public CompositeConsideration() {
       Initialize();
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CompositeConsideration"/> class.
+    /// Initializes a new instance of the <see cref="T:Crystal.CompositeConsideration"/> class.
     /// </summary>
     /// <param name="other">The other.</param>
     protected CompositeConsideration(CompositeConsideration other) {
@@ -187,10 +189,10 @@ namespace Crystal {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CompositeConsideration"/> class.
+    /// Initializes a new instance of the <see cref="T:Crystal.CompositeConsideration"/> class.
     /// </summary>
     /// <param name="collection">The collection.</param>
-    /// <exception cref="Crystal.CompositeConsideration.ConsiderationCollectionNullException"></exception>
+    /// <exception cref="T:Crystal.CompositeConsideration.ConsiderationCollectionNullException"></exception>
     protected CompositeConsideration(IConsiderationCollection collection) {
       if(collection == null)
         throw new ConsiderationCollectionNullException();
@@ -204,9 +206,9 @@ namespace Crystal {
     /// </summary>
     /// <param name="nameId">The name identifier.</param>
     /// <param name="collection">The collection.</param>
-    /// <exception cref="Crystal.CompositeConsideration.NameIdIsNullOrEmptyException"></exception>
-    /// <exception cref="Crystal.CompositeConsideration.ConsiderationCollectionNullException"></exception>
-    /// <exception cref="Crystal.CompositeConsideration.NameIdAlreadyExistsInCollectionException"></exception>
+    /// <exception cref="T:Crystal.CompositeConsideration.NameIdIsNullOrEmptyException"></exception>
+    /// <exception cref="T:Crystal.CompositeConsideration.ConsiderationCollectionNullException"></exception>
+    /// <exception cref="T:Crystal.CompositeConsideration.NameIdAlreadyExistsInCollectionException"></exception>
     public CompositeConsideration(string nameId, IConsiderationCollection collection) {
       if(string.IsNullOrEmpty(nameId))
         throw new NameIdIsNullOrEmptyException();

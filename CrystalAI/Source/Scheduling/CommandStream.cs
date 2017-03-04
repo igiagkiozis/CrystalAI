@@ -69,6 +69,11 @@ namespace Crystal {
       get { return Queue.Count; }
     }
 
+    /// <summary>
+    /// Adds the specified command.
+    /// </summary>
+    /// <param name="cmd">The command.</param>
+    /// <returns></returns>
     public IDeferredCommandHandle Add(DeferredCommand cmd) {
       float time = CrTime.Time;
       var scheduledCommand = new QueuedCommand(this) {
@@ -101,7 +106,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="CommandStream"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.CommandStream"/> class.
     /// </summary>
     /// <param name="initialQueueSize">Initial queue size.</param>
     public CommandStream(int initialQueueSize) {

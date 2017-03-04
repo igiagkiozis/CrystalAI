@@ -27,7 +27,7 @@ namespace Crystal {
   ///   Base class for non-generic <see cref="T:Crystal.IAction"/>s. All actions should derive either from
   ///   this class or its generic version <see cref="T:Crystal.ActionBase`1"/>.
   /// </summary>
-  /// <seealso cref="Crystal.IAction"/>
+  /// <seealso cref="T:Crystal.IAction"/>
   public class ActionBase : IAction {
     ActionStatus _actionStatus = ActionStatus.Idle;
     IActionCollection _collection;

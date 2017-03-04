@@ -25,7 +25,7 @@ namespace Crystal {
   /// <summary>
   /// AI Actions collection.
   /// </summary>
-  /// <seealso cref="Crystal.IActionCollection" />
+  /// <seealso cref="T:Crystal.IActionCollection" />
   public class ActionCollection : IActionCollection {
     Dictionary<string, IAction> _actionsMap;
 

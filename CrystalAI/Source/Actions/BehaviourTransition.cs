@@ -27,8 +27,8 @@ namespace Crystal {
   /// the selection of an <see cref="T:Crystal.IAction"/> using a linked 
   /// <see cref="T:Crystal.IBehaviour"/>.
   /// </summary>
-  /// <seealso cref="Crystal.ActionBase" />
-  /// <seealso cref="Crystal.ITransition" />
+  /// <seealso cref="T:Crystal.ActionBase" />
+  /// <seealso cref="T:Crystal.ITransition" />
   public sealed class BehaviourTransition : ActionBase, ITransition {
     Behaviour _behaviour;
     IBehaviourCollection _behaviourCollection;

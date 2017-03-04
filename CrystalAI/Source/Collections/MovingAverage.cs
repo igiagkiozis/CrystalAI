@@ -54,14 +54,14 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Crystal.MovingAverage"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.MovingAverage"/> class.
     /// </summary>
     public MovingAverage() {
       Initialize(DefaultSize);
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="Crystal.MovingAverage"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.MovingAverage"/> class.
     /// </summary>
     /// <param name="length">Length.</param>
     public MovingAverage(int length) {

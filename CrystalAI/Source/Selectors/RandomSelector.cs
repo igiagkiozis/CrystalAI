@@ -26,7 +26,7 @@ namespace Crystal {
   ///   This selector returns a random <see cref="T:Crystal.Utility"/> from the
   ///   supplied <see cref="T:System.Collections.ICollection"/>.
   /// </summary>
-  /// <seealso cref="Crystal.ISelector"/>
+  /// <seealso cref="T:Crystal.ISelector"/>
   public sealed class RandomSelector : ISelector {
     Pcg _random;
 
@@ -57,14 +57,14 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="RandomSelector"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.RandomSelector"/> class.
     /// </summary>
     public RandomSelector() {
       _random = new Pcg();
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="RandomSelector"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.RandomSelector"/> class.
     /// </summary>
     /// <param name="random">The random.</param>
     public RandomSelector(Pcg random) {

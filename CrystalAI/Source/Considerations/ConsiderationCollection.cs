@@ -26,7 +26,7 @@ namespace Crystal {
   /// A collection of <see cref="T:Crystal.IConsideration"/>s and 
   /// <see cref="T:Crystal.ICompositeConsideration"/>s
   /// </summary>
-  /// <seealso cref="Crystal.IConsiderationCollection" />
+  /// <seealso cref="T:Crystal.IConsiderationCollection" />
   public class ConsiderationCollection : IConsiderationCollection {
     Dictionary<string, IConsideration> _considerationsMap;
 

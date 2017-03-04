@@ -27,7 +27,7 @@ namespace Crystal {
   /// <summary>
   /// Calculates the l-p weighted metrics <see cref="https://en.wikipedia.org/wiki/Lp_space"/>. 
   /// </summary>
-  /// <seealso cref="Crystal.IMeasure" />
+  /// <seealso cref="T:Crystal.IMeasure" />
   public sealed class WeightedMetrics : IMeasure {
     float _oneOverP;
     float _p;
@@ -95,7 +95,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="WeightedMetrics"/> class.
+    /// Initializes a new instance of the <see cref="T:Crystal.WeightedMetrics"/> class.
     /// </summary>
     /// <param name="pNorm">The p norm.</param>
     public WeightedMetrics(float pNorm = 2f) {
