@@ -57,7 +57,7 @@ namespace Crystal {
     TItem Dequeue();
 
     /// <summary>
-    ///   Returns true if the queue has 1 or more of the secified items.
+    ///   Returns true if the queue has 1 or more of the specified items.
     /// </summary>
     bool Contains(TItem item);
 
@@ -75,6 +75,8 @@ namespace Crystal {
     /// <param name="predicate">The predicate.</param>
     /// <returns>The item that was removed or null if no item was not found.</returns>
     TItem Remove(Func<TItem, bool> predicate);
+
+//    void UpdatePriority(TItem item);
 
     /// <summary>
     ///   Updates the priority of the specified item. If the item does not exist in the queue, it simply

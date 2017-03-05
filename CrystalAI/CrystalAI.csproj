@@ -62,6 +62,7 @@
     <Compile Include="Source\Behaviours\BehaviourCollection.cs" />
     <Compile Include="Source\Behaviours\Interfaces\IBehaviour.cs" />
     <Compile Include="Source\Behaviours\Interfaces\IBehaviourCollection.cs" />
+    <Compile Include="Source\Collections\BinaryHeap.cs" />
     <Compile Include="Source\Collections\CircularBuffer.cs" />
     <Compile Include="Source\Collections\ICircularBuffer.cs" />
     <Compile Include="Source\Collections\IPriorityQueue.cs" />

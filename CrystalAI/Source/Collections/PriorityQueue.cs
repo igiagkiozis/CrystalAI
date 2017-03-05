@@ -26,7 +26,7 @@ namespace Crystal {
   // The initial version of this file was based on https://github.com/BlueRaja/High-Speed-Priority-Queue-for-C-Sharp.git
 
   /// <summary>
-  /// Priority queue node.
+  ///   Priority queue node.
   /// </summary>
   public class PriorityQueueNode<TPriority> {
     /// <summary>
@@ -35,30 +35,31 @@ namespace Crystal {
     ///   Should not be manually edited once the node has been enqueued - use queue.UpdatePriority()
     ///   instead
     /// </summary>
-    public TPriority Priority { get; protected internal set; }
+    public TPriority Priority;
 
     /// <summary>
     ///   Represents the current position in the queue
     /// </summary>
-    public int QueueIndex { get; internal set; }
+    public int QueueIndex;
 
     /// <summary>
     ///   Represents the order the node was inserted in
     /// </summary>
-    public long InsertionIndex { get; internal set; }
+    public long InsertionIndex;
   }
 
 
   /// <summary>
-  /// Priority queue.
+  ///   Priority queue.
   /// </summary>
   /// <typeparam name="TItem">The type of the item.</typeparam>
   /// <typeparam name="TPriority">The type of the priority.</typeparam>
-  /// <seealso cref="T:Crystal.IPriorityQueue`2" />
+  /// <seealso cref="T:Crystal.IPriorityQueue`2"/>
   public class PriorityQueue<TItem, TPriority> : IPriorityQueue<TItem, TPriority>
     where TPriority : IComparable<TPriority> {
+    const int DefaultSize = 128;
     QueueNode[] _nodes;
-    int _numNodes;
+    int _nodeCount;
     long _numNodesEverEnqueued;
 
     /// <summary>
@@ -68,7 +69,7 @@ namespace Crystal {
     /// <value>true</value>
     /// <c>false</c>
     public bool HasNext {
-      get { return Count > 0; }
+      get { return _nodeCount > 0; }
     }
 
     /// <summary>
@@ -76,7 +77,7 @@ namespace Crystal {
     ///   O(1)
     /// </summary>
     public int Count {
-      get { return _numNodes; }
+      get { return _nodeCount; }
     }
 
     /// <summary>
@@ -86,13 +87,13 @@ namespace Crystal {
     public bool IsBinaryHeapValid() {
       for(int i = 1; i < _nodes.Length; i++)
         if(_nodes[i] != null) {
-          int childLeftIndex = 2 * i;
+          int childLeftIndex = i << 1;
           if(childLeftIndex < _nodes.Length &&
              _nodes[childLeftIndex] != null &&
              HasHigherPriority(_nodes[childLeftIndex], _nodes[i]))
             return false;
 
-          int childRightIndex = childLeftIndex + 1;
+          int childRightIndex = childLeftIndex | 1;
           if(childRightIndex < _nodes.Length &&
              _nodes[childRightIndex] != null &&
              HasHigherPriority(_nodes[childRightIndex], _nodes[i]))
@@ -106,7 +107,7 @@ namespace Crystal {
     ///   Returns the item at the head of the queue without removing it.
     /// </summary>
     public TItem Peek() {
-      return _numNodes <= 0 ? default(TItem) : _nodes[1].Data;
+      return _nodeCount <= 0 ? default(TItem) : _nodes[1].Data;
     }
 
     /// <summary>
@@ -121,11 +122,11 @@ namespace Crystal {
       ResizeIfNeedsResizing();
 
       node.Priority = priority;
-      _numNodes++;
-      _nodes[_numNodes] = node;
-      node.QueueIndex = _numNodes;
+      _nodeCount++;
+      _nodes[_nodeCount] = node;
+      node.QueueIndex = _nodeCount;
       node.InsertionIndex = _numNodesEverEnqueued++;
-      CascadeUp(_nodes[_numNodes]);
+      CascadeUp(_nodes[_nodeCount]);
     }
 
     /// <summary>
@@ -134,7 +135,7 @@ namespace Crystal {
     ///   O(log n)
     /// </summary>
     public TItem Dequeue() {
-      if(_numNodes <= 0)
+      if(_nodeCount <= 0)
         return default(TItem);
 
       var retv = _nodes[1].Data;
@@ -148,7 +149,7 @@ namespace Crystal {
     /// <param name="item">Item.</param>
     public bool Contains(TItem item) {
       var comparer = EqualityComparer<TItem>.Default;
-      for(int i = 1; i <= _numNodes; i++) {
+      for(int i = 1; i <= _nodeCount; i++) {
         var node = _nodes[i];
         if(comparer.Equals(node.Data, item))
           return true;
@@ -174,7 +175,7 @@ namespace Crystal {
     /// </summary>
     public TItem Remove(Func<TItem, bool> predicate) {
       QueueNode rNode = null;
-      for(int i = 1; i <= _numNodes; i++)
+      for(int i = 1; i <= _nodeCount; i++)
         if(predicate(_nodes[i].Data)) {
           rNode = _nodes[i];
           break;
@@ -184,6 +185,16 @@ namespace Crystal {
       return rNode != null ? rNode.Data : default(TItem);
     }
 
+    public void UpdatePriority(TItem item) {
+      // TODO Find a way around this as Contains() is expensive
+      if(Contains(item) == false)
+        return;
+
+      var node = GetExistingNode(item);
+      node.InsertionIndex = _numNodesEverEnqueued++;
+      OnNodeUpdated(node);
+    }
+
     /// <summary>
     ///   Updates the priority of the specified item. If the item does not exist in the queue, it simply
     ///   returns.
@@ -191,10 +202,15 @@ namespace Crystal {
     /// <param name="item">Item.</param>
     /// <param name="priority">Priority.</param>
     public void UpdatePriority(TItem item, TPriority priority) {
+      // TODO Find a way around this as Contains() is expensive
       if(Contains(item) == false)
         return;
 
       var node = GetExistingNode(item);
+      // This ensures that when an update is called on an item whose priority is unchanged
+      // the insertion index is updated, thus updating the order among items with the same
+      // priority.
+      node.InsertionIndex = _numNodesEverEnqueued++;
       node.Priority = priority;
       OnNodeUpdated(node);
     }
@@ -203,16 +219,16 @@ namespace Crystal {
     ///   Removes every node from the queue.
     /// </summary>
     public void Clear() {
-      Array.Clear(_nodes, 1, _numNodes);
-      _numNodes = 0;
+      Array.Clear(_nodes, 1, _nodeCount);
+      _nodeCount = 0;
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="T:PriorityQueue`2"/> class.
+    ///   Initializes a new instance of the <see cref="T:PriorityQueue`2"/> class.
     /// </summary>
     public PriorityQueue() {
-      _numNodes = 0;
-      _nodes = new QueueNode[DefaultSize];
+      _nodeCount = 0;
+      _nodes = new QueueNode[DefaultSize + 1];
       _numNodesEverEnqueued = 0;
     }
 
@@ -221,7 +237,7 @@ namespace Crystal {
     /// </summary>
     /// <param name="maxNodes">Max nodes.</param>
     public PriorityQueue(int maxNodes) {
-      _numNodes = 0;
+      _nodeCount = 0;
       _nodes = maxNodes > 0 ? new QueueNode[maxNodes + 1] : new QueueNode[DefaultSize + 1];
       _numNodesEverEnqueued = 0;
     }
@@ -230,9 +246,10 @@ namespace Crystal {
       get { return _nodes.Length - 1; }
     }
 
+    // TODO This is an O(N) operation... 
     QueueNode GetExistingNode(TItem item) {
       var comparer = EqualityComparer<TItem>.Default;
-      for(int i = 1; i <= _numNodes; i++) {
+      for(int i = 1; i <= _nodeCount; i++) {
         var node = _nodes[i];
         if(comparer.Equals(node.Data, item))
           return node;
@@ -241,28 +258,24 @@ namespace Crystal {
       return null;
     }
 
-    QueueNode Remove(QueueNode node) {
+    void Remove(QueueNode node) {
       if(node == null)
-        return null;
+        return;
 
-      QueueNode rNode;
       // Check if the node is the last since we can remove this one quickly.
-      if(node.QueueIndex == _numNodes) {
-        rNode = _nodes[_numNodes];
-        _nodes[_numNodes] = null;
-        _numNodes--;
-        return rNode;
+      if(node.QueueIndex == _nodeCount) {
+        _nodes[_nodeCount] = null;
+        _nodeCount--;
+        return;
       }
 
-      QueueNode oldLastNode = _nodes[_numNodes];
+      QueueNode oldLastNode = _nodes[_nodeCount];
       Swap(node, oldLastNode);
-      rNode = _nodes[_numNodes];
-      _nodes[_numNodes] = null;
-      _numNodes--;
+      _nodes[_nodeCount] = null;
+      _nodeCount--;
 
       // Reposition the previous last node up or down as appropriate.
       OnNodeUpdated(oldLastNode);
-      return rNode;
     }
 
     void Swap(QueueNode node1, QueueNode node2) {
@@ -270,13 +283,14 @@ namespace Crystal {
       _nodes[node1.QueueIndex] = node2;
       _nodes[node2.QueueIndex] = node1;
 
-      //Swap their indicies
+      //Swap their indices
       int temp = node1.QueueIndex;
       node1.QueueIndex = node2.QueueIndex;
       node2.QueueIndex = temp;
     }
 
     void ResizeIfNeedsResizing() {
+      // Standard resize strategy used in the C++ STL.
       if(Count == MaxSize)
         Resize(2 * MaxSize + 1);
     }
@@ -286,7 +300,7 @@ namespace Crystal {
     /// </summary>
     /// <param name="node">Node.</param>
     void CascadeUp(QueueNode node) {
-      int parent = node.QueueIndex / 2;
+      int parent = node.QueueIndex >> 1;
       while(parent >= 1) {
         QueueNode parentNode = _nodes[parent];
         if(HasHigherPriority(parentNode, node))
@@ -294,7 +308,7 @@ namespace Crystal {
 
         // Node has lower priority value, so move it up the heap
         Swap(node, parentNode);
-        parent = node.QueueIndex / 2;
+        parent = node.QueueIndex >> 1;
       }
     }
 
@@ -307,10 +321,10 @@ namespace Crystal {
       int finalQueueIndex = node.QueueIndex;
       while(true) {
         newParent = node;
-        int childLeftIndex = 2 * finalQueueIndex;
+        int childLeftIndex = finalQueueIndex << 1;
 
         //Check if the left-child is higher-priority than the current node
-        if(childLeftIndex > _numNodes) {
+        if(childLeftIndex > _nodeCount) {
           //This could be placed outside the loop, but then we'd have to check newParent != node twice
           node.QueueIndex = finalQueueIndex;
           _nodes[finalQueueIndex] = node;
@@ -322,8 +336,8 @@ namespace Crystal {
           newParent = childLeft;
 
         //Check if the right-child is higher-priority than either the current node or the left child
-        int childRightIndex = childLeftIndex + 1;
-        if(childRightIndex <= _numNodes) {
+        int childRightIndex = childLeftIndex | 1;
+        if(childRightIndex <= _nodeCount) {
           QueueNode childRight = _nodes[childRightIndex];
           if(HasHigherPriority(childRight, newParent))
             newParent = childRight;
@@ -358,31 +372,28 @@ namespace Crystal {
 
     void Resize(int maxNodes) {
       if(maxNodes <= 0 ||
-         maxNodes < _numNodes)
+         maxNodes < _nodeCount)
         return;
 
       var newArray = new QueueNode[maxNodes + 1];
-      if(_numNodes > 0)
-        Array.Copy(_nodes, 1, newArray, 1, _numNodes);
+      if(_nodeCount > 0)
+        Array.Copy(_nodes, 1, newArray, 1, _nodeCount);
       _nodes = newArray;
     }
 
     void OnNodeUpdated(QueueNode node) {
       //Bubble the updated node up or down as appropriate
-      int parentIndex = node.QueueIndex / 2;
+      int parentIndex = node.QueueIndex >> 1;
       QueueNode parentNode = _nodes[parentIndex];
 
-      if(parentIndex > 0 &&
-         HasHigherPriority(node, parentNode))
+      if(parentIndex > 0 && HasHigherPriority(node, parentNode))
         CascadeUp(node);
       else
         CascadeDown(node);
     }
 
-    const int DefaultSize = 128;
-
     class QueueNode : PriorityQueueNode<TPriority> {
-      public TItem Data { get; private set; }
+      public TItem Data;
 
       public QueueNode(TItem data) {
         Data = data;

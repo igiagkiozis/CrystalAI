@@ -48,6 +48,7 @@
     <Compile Include="Tests\Actions\ActionTests.cs" />
     <Compile Include="Tests\Actions\BehaviourTransitionTests.cs" />
     <Compile Include="Tests\Actions\GenericActionBaseTests.cs" />
+    <Compile Include="Tests\Collections\BinaryHeapTests.cs" />
     <Compile Include="Tests\Collections\ThreadSafePriorityQueueTests.cs" />
     <Compile Include="Tests\Considerations\ConsiderationConstructorTests.cs" />
     <Compile Include="Tests\Evaluators\EvaluatorBaseTests.cs" />
