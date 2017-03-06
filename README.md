@@ -16,6 +16,7 @@ To get started check out the [Crystal AI pages](https://theldoctor.github.io/Cry
 - [Unity](https://unity3d.com/)
 
 ## History
+- v1.1.0 Faster implementation of the core simulation loop.
 - v1.0.0 Increased code-coverage to 95%. Fixed XML doc errors. Semantic versioning will be used from now on. 
 - v0.9.6 Completed in-code documenation (exported as XML). Simplified the API.
 - v0.7.2 Changed a portion of the API to make it more intuitive. Added a basic example project showcasing the AI. 
