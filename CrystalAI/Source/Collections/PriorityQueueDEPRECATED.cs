@@ -3,7 +3,7 @@
 // Copyright (c) 2016-2017 Bismur Studios Ltd.
 // Copyright (c) 2016-2017 Ioannis Giagkiozis
 // 
-// PriorityQueue.cs is part of Crystal AI.
+// PriorityQueueDEPRECATED.cs is part of Crystal AI.
 //  
 // Crystal AI is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,9 +22,7 @@ using System.Collections.Generic;
 
 
 namespace Crystal {
-
-  // The initial version of this file was based on https://github.com/BlueRaja/High-Speed-Priority-Queue-for-C-Sharp.git
-
+  
   /// <summary>
   ///   Priority queue node.
   /// </summary>
@@ -40,12 +38,12 @@ namespace Crystal {
     /// <summary>
     ///   Represents the current position in the queue
     /// </summary>
-    public int QueueIndex;
+    public int QueueIndex { get; set; }
 
     /// <summary>
     ///   Represents the order the node was inserted in
     /// </summary>
-    public long InsertionIndex;
+    public long InsertionIndex { get; set; }
   }
 
 
@@ -54,8 +52,8 @@ namespace Crystal {
   /// </summary>
   /// <typeparam name="TItem">The type of the item.</typeparam>
   /// <typeparam name="TPriority">The type of the priority.</typeparam>
-  /// <seealso cref="T:Crystal.IPriorityQueue`2"/>
-  public class PriorityQueue<TItem, TPriority> : IPriorityQueue<TItem, TPriority>
+  /// <seealso cref="T:Crystal.IPriorityQueueDEPRECATED`2"/>
+  public class PriorityQueueDEPRECATED<TItem, TPriority> : IPriorityQueueDEPRECATED<TItem, TPriority>
     where TPriority : IComparable<TPriority> {
     const int DefaultSize = 128;
     QueueNode[] _nodes;
@@ -224,19 +222,19 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="T:PriorityQueue`2"/> class.
+    ///   Initializes a new instance of the <see cref="T:PriorityQueueDEPRECATED`2"/> class.
     /// </summary>
-    public PriorityQueue() {
+    public PriorityQueueDEPRECATED() {
       _nodeCount = 0;
       _nodes = new QueueNode[DefaultSize + 1];
       _numNodesEverEnqueued = 0;
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="T:Crystal.PriorityQueue`2"/> class.
+    ///   Initializes a new instance of the <see cref="T:Crystal.PriorityQueueDEPRECATED`2"/> class.
     /// </summary>
     /// <param name="maxNodes">Max nodes.</param>
-    public PriorityQueue(int maxNodes) {
+    public PriorityQueueDEPRECATED(int maxNodes) {
       _nodeCount = 0;
       _nodes = maxNodes > 0 ? new QueueNode[maxNodes + 1] : new QueueNode[DefaultSize + 1];
       _numNodesEverEnqueued = 0;

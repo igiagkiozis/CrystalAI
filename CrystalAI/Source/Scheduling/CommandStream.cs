@@ -111,7 +111,7 @@ namespace Crystal {
     /// <param name="initialQueueSize">Initial queue size.</param>
     public CommandStream(int initialQueueSize) {
       _watch = new Stopwatch();
-      Queue = new PriorityQueue<QueuedCommand, float>(initialQueueSize);
+      Queue = new PriorityQueueDEPRECATED<QueuedCommand, float>(initialQueueSize);
     }
 
     void ResetVariables() {
@@ -164,7 +164,7 @@ namespace Crystal {
       TotalMilliseconds = _watch.Elapsed.TotalMilliseconds;
     }
 
-    internal IPriorityQueue<QueuedCommand, float> Queue;
+    internal IPriorityQueueDEPRECATED<QueuedCommand, float> Queue;
   }
 
 }

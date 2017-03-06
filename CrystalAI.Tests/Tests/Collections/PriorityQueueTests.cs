@@ -37,10 +37,10 @@ namespace Crystal.CollectionsTests {
   }
 
   [TestFixture]
-  public class PriorityQueueTests : PriorityQueueTestBase<PriorityQueue<Node, float>> {
+  public class PriorityQueueTests : PriorityQueueTestBase<PriorityQueueDEPRECATED<Node, float>> {
     [Test]
     public void SizeConstructorTest() {
-      var q = new PriorityQueue<Node, float>(128);
+      var q = new PriorityQueueDEPRECATED<Node, float>(128);
       Assert.IsNotNull(q);
     }
 
@@ -288,8 +288,8 @@ namespace Crystal.CollectionsTests {
       Assert.DoesNotThrow(() => Queue.UpdatePriority(node, 2));
     }
 
-    protected override PriorityQueue<Node, float> CreateQueue() {
-      return new PriorityQueue<Node, float>();
+    protected override PriorityQueueDEPRECATED<Node, float> CreateQueue() {
+      return new PriorityQueueDEPRECATED<Node, float>();
     }
 
     protected override bool IsValidQueue() {

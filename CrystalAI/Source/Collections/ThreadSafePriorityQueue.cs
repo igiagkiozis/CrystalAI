@@ -28,9 +28,9 @@ namespace Crystal {
   /// <summary>
   ///   Thread safe priority queue.
   /// </summary>
-  public class ThreadSafePriorityQueue<TItem, TPriority> : IPriorityQueue<TItem, TPriority>
+  public class ThreadSafePriorityQueue<TItem, TPriority> : IPriorityQueueDEPRECATED<TItem, TPriority>
     where TPriority : IComparable<TPriority> {
-    readonly PriorityQueue<TItem, TPriority> _queue;
+    readonly PriorityQueueDEPRECATED<TItem, TPriority> _queue;
 
     readonly ReaderWriterLockSlim _rwlock = new ReaderWriterLockSlim();
 
@@ -145,7 +145,7 @@ namespace Crystal {
     ///   class.
     /// </summary>
     public ThreadSafePriorityQueue() {
-      _queue = new PriorityQueue<TItem, TPriority>(DefaultSize);
+      _queue = new PriorityQueueDEPRECATED<TItem, TPriority>(DefaultSize);
     }
 
     /// <summary>
@@ -154,7 +154,7 @@ namespace Crystal {
     /// </summary>
     /// <param name="size">Size.</param>
     public ThreadSafePriorityQueue(int size) {
-      _queue = new PriorityQueue<TItem, TPriority>(size);
+      _queue = new PriorityQueueDEPRECATED<TItem, TPriority>(size);
     }
 
     const int DefaultSize = 128;

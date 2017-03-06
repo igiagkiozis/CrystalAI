@@ -22,7 +22,7 @@ using NUnit.Framework;
 
 namespace Crystal.CollectionsTests {
 
-  public abstract class PriorityQueueTestBase<TQueue> where TQueue : IPriorityQueue<Node, float> {
+  public abstract class PriorityQueueTestBase<TQueue> where TQueue : IPriorityQueueDEPRECATED<Node, float> {
     [SetUp]
     public void SetUp() {
       Queue = CreateQueue();
@@ -44,30 +44,31 @@ namespace Crystal.CollectionsTests {
       Dequeue();
       Assert.That(Queue.HasNext, Is.False);
     }
-
-    [Test]
-    public void RemoveUsingPredicateTest() {
-      Queue.Clear();
-      var node1 = new Node(1);
-      var node2 = new Node(2);
-      var node3 = new Node(3);
-      var node4 = new Node(4);
-
-      Enqueue(node1);
-      Enqueue(node2);
-      Enqueue(node3);
-      Enqueue(node4);
-
-      // Removes the first item whose priority is > 2
-      Queue.Remove(n => n.Priority > 2);
-      Assert.That(Queue.Count, Is.EqualTo(3));
-
-      Assert.That(Queue.Peek(), Is.EqualTo(node1));
-      Queue.Remove(n => n.Priority >= 1);
-      Assert.That(Queue.Peek(), Is.EqualTo(node2));
-      Queue.Remove(n => n.Priority >= 4);
-      Assert.That(Queue.Peek(), Is.EqualTo(node2));
-    }
+    
+    // TODO REMOVE DEPRECATED
+//    [Test]
+//    public void RemoveUsingPredicateTest() {
+//      Queue.Clear();
+//      var node1 = new Node(1);
+//      var node2 = new Node(2);
+//      var node3 = new Node(3);
+//      var node4 = new Node(4);
+//
+//      Enqueue(node1);
+//      Enqueue(node2);
+//      Enqueue(node3);
+//      Enqueue(node4);
+//
+//      // Removes the first item whose priority is > 2
+//      Queue.Remove(n => n.Priority > 2);
+//      Assert.That(Queue.Count, Is.EqualTo(3));
+//
+//      Assert.That(Queue.Peek(), Is.EqualTo(node1));
+//      Queue.Remove(n => n.Priority >= 1);
+//      Assert.That(Queue.Peek(), Is.EqualTo(node2));
+//      Queue.Remove(n => n.Priority >= 4);
+//      Assert.That(Queue.Peek(), Is.EqualTo(node2));
+//    }
 
     [Test]
     public void SanityTest() {
