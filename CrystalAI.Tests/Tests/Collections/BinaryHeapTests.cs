@@ -56,12 +56,52 @@ namespace CrystalAI.CollectionTests {
       h.Enqueue(new FloatHeapItem(0f));
       h.Enqueue(new FloatHeapItem(1f));
 
+      Assert.True(h.IsBinaryHeapValid());
+
       Assert.AreEqual(2, h.Count);
+      Assert.True(h.IsBinaryHeapValid());
 
       Console.WriteLine(h.Dequeue().ToString());
       Console.WriteLine(h.Dequeue().ToString());
+
+      Assert.True(h.IsBinaryHeapValid());
 
       Assert.AreEqual(0, h.Count);
+
+      for(int i = 0; i < 1024; i++) {
+        h.Enqueue(new FloatHeapItem((float)i));
+        Assert.True(h.IsBinaryHeapValid());
+      }
+
+      Assert.AreEqual(1024, h.Count);
+      Assert.True(h.IsBinaryHeapValid());
+
+      h.Clear();
+      Assert.True(h.IsBinaryHeapValid());
+
+      Assert.AreEqual(0, h.Count);
+
+      var i1 = new FloatHeapItem(0f);
+      var i2 = new FloatHeapItem(0f);
+      h.Enqueue(i1);
+      h.Enqueue(i2);
+
+      h.Remove(i2);
+      Assert.AreEqual(1, h.Count);
+      Assert.True(h.IsBinaryHeapValid());
+
+      h.Remove(i1);
+      Assert.AreEqual(0, h.Count);
+      Assert.True(h.IsBinaryHeapValid());
+
+      h.Enqueue(i1);
+      h.Enqueue(i2);
+
+      i1.Value = 1f;
+      h.UpdatePriority(i1);
+      Assert.True(h.IsBinaryHeapValid());
+      Assert.That(h.Dequeue() == i2);
+      Assert.That(h.Dequeue() == i1);
     }
 
   }

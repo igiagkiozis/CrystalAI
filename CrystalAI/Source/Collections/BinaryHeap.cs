@@ -1,73 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 
 namespace CrystalAI {
 
-  public interface IPriorityQueueHandle<T> {    
+  public interface IPriorityQueueHandle<T> {
   }
 
-  public interface IHeapItem<T>  {    
+  public interface IHeapItem<T> {
     IPriorityQueueHandle<T> Handle { get; set; }
   }
-  
-  class BinaryHeap<T> where T : class, IHeapItem<T> {
 
+  internal class BinaryHeap<T> where T : class, IHeapItem<T> {
+    const int DefaultSize = 128;
+
+    ulong _runningCount;
     IComparer<T> _comparer = Comparer<T>.Default;
-
-    [Serializable]
-    class Handle : IPriorityQueueHandle<T> {
-      /// <summary>
-      /// To save space, the index is 2*cell for heap[cell].first, and 2*cell+1 for heap[cell].last
-      /// </summary>
-      internal int index = -1;
-
-      public override string ToString() {
-        return string.Format("[{0}]", index);
-      }
-    }
-    
-    class HeapNode {
-      internal T Item;
-      internal Handle Handle;
-
-      public HeapNode() {
-        Item = null;
-        Handle = null;
-      }
-
-      public HeapNode(T item) {
-        Item = item;
-        Handle = new Handle();
-        Item.Handle = Handle;
-      }
-
-      ~HeapNode() {
-        Item.Handle = null;
-      }
-
-      public override string ToString() {
-        return string.Format("[{0}]", Item);
-      }
-    }
-
     int _heapSize;
     HeapNode[] _heap;
-
-    const int DefaultSize = 128;
 
 
     /// <summary>
     ///   Returns true if there is an element at the head of the queue, i.e. if the queue is not
     ///   empty.
     /// </summary>
-    public bool HasNext { get { return _heapSize > 0; } }
+    public bool HasNext {
+      get { return _heapSize > 0; }
+    }
 
     /// <summary>
     ///   Returns the number of items in the queue.
     /// </summary>
-    public int Count { get { return _heapSize; } }
+    public int Count {
+      get { return _heapSize; }
+    }
 
     /// <summary>
     ///   Returns the item at the head of the queue without removing it.
@@ -88,14 +54,9 @@ namespace CrystalAI {
 
       _heapSize++;
       _heap[_heapSize] = node;
-      node.Handle.index = _heapSize;
+      node.Handle.Index = _heapSize;
+      node.Handle.Order = _runningCount++;
       MinBubbleUp(_heapSize);
-    }
-
-    void ResizeHeap() {
-      var resizedHeap = new HeapNode[2 * _heap.Length];
-      Array.Copy(_heap, 1, resizedHeap, 1, _heapSize);
-      _heap = resizedHeap;
     }
 
     /// <summary>
@@ -119,10 +80,10 @@ namespace CrystalAI {
     /// </summary>
     public bool Contains(T item) {
       Handle h = item.Handle as Handle;
-      if(h == null || h.index > _heapSize)
+      if(h == null || h.Index > _heapSize)
         return false;
-      
-      return _heap[h.index].Item == item;      
+
+      return _heap[h.Index].Item == item;
     }
 
     /// <summary>
@@ -130,9 +91,31 @@ namespace CrystalAI {
     ///   which case this removes the one that is closest to the head.
     /// </summary>
     /// <param name="item">Item.</param>
-    public T Remove(T item) {
-      
-      return default(T);
+    public void Remove(T item) {
+      if(item == null)
+        return;
+
+      Handle itemHandle = item.Handle as Handle;
+      if(itemHandle == null)
+        return;
+
+      int itemIndex = itemHandle.Index;
+
+      if(itemIndex == _heapSize) {
+        _heap[_heapSize] = null;
+        _heapSize--;
+        return;
+      }
+
+      Swap(itemIndex, _heapSize);
+      _heap[_heapSize] = null;
+      _heapSize--;
+      int parent = itemIndex >> 1;
+
+      if(parent > 0 && _comparer.Compare(_heap[itemIndex].Item, _heap[parent].Item) < 0)
+        MinBubbleUp(itemIndex);
+      else
+        MinHeapify(itemIndex);
     }
 
     /// <summary>
@@ -140,7 +123,18 @@ namespace CrystalAI {
     ///   returns.
     /// </summary>
     public void UpdatePriority(T item) {
-      
+      Handle h = item.Handle as Handle;
+      if(h == null)
+        return;
+
+      int idx = h.Index;
+      h.Order = _runningCount++;
+      int parent = idx >> 1;
+
+      if(parent > 0 && _comparer.Compare(_heap[idx].Item, _heap[parent].Item) < 0)
+        MinBubbleUp(idx);
+      else
+        MinHeapify(idx);
     }
 
     /// <summary>
@@ -150,7 +144,26 @@ namespace CrystalAI {
       Array.Clear(_heap, 1, _heapSize);
       _heapSize = 0;
     }
-    
+
+    public bool IsBinaryHeapValid() {
+      for(int i = 1; i < _heap.Length; i++)
+        if(_heap[i] != null) {
+          int childLeftIndex = i << 1;
+          if(childLeftIndex < _heap.Length &&
+             _heap[childLeftIndex] != null &&
+             _comparer.Compare(_heap[childLeftIndex].Item, _heap[i].Item) < 0)
+            return false;
+
+          int childRightIndex = childLeftIndex | 1;
+          if(childRightIndex < _heap.Length &&
+             _heap[childRightIndex] != null &&
+             _comparer.Compare(_heap[childRightIndex].Item, _heap[i].Item) < 0)
+            return false;
+        }
+
+      return true;
+    }
+
     public BinaryHeap() {
       _heap = new HeapNode[DefaultSize];
       _heapSize = 0;
@@ -162,19 +175,24 @@ namespace CrystalAI {
       _comparer = comparer;
     }
 
+    void ResizeHeap() {
+      var resizedHeap = new HeapNode[2 * _heap.Length];
+      Array.Copy(_heap, 1, resizedHeap, 1, _heapSize);
+      _heap = resizedHeap;
+    }
+
     void MaxHeapify(int i) {
       int largest;
       int left = i << 1;
-      int right = (i<<1) | 1;
-      if(left <= _heapSize && _comparer.Compare(_heap[left].Item, _heap[i].Item) > 0) {
-        largest = left;
-      } else {
-        largest = i;
-      }
+      int right = (i << 1) | 1;
 
-      if(right <= _heapSize && _comparer.Compare(_heap[right].Item, _heap[i].Item) > 0) {
+      if(left <= _heapSize && _comparer.Compare(_heap[left].Item, _heap[i].Item) > 0)
+        largest = left;
+      else
+        largest = i;
+
+      if(right <= _heapSize && _comparer.Compare(_heap[right].Item, _heap[i].Item) > 0)
         largest = right;
-      }
 
       if(largest != i) {
         Swap(i, largest);
@@ -186,14 +204,18 @@ namespace CrystalAI {
       int smallest;
       int left = i << 1;
       int right = (i << 1) | 1;
-      if(left <= _heapSize && _comparer.Compare(_heap[left].Item, _heap[i].Item) < 0) {
-        smallest = left;
-      } else {
-        smallest = i;
+
+      smallest = i;
+      if(left <= _heapSize) {
+        var cmp = _comparer.Compare(_heap[left].Item, _heap[i].Item);
+        if(cmp < 0 || cmp == 0 && _heap[left].Handle.Order < _heap[i].Handle.Order)
+          smallest = left;
       }
 
-      if(right <= _heapSize && _comparer.Compare(_heap[right].Item, _heap[i].Item) < 0) {
-        smallest = right;
+      if(right <= _heapSize) {
+        var cmp = _comparer.Compare(_heap[right].Item, _heap[i].Item);
+        if(cmp < 0 || cmp == 0 && _heap[right].Handle.Order < _heap[i].Handle.Order)
+          smallest = right;
       }
 
       if(smallest != i) {
@@ -201,14 +223,13 @@ namespace CrystalAI {
         MinHeapify(smallest);
       }
     }
-    
+
     void MinBubbleUp(int i) {
       if(i < 1)
         return;
 
       T c = _heap[i].Item;
       T p = c;
-      Handle minHandle = _heap[i].Handle;
       int parent = i >> 1;
 
       while(parent > 0) {
@@ -227,12 +248,43 @@ namespace CrystalAI {
       _heap[i] = _heap[j];
       _heap[j] = tmp;
 
-      _heap[i].Handle.index = i;
-      _heap[j].Handle.index = j;
+      _heap[i].Handle.Index = i;
+      _heap[j].Handle.Index = j;
     }
 
+    [Serializable]
+    class Handle : IPriorityQueueHandle<T> {
+      public override string ToString() {
+        return string.Format("[{0}]", Index);
+      }
 
+      internal int Index = -1;
+      internal ulong Order;
+    }
+
+    class HeapNode {
+      public override string ToString() {
+        return string.Format("[{0}]", Item);
+      }
+
+      public HeapNode() {
+        Item = null;
+        Handle = null;
+      }
+
+      public HeapNode(T item) {
+        Item = item;
+        Handle = new Handle();
+        Item.Handle = Handle;
+      }
+
+      internal T Item;
+      internal Handle Handle;
+
+      ~HeapNode() {
+        Item.Handle = null;
+      }
+    }
   }
-
 
 }
