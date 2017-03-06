@@ -62,11 +62,11 @@
     <Compile Include="Source\Behaviours\BehaviourCollection.cs" />
     <Compile Include="Source\Behaviours\Interfaces\IBehaviour.cs" />
     <Compile Include="Source\Behaviours\Interfaces\IBehaviourCollection.cs" />
+    <Compile Include="Source\Collections\PriorityQueue.cs" />
     <Compile Include="Source\Collections\CircularBuffer.cs" />
     <Compile Include="Source\Collections\ICircularBuffer.cs" />
     <Compile Include="Source\Collections\IPriorityQueue.cs" />
     <Compile Include="Source\Collections\MovingAverage.cs" />
-    <Compile Include="Source\Collections\PriorityQueue.cs" />
     <Compile Include="Source\Collections\ThreadSafePriorityQueue.cs" />
     <Compile Include="Source\Considerations\CompositeConsideration.cs" />
     <Compile Include="Source\Considerations\ConsiderationBase.cs" />

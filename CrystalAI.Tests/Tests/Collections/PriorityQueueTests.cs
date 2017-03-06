@@ -1,300 +1,400 @@
-﻿// GPL v3 License
-// 
-// Copyright (c) 2016-2017 Bismur Studios Ltd.
-// Copyright (c) 2016-2017 Ioannis Giagkiozis
-// 
-// PriorityQueueTests.cs is part of Crystal AI.
-//  
-// Crystal AI is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//  
-// Crystal AI is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using Crystal;
 using NUnit.Framework;
 
-
-namespace Crystal.CollectionsTests {
-
-  public class Node : PriorityQueueNode<float> {
-    public override string ToString() {
-      return string.Format(
-                           "Priority: {0}, InsertionIndex: {1}, QueueIndex: {2}",
-                           Priority,
-                           InsertionIndex,
-                           QueueIndex);
-    }
-
-    public Node(float priority) {
-      Priority = priority;
-    }
-  }
+namespace CrystalAI.CollectionTests {
 
   [TestFixture]
-  public class PriorityQueueTests : PriorityQueueTestBase<PriorityQueue<Node, float>> {
-    [Test]
-    public void SizeConstructorTest() {
-      var q = new PriorityQueue<Node, float>(128);
-      Assert.IsNotNull(q);
+  class PriorityQueueTests {
+    
+    TestHeapItemComparer _testHeapComparer;
+    PriorityQueue<TestHeapItem> _pq;
+    const int N = 100000;
+
+    [OneTimeSetUp]
+    public void Initialize() {
+      _testHeapComparer = new TestHeapItemComparer();
+      _pq = new PriorityQueue<TestHeapItem>(_testHeapComparer);
     }
 
-    [Test]
-    public void OrderedQueueTest() {
-      Node node1 = new Node(1);
-      Node node2 = new Node(1);
-      Node node3 = new Node(1);
-      Node node4 = new Node(1);
-      Node node5 = new Node(1);
-
-      Enqueue(node1);
-      Enqueue(node2);
-      Enqueue(node3);
-      Enqueue(node4);
-      Enqueue(node5);
-
-      Assert.AreEqual(node1, Dequeue());
-      Assert.AreEqual(node2, Dequeue());
-      Assert.AreEqual(node3, Dequeue());
-      Assert.AreEqual(node4, Dequeue());
-      Assert.AreEqual(node5, Dequeue());
-    }
-
-    [Test]
-    public void MoreComplicatedOrderedQueueTest() {
-      Node node11 = new Node(1);
-      Node node12 = new Node(1);
-      Node node13 = new Node(1);
-      Node node14 = new Node(1);
-      Node node15 = new Node(1);
-      Node node21 = new Node(2);
-      Node node22 = new Node(2);
-      Node node23 = new Node(2);
-      Node node24 = new Node(2);
-      Node node25 = new Node(2);
-      Node node31 = new Node(3);
-      Node node32 = new Node(3);
-      Node node33 = new Node(3);
-      Node node34 = new Node(3);
-      Node node35 = new Node(3);
-      Node node41 = new Node(4);
-      Node node42 = new Node(4);
-      Node node43 = new Node(4);
-      Node node44 = new Node(4);
-      Node node45 = new Node(4);
-      Node node51 = new Node(5);
-      Node node52 = new Node(5);
-      Node node53 = new Node(5);
-      Node node54 = new Node(5);
-      Node node55 = new Node(5);
-
-      Enqueue(node31);
-      Enqueue(node51);
-      Enqueue(node52);
-      Enqueue(node11);
-      Enqueue(node21);
-      Enqueue(node22);
-      Enqueue(node53);
-      Enqueue(node41);
-      Enqueue(node12);
-      Enqueue(node32);
-      Enqueue(node13);
-      Enqueue(node42);
-      Enqueue(node43);
-      Enqueue(node44);
-      Enqueue(node45);
-      Enqueue(node54);
-      Enqueue(node14);
-      Enqueue(node23);
-      Enqueue(node24);
-      Enqueue(node33);
-      Enqueue(node34);
-      Enqueue(node55);
-      Enqueue(node35);
-      Enqueue(node25);
-      Enqueue(node15);
-
-      Assert.AreEqual(node11, Dequeue());
-      Assert.AreEqual(node12, Dequeue());
-      Assert.AreEqual(node13, Dequeue());
-      Assert.AreEqual(node14, Dequeue());
-      Assert.AreEqual(node15, Dequeue());
-      Assert.AreEqual(node21, Dequeue());
-      Assert.AreEqual(node22, Dequeue());
-      Assert.AreEqual(node23, Dequeue());
-      Assert.AreEqual(node24, Dequeue());
-      Assert.AreEqual(node25, Dequeue());
-      Assert.AreEqual(node31, Dequeue());
-      Assert.AreEqual(node32, Dequeue());
-      Assert.AreEqual(node33, Dequeue());
-      Assert.AreEqual(node34, Dequeue());
-      Assert.AreEqual(node35, Dequeue());
-      Assert.AreEqual(node41, Dequeue());
-      Assert.AreEqual(node42, Dequeue());
-      Assert.AreEqual(node43, Dequeue());
-      Assert.AreEqual(node44, Dequeue());
-      Assert.AreEqual(node45, Dequeue());
-      Assert.AreEqual(node51, Dequeue());
-      Assert.AreEqual(node52, Dequeue());
-      Assert.AreEqual(node53, Dequeue());
-      Assert.AreEqual(node54, Dequeue());
-      Assert.AreEqual(node55, Dequeue());
-    }
-
-    [Test]
-    public void QueueAutomaticallyResizesTest() {
-      for(int i = 0; i < 1000; i++) {
-        Enqueue(new Node(i));
-        Assert.AreEqual(i + 1, Queue.Count);
-      }
-
-      for(int i = 0; i < 1000; i++) {
-        Node node = Dequeue();
-        Assert.AreEqual(i, node.Priority);
+    public class TestHeapItemComparer : IComparer<TestHeapItem> {
+      /// <summary>Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.</summary>
+      /// <returns>Value Condition Less than zero<paramref name="x" /> is less than <paramref name="y" />.Zero<paramref name="x" /> equals <paramref name="y" />.Greater than zero<paramref name="x" /> is greater than <paramref name="y" />.</returns>
+      /// <param name="x">The first object to compare.</param>
+      /// <param name="y">The second object to compare.</param>
+      public int Compare(TestHeapItem x, TestHeapItem y) {
+        return x.Priority.CompareTo(y.Priority);
       }
     }
 
-    [Test]
-    public void DequeueIsNullOnEmptyQueueTest() {
-      Assert.IsNull(Queue.Dequeue());
+    public class TestHeapItem : IHeapItem<TestHeapItem> {      
+      public float Value;
+      public float Priority;
+
+      IPriorityQueueHandle<TestHeapItem> IHeapItem<TestHeapItem>.Handle { get; set; }
+
+      /// <summary>Returns a string that represents the current object.</summary>
+      /// <returns>A string that represents the current object.</returns>
+      public override string ToString() {
+        return string.Format("Value : {0}, Priority : {1}", Value, Priority);
+      }
+
+      public TestHeapItem() {
+        Value = 0f;
+        Priority = 0f;
+      }
+
+      public TestHeapItem(float value, float priority) {
+        Value = value;
+        Priority = priority;
+      }
     }
+    
 
     [Test]
-    public void DequeueIsNullOnEmptyQueue2Test() {
-      Node node1 = new Node(1);
-      Node node2 = new Node(2);
-
-      Enqueue(node1);
-      Enqueue(node2);
-
-      Dequeue();
-      Dequeue();
-      Assert.IsNull(Queue.Dequeue());
-    }
-
-    [Test]
-    public void PeekNullOnEmptyQueueTest() {
-      Assert.IsNull(Queue.Peek());
-    }
-
-    [Test]
-    public void PeekNullOnEmptyQueue2Test() {
-      Node node1 = new Node(1);
-      Node node2 = new Node(2);
-
-      Enqueue(node1);
-      Enqueue(node2);
-
-      Dequeue();
-      Dequeue();
-      Assert.IsNull(Queue.Peek());
+    public void DefaultConstructorTest() {
+      var h = new PriorityQueue<TestHeapItem>();
+      Assert.IsNotNull(h);
     }
 
     [Test]
-    public void EnqueueRemovesOneCopyOfItemTest() {
-      Node node = new Node(1);
-
-      Enqueue(node);
-      Enqueue(node);
-
-      Assert.AreEqual(2, Queue.Count);
-      Assert.IsTrue(Queue.Contains(node));
-
-      Queue.Remove(node);
-
-      Assert.AreEqual(1, Queue.Count);
-      Assert.IsTrue(Queue.Contains(node));
-
-      Queue.Remove(node);
-
-      Assert.AreEqual(0, Queue.Count);
-      Assert.IsFalse(Queue.Contains(node));
+    public void ComparerOnlyConstructorTest() {
+      var h = new PriorityQueue<TestHeapItem>(_testHeapComparer);
+      Assert.IsNotNull(h);
     }
 
     [Test]
-    public void EnqueueRemovesFirstCopyOfItemTest() {
-      Node node11 = new Node(1);
-      Node node12 = new Node(1);
-
-      Enqueue(node11);
-      Enqueue(node12);
-      Enqueue(node11);
-
-      Assert.AreEqual(node11, Queue.Peek());
-
-      Queue.Remove(node11);
-
-      Assert.AreEqual(node12, Dequeue());
-      Assert.AreEqual(node11, Dequeue());
-      Assert.AreEqual(0, Queue.Count);
+    public void TwoParamConstructorTest() {
+      var h = new PriorityQueue<TestHeapItem>(100, _testHeapComparer);
+      Assert.IsNotNull(h);
     }
 
     [Test]
-    public void MultipleCopiesOfSameItemTest() {
-      Node node1 = new Node(1);
-      Node node21 = new Node(2);
-      Node node22 = new Node(2);
-      Node node3 = new Node(3);
+    public void EnqueueDequeueTest() {
+      _pq.Clear();
+      var item1 = new TestHeapItem(0f, 0f);
+      var item2 = new TestHeapItem(0f, 2f);
+      var item3 = new TestHeapItem(0f, 5f);
+      var item4 = new TestHeapItem(0f, 4f);
+      var item5 = new TestHeapItem(0f, 8f);
 
-      Enqueue(node1);
-      Enqueue(node21);
-      Enqueue(node22);
-      Enqueue(node21);
-      Enqueue(node22);
-      Enqueue(node3);
-      Enqueue(node3);
-      Enqueue(node1);
+      _pq.Enqueue(item3);
+      _pq.Enqueue(item2);
+      _pq.Enqueue(item1);
+      _pq.Enqueue(item4);
+      _pq.Enqueue(item5);
 
-      Assert.AreEqual(node1, Dequeue());
-      Assert.AreEqual(node1, Dequeue());
-      Assert.AreEqual(node21, Dequeue());
-      Assert.AreEqual(node22, Dequeue());
-      Assert.AreEqual(node21, Dequeue());
-      Assert.AreEqual(node22, Dequeue());
-      Assert.AreEqual(node3, Dequeue());
-      Assert.AreEqual(node3, Dequeue());
+      Assert.AreEqual(5, _pq.Count);
+      Assert.True(_pq.IsHeapValid());
+
+      Assert.AreEqual(item1, _pq.Dequeue());
+      Assert.AreEqual(item2, _pq.Peek());
+      Assert.True(_pq.IsHeapValid());
+      Assert.AreEqual(4, _pq.Count);
+      Assert.True(_pq.HasNext);
+
+      Assert.AreEqual(item2, _pq.Dequeue());
+      Assert.AreEqual(item4, _pq.Peek());
+      Assert.True(_pq.IsHeapValid());
+      Assert.AreEqual(3, _pq.Count);
+      Assert.True(_pq.HasNext);
+
+      Assert.AreEqual(item4, _pq.Dequeue());
+      Assert.AreEqual(item3, _pq.Peek());
+      Assert.True(_pq.IsHeapValid());
+      Assert.AreEqual(2, _pq.Count);
+      Assert.True(_pq.HasNext);
+
+      Assert.AreEqual(item3, _pq.Dequeue());
+      Assert.AreEqual(item5, _pq.Peek());
+      Assert.True(_pq.IsHeapValid());
+      Assert.AreEqual(1, _pq.Count);
+      Assert.True(_pq.HasNext);
+
+      Assert.AreEqual(item5, _pq.Dequeue());
+      Assert.AreEqual(null, _pq.Peek());
+      Assert.True(_pq.IsHeapValid());
+      Assert.AreEqual(0, _pq.Count);
+      Assert.False(_pq.HasNext);
     }
 
     [Test]
-    public void EnqueuingNullTest() {
-      Queue.Enqueue(null, 1);
-      Assert.AreEqual(1, Queue.Count);
-      Assert.AreEqual(null, Queue.Peek());
-      Assert.IsTrue(Queue.Contains(null));
-      Assert.IsFalse(Queue.Contains(new Node(1)));
+    public void EnqueueDequeueOrderTest() {
+      _pq.Clear();
+      var item1 = new TestHeapItem(1f, 0f);
+      var item2 = new TestHeapItem(2f, 0f);
+      var item3 = new TestHeapItem(3f, 1f);
+      var item4 = new TestHeapItem(4f, 1f);
+      var item5 = new TestHeapItem(5f, 1f);
 
-      Assert.AreEqual(null, Dequeue());
+      _pq.Enqueue(item1);
+      _pq.Enqueue(item2);
+      _pq.Enqueue(item3);
+      _pq.Enqueue(item4);
+      _pq.Enqueue(item5);
 
-      Assert.AreEqual(0, Queue.Count);
-      Assert.IsFalse(Queue.Contains(null));
+      Assert.AreEqual(5, _pq.Count);
+      Assert.True(_pq.IsHeapValid());
+
+      Assert.AreEqual(item1, _pq.Dequeue());
+      Assert.True(_pq.IsHeapValid());
+      Assert.AreEqual(4, _pq.Count);
+      Assert.True(_pq.HasNext);
+
+      Assert.AreEqual(item2, _pq.Dequeue());
+      Assert.True(_pq.IsHeapValid());
+      Assert.AreEqual(3, _pq.Count);
+      Assert.True(_pq.HasNext);
+
+      Assert.AreEqual(item3, _pq.Dequeue());
+      Assert.True(_pq.IsHeapValid());
+      Assert.AreEqual(2, _pq.Count);
+      Assert.True(_pq.HasNext);
+
+      Assert.AreEqual(item4, _pq.Dequeue());
+      Assert.True(_pq.IsHeapValid());
+      Assert.AreEqual(1, _pq.Count);
+      Assert.True(_pq.HasNext);
+
+      Assert.AreEqual(item5, _pq.Dequeue());
+      Assert.True(_pq.IsHeapValid());
+      Assert.AreEqual(0, _pq.Count);
+      Assert.False(_pq.HasNext);
     }
 
     [Test]
-    public void RemoveIsGracefulOnNodeNotInQueueTest() {
-      Node node = new Node(1);
+    public void EnqueueDequeueLargeScaleTest() {
+      _pq.Clear();
+      var itemList = new List<TestHeapItem>();
+      for(int i = 0; i < N; i++) {
+        itemList.Add(new TestHeapItem(0f, i));
+      }
 
-      Assert.DoesNotThrow(() => Queue.Remove(node));
+      for(int i = N - 1; i >= 0; i--) {
+        _pq.Enqueue(itemList[i]);        
+      }
+      Assert.True(_pq.IsHeapValid());
+
+      int count = 0;
+      while(_pq.HasNext) {
+        Assert.AreEqual(itemList[count], _pq.Dequeue());
+        if(count == N / 2) // Good as any point
+          Assert.True(_pq.IsHeapValid());
+        Assert.False(_pq.Contains(itemList[count]));
+        count++;
+      }
+      Assert.True(_pq.IsHeapValid());
     }
 
     [Test]
-    public void UpdatePriorityIsGracefulOnNodeNotInQueueTest() {
-      Node node = new Node(1);
+    public void ContainsTest() {
+      _pq.Clear();
+      var item1 = new TestHeapItem(0f, 0f);
+      var item2 = new TestHeapItem(0f, 1f);
+      var item3 = new TestHeapItem(0f, 2f);
+      var item4 = new TestHeapItem(0f, 3f);
+      var item5 = new TestHeapItem(0f, 4f);
+      var item6 = new TestHeapItem(11f, 100f);
 
-      Assert.DoesNotThrow(() => Queue.UpdatePriority(node, 2));
+      _pq.Enqueue(item3);
+      _pq.Enqueue(item2);
+      _pq.Enqueue(item1);
+      _pq.Enqueue(item4);
+      _pq.Enqueue(item5);
+
+
+      Assert.True(_pq.Contains(item1));
+      Assert.True(_pq.Contains(item2));
+      Assert.True(_pq.Contains(item3));
+      Assert.True(_pq.Contains(item4));
+      Assert.True(_pq.Contains(item5));
+      Assert.False(_pq.Contains(item6));
+
+      Assert.AreEqual(5, _pq.Count);
+      Assert.True(_pq.IsHeapValid());
+
+      Assert.AreEqual(item1, _pq.Dequeue());
+      Assert.True(_pq.IsHeapValid());
+      Assert.False(_pq.Contains(item1));
+
+      Assert.AreEqual(item2, _pq.Dequeue());
+      Assert.True(_pq.IsHeapValid());
+      Assert.False(_pq.Contains(item2));
+      
+      Assert.AreEqual(item3, _pq.Dequeue());
+      Assert.True(_pq.IsHeapValid());
+      Assert.False(_pq.Contains(item3));
+
+      Assert.AreEqual(item4, _pq.Dequeue());
+      Assert.True(_pq.IsHeapValid());
+      Assert.False(_pq.Contains(item4));
+
+      Assert.AreEqual(item5, _pq.Dequeue());
+      Assert.True(_pq.IsHeapValid());
+      Assert.False(_pq.Contains(item5));
     }
 
-    protected override PriorityQueue<Node, float> CreateQueue() {
-      return new PriorityQueue<Node, float>();
+    [Test]
+    public void RemoveTest() {
+      _pq.Clear();
+      var item1 = new TestHeapItem(0f, 0f);
+      var item2 = new TestHeapItem(0f, 1f);
+      var item3 = new TestHeapItem(0f, 2f);
+      var item4 = new TestHeapItem(0f, 3f);
+      var item5 = new TestHeapItem(0f, 4f);
+
+      _pq.Enqueue(item3);
+      _pq.Enqueue(item2);
+      _pq.Enqueue(item1);
+      _pq.Enqueue(item4);
+      _pq.Enqueue(item5);
+      
+      Assert.AreEqual(5, _pq.Count);
+      Assert.True(_pq.IsHeapValid());
+
+      _pq.Remove(item1);
+      Assert.True(_pq.IsHeapValid());
+      Assert.False(_pq.Contains(item1));
+
+      _pq.Remove(item2);
+      Assert.True(_pq.IsHeapValid());
+      Assert.False(_pq.Contains(item2));
+
+      _pq.Remove(item3);
+      Assert.True(_pq.IsHeapValid());
+      Assert.False(_pq.Contains(item3));
+
+      _pq.Remove(item4);
+      Assert.True(_pq.IsHeapValid());
+      Assert.False(_pq.Contains(item4));
+
+      _pq.Remove(item5);
+      Assert.True(_pq.IsHeapValid());
+      Assert.False(_pq.Contains(item5));
     }
 
-    protected override bool IsValidQueue() {
-      return Queue.IsBinaryHeapValid();
+    [Test]
+    public void RemoveLargeScaleTest() {
+      _pq.Clear();
+      var rnd = new Random();
+      var itemsList = new List<TestHeapItem>();
+
+      for(int i = 0; i < N; i++) {
+        float priority = 10000f * (float)rnd.NextDouble();
+        itemsList.Add(new TestHeapItem(rnd.Next(), priority));
+      }
+
+      for(int i = 0; i < N; i++) {
+        _pq.Enqueue(itemsList[i]);
+      }
+      Assert.True(_pq.IsHeapValid());
+
+      for(int i = 0; i < N; i++) {
+        _pq.Remove(itemsList[i]);
+        Assert.False(_pq.Contains(itemsList[i]));
+      }
+      Assert.True(_pq.IsHeapValid());
     }
+
+    [Test]
+    public void UpdatePriorityTest() {
+      _pq.Clear();
+      var item1 = new TestHeapItem(0f, 0f);
+      var item2 = new TestHeapItem(0f, 1f);
+      var item3 = new TestHeapItem(0f, 2f);
+      var item4 = new TestHeapItem(0f, 3f);
+      var item5 = new TestHeapItem(0f, 4f);
+
+      _pq.Enqueue(item3);
+      _pq.Enqueue(item2);
+      _pq.Enqueue(item1);
+      _pq.Enqueue(item4);
+      _pq.Enqueue(item5);
+
+      Assert.AreEqual(item1, _pq.Peek());
+
+      item5.Priority = -1f;
+      _pq.UpdatePriority(item5);
+      Assert.AreEqual(item5, _pq.Peek());
+
+      item4.Priority = -2f;
+      _pq.UpdatePriority(item4);
+      Assert.AreEqual(item4, _pq.Peek());
+
+      item3.Priority = -3f;
+      _pq.UpdatePriority(item3);
+      Assert.AreEqual(item3, _pq.Peek());
+
+      item2.Priority = -4f;
+      _pq.UpdatePriority(item2);
+      Assert.AreEqual(item2, _pq.Peek());
+
+      item1.Priority = -5f;
+      _pq.UpdatePriority(item1);
+      Assert.AreEqual(item1, _pq.Peek());
+    }
+
+    [Test]
+    public void UpdatePriorityLargeScaleTest() {
+      _pq.Clear();
+      var itemList = new List<TestHeapItem>();
+      var rnd = new Random();
+      for(int i = 0; i < N; i++) {
+        itemList.Add(new TestHeapItem(rnd.Next(), i));
+        _pq.Enqueue(itemList[i]);
+      }
+
+      float priority = -1f;
+      for(int i = N - 1; i >= 0; i--) {
+        var item = itemList[i];
+        item.Priority = priority;
+        _pq.UpdatePriority(item);
+        Assert.AreEqual(item, _pq.Peek());
+        priority--;
+      }
+    }
+
+    [Test, Ignore("Benchmark")]
+    public void EnqueueRemoveBenchmark() {
+      //prevent the JIT Compiler from optimizing Fkt calls away
+      long seed = Environment.TickCount;
+      //use the second Core/Processor for the test
+      Process.GetCurrentProcess().ProcessorAffinity = new IntPtr(2);
+      //prevent "Normal" Processes from interrupting Threads
+      Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+      //prevent "Normal" Threads from interrupting this thread
+      Thread.CurrentThread.Priority = ThreadPriority.Highest;
+      
+      Stopwatch sw = new Stopwatch();
+
+      _pq.Clear();
+      var itemList = new List<TestHeapItem>();
+      var rnd = new Random();
+
+      for(int i = 0; i < N; i++) {
+        itemList.Add(new TestHeapItem(rnd.Next(), 100f * (float)rnd.NextDouble()));
+      }
+
+      sw.Reset();
+      sw.Start();
+      for(int i = 0; i < N; i++) {
+        _pq.Enqueue(itemList[i]);
+      }
+      sw.Stop();
+      Console.WriteLine("Enqueue : {0}", sw.Elapsed.TotalMilliseconds);
+
+      sw.Reset();
+      sw.Start();
+      for(int i = 0; i < N; i++) {
+        _pq.Remove(itemList[i]);
+      }
+      sw.Stop();
+      Console.WriteLine("Remove : {0}", sw.Elapsed.TotalMilliseconds);      
+    }
+    
   }
 
 }

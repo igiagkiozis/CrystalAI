@@ -1,101 +1,165 @@
-﻿// GPL v3 License
-// 
-// Copyright (c) 2016-2017 Bismur Studios Ltd.
-// Copyright (c) 2016-2017 Ioannis Giagkiozis
-// 
-// PriorityQueue.cs is part of Crystal AI.
-//  
-// Crystal AI is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//  
-// Crystal AI is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 
 namespace Crystal {
 
-  // The initial version of this file was based on https://github.com/BlueRaja/High-Speed-Priority-Queue-for-C-Sharp.git
-
   /// <summary>
-  /// Priority queue node.
+  ///   A standard priority queue implemented using a min-heap with some extra functionality
+  ///   such as "contains" test and efficient item removal.
   /// </summary>
-  public class PriorityQueueNode<TPriority> {
-    /// <summary>
-    ///   The Priority to insert this node at.  Must be set BEFORE adding a node to the queue
-    ///   (ideally just once, in the node's constructor).
-    ///   Should not be manually edited once the node has been enqueued - use queue.UpdatePriority()
-    ///   instead
-    /// </summary>
-    public TPriority Priority { get; protected internal set; }
+  /// <typeparam name="TQueuedItem">The type of the queued item.</typeparam>
+  /// <seealso cref="Crystal.IPriorityQueue{TQueuedItem}"/>
+  public class PriorityQueue<TQueuedItem> : IPriorityQueue<TQueuedItem>
+    where TQueuedItem : class, IHeapItem<TQueuedItem> {
+    const int DefaultSize = 128;
 
-    /// <summary>
-    ///   Represents the current position in the queue
-    /// </summary>
-    public int QueueIndex { get; internal set; }
-
-    /// <summary>
-    ///   Represents the order the node was inserted in
-    /// </summary>
-    public long InsertionIndex { get; internal set; }
-  }
-
-
-  /// <summary>
-  /// Priority queue.
-  /// </summary>
-  /// <typeparam name="TItem">The type of the item.</typeparam>
-  /// <typeparam name="TPriority">The type of the priority.</typeparam>
-  /// <seealso cref="T:Crystal.IPriorityQueue`2" />
-  public class PriorityQueue<TItem, TPriority> : IPriorityQueue<TItem, TPriority>
-    where TPriority : IComparable<TPriority> {
-    QueueNode[] _nodes;
-    int _numNodes;
-    long _numNodesEverEnqueued;
+    int _heapSize;
+    ulong _runningCount;
+    HeapNode[] _heap;
+    IComparer<TQueuedItem> _comparer;
 
     /// <summary>
     ///   Returns true if there is an element at the head of the queue, i.e. if the queue is not
     ///   empty.
     /// </summary>
-    /// <value>true</value>
-    /// <c>false</c>
     public bool HasNext {
-      get { return Count > 0; }
+      get { return _heapSize > 0; }
     }
 
     /// <summary>
-    ///   Returns the number of nodes in the queue.
-    ///   O(1)
+    ///   Returns the number of items in the queue.
     /// </summary>
     public int Count {
-      get { return _numNodes; }
+      get { return _heapSize; }
     }
 
     /// <summary>
-    ///   Verifies if the heap is in a valid state. Use only for debugging.
+    ///   Returns the item at the head of the queue without removing it.
     /// </summary>
-    /// <returns><c>true</c> if this instance is binary heap valid; otherwise, <c>false</c>.</returns>
-    public bool IsBinaryHeapValid() {
-      for(int i = 1; i < _nodes.Length; i++)
-        if(_nodes[i] != null) {
-          int childLeftIndex = 2 * i;
-          if(childLeftIndex < _nodes.Length &&
-             _nodes[childLeftIndex] != null &&
-             HasHigherPriority(_nodes[childLeftIndex], _nodes[i]))
+    public TQueuedItem Peek() {
+      return _heap[1]?.Item;
+    }
+
+    /// <summary>
+    ///   Enqueues an item to the list. Items with lower priority values are placed ahead of the
+    ///   queue.
+    /// </summary>
+    public void Enqueue(TQueuedItem item) {
+      var node = new HeapNode(item);
+
+      if(_heapSize + 1 >= _heap.Length)
+        ResizeHeap();
+
+      _heapSize++;
+      _heap[_heapSize] = node;
+      node.Handle.Index = _heapSize;
+      node.Handle.Order = _runningCount++;
+      MinBubbleUp(_heapSize);
+    }
+
+    /// <summary>
+    ///   Removes and returns the item at the head of the queue. In the event of a priority tie the item
+    ///   inserted first in the queue is returned.
+    /// </summary>
+    public TQueuedItem Dequeue() {
+      if(_heapSize < 1)
+        return default(TQueuedItem);
+
+      TQueuedItem ret = _heap[1].Item;
+      _heap[1] = _heap[_heapSize];
+      _heap[_heapSize] = null;
+      _heapSize--;
+      MinHeapify(1);
+      return ret;
+    }
+
+    /// <summary>
+    ///   Returns true if the queue has 1 or more of the specified items.
+    /// </summary>
+    public bool Contains(TQueuedItem item) {
+      Handle h = item.Handle as Handle;
+      if(h == null || h.Index > _heapSize)
+        return false;
+
+      return _heap[h.Index].Item == item;
+    }
+
+    /// <summary>
+    ///   RemoveBehaviour the specified item. Note that the queue may contain multiples of the same item, in
+    ///   which case this removes the one that is closest to the head.
+    /// </summary>
+    /// <param name="item">Item.</param>
+    public void Remove(TQueuedItem item) {
+      if(item?.Handle == null)
+        return;
+
+      Handle itemHandle = item.Handle as Handle;
+      if(itemHandle == null)
+        return;
+
+      int itemIndex = itemHandle.Index;
+
+      if(itemIndex == _heapSize) {
+        _heap[_heapSize] = null;
+        _heapSize--;
+        return;
+      }
+
+      Swap(itemIndex, _heapSize);
+      _heap[_heapSize] = null;
+      _heapSize--;
+      int parent = itemIndex >> 1;
+
+      if(parent > 0 && _comparer.Compare(_heap[itemIndex].Item, _heap[parent].Item) < 0)
+        MinBubbleUp(itemIndex);
+      else
+        MinHeapify(itemIndex);
+    }
+
+    /// <summary>
+    ///   Updates the priority of the specified item. If the item does not exist in the queue, it simply
+    ///   returns.
+    /// </summary>
+    public void UpdatePriority(TQueuedItem item) {
+      Handle h = item.Handle as Handle;
+      if(h == null)
+        return;
+
+      int idx = h.Index;
+      h.Order = _runningCount++;
+      int parent = idx >> 1;
+
+      if(parent > 0 && _comparer.Compare(_heap[idx].Item, _heap[parent].Item) < 0)
+        MinBubbleUp(idx);
+      else
+        MinHeapify(idx);
+    }
+
+    /// <summary>
+    ///   Removes every node from the queue.
+    /// </summary>
+    public void Clear() {
+      Array.Clear(_heap, 1, _heapSize);
+      _heapSize = 0;
+    }
+
+    /// <summary>
+    ///   Determines whether the min-heap used in the priority queue is valid.
+    /// </summary>
+    public bool IsHeapValid() {
+      for(int i = 1; i < _heap.Length; i++)
+        if(_heap[i] != null) {
+          int left = i << 1;
+          if(left < _heap.Length &&
+             _heap[left] != null &&
+             _comparer.Compare(_heap[left].Item, _heap[i].Item) < 0)
             return false;
 
-          int childRightIndex = childLeftIndex + 1;
-          if(childRightIndex < _nodes.Length &&
-             _nodes[childRightIndex] != null &&
-             HasHigherPriority(_nodes[childRightIndex], _nodes[i]))
+          int right = left | 1;
+          if(right < _heap.Length &&
+             _heap[right] != null &&
+             _comparer.Compare(_heap[right].Item, _heap[i].Item) < 0)
             return false;
         }
 
@@ -103,289 +167,99 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Returns the item at the head of the queue without removing it.
+    ///   Initializes a new instance of the <see cref="PriorityQueue{TQueuedItem}"/> class.
     /// </summary>
-    public TItem Peek() {
-      return _numNodes <= 0 ? default(TItem) : _nodes[1].Data;
+    /// <param name="comparer">The comparer.</param>
+    public PriorityQueue(IComparer<TQueuedItem> comparer = null) {
+      _heap = new HeapNode[DefaultSize];
+      _comparer = comparer ?? Comparer<TQueuedItem>.Default;
+      _heapSize = 0;
     }
 
     /// <summary>
-    ///   Enqueue a node to the priority queue.  Lower values are placed in front. Ties are broken by first-in-first-out.
-    ///   If the queue is full, the result is undefined.
-    ///   If the node is already enqueued, the result is undefined.
-    ///   O(log n)
+    ///   Initializes a new instance of the <see cref="PriorityQueue{TQueuedItem}"/> class.
     /// </summary>
-    public void Enqueue(TItem item, TPriority priority) {
-      var node = new QueueNode(item);
-
-      ResizeIfNeedsResizing();
-
-      node.Priority = priority;
-      _numNodes++;
-      _nodes[_numNodes] = node;
-      node.QueueIndex = _numNodes;
-      node.InsertionIndex = _numNodesEverEnqueued++;
-      CascadeUp(_nodes[_numNodes]);
+    /// <param name="initialHeapSize">Initial size of the heap.</param>
+    /// <param name="comparer">The comparer.</param>
+    public PriorityQueue(int initialHeapSize, IComparer<TQueuedItem> comparer = null) {
+      _heap = initialHeapSize < 1 ? new HeapNode[DefaultSize] : new HeapNode[initialHeapSize];
+      _comparer = comparer ?? Comparer<TQueuedItem>.Default;
+      _heapSize = 0;
     }
 
-    /// <summary>
-    ///   Removes the head of the queue (node with minimum priority; ties are broken by order of insertion), and returns it.
-    ///   If queue is empty, result is undefined
-    ///   O(log n)
-    /// </summary>
-    public TItem Dequeue() {
-      if(_numNodes <= 0)
-        return default(TItem);
-
-      var retv = _nodes[1].Data;
-      Remove(_nodes[1]);
-      return retv;
+    void ResizeHeap() {
+      var resizedHeap = new HeapNode[2 * _heap.Length];
+      Array.Copy(_heap, 1, resizedHeap, 1, _heapSize);
+      _heap = resizedHeap;
     }
 
-    /// <summary>
-    ///   Returns true if the queue has 1 or more of the specified items.
-    /// </summary>
-    /// <param name="item">Item.</param>
-    public bool Contains(TItem item) {
-      var comparer = EqualityComparer<TItem>.Default;
-      for(int i = 1; i <= _numNodes; i++) {
-        var node = _nodes[i];
-        if(comparer.Equals(node.Data, item))
-          return true;
-      }
-
-      return false;
-    }
-
-    /// <summary>
-    ///   RemoveBehaviour the specified item. Note that the queue may contain multiples of the same item, in
-    ///   which case this removes the one that is closest to the head.
-    /// </summary>
-    /// <param name="item">Item.</param>
-    public TItem Remove(TItem item) {
-      var rNode = GetExistingNode(item);
-      Remove(rNode);
-      return rNode != null ? rNode.Data : default(TItem);
-    }
-
-    /// <summary>
-    ///   RemoveBehaviour the specified item. Note that the queue may contain multiples of the same item, in
-    ///   which case this removes the one that is closest to the head.
-    /// </summary>
-    public TItem Remove(Func<TItem, bool> predicate) {
-      QueueNode rNode = null;
-      for(int i = 1; i <= _numNodes; i++)
-        if(predicate(_nodes[i].Data)) {
-          rNode = _nodes[i];
-          break;
-        }
-
-      Remove(rNode);
-      return rNode != null ? rNode.Data : default(TItem);
-    }
-
-    /// <summary>
-    ///   Updates the priority of the specified item. If the item does not exist in the queue, it simply
-    ///   returns.
-    /// </summary>
-    /// <param name="item">Item.</param>
-    /// <param name="priority">Priority.</param>
-    public void UpdatePriority(TItem item, TPriority priority) {
-      if(Contains(item) == false)
-        return;
-
-      var node = GetExistingNode(item);
-      node.Priority = priority;
-      OnNodeUpdated(node);
-    }
-
-    /// <summary>
-    ///   Removes every node from the queue.
-    /// </summary>
-    public void Clear() {
-      Array.Clear(_nodes, 1, _numNodes);
-      _numNodes = 0;
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="T:PriorityQueue`2"/> class.
-    /// </summary>
-    public PriorityQueue() {
-      _numNodes = 0;
-      _nodes = new QueueNode[DefaultSize];
-      _numNodesEverEnqueued = 0;
-    }
-
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="T:Crystal.PriorityQueue`2"/> class.
-    /// </summary>
-    /// <param name="maxNodes">Max nodes.</param>
-    public PriorityQueue(int maxNodes) {
-      _numNodes = 0;
-      _nodes = maxNodes > 0 ? new QueueNode[maxNodes + 1] : new QueueNode[DefaultSize + 1];
-      _numNodesEverEnqueued = 0;
-    }
-
-    int MaxSize {
-      get { return _nodes.Length - 1; }
-    }
-
-    QueueNode GetExistingNode(TItem item) {
-      var comparer = EqualityComparer<TItem>.Default;
-      for(int i = 1; i <= _numNodes; i++) {
-        var node = _nodes[i];
-        if(comparer.Equals(node.Data, item))
-          return node;
-      }
-
-      return null;
-    }
-
-    QueueNode Remove(QueueNode node) {
-      if(node == null)
-        return null;
-
-      QueueNode rNode;
-      // Check if the node is the last since we can remove this one quickly.
-      if(node.QueueIndex == _numNodes) {
-        rNode = _nodes[_numNodes];
-        _nodes[_numNodes] = null;
-        _numNodes--;
-        return rNode;
-      }
-
-      QueueNode oldLastNode = _nodes[_numNodes];
-      Swap(node, oldLastNode);
-      rNode = _nodes[_numNodes];
-      _nodes[_numNodes] = null;
-      _numNodes--;
-
-      // Reposition the previous last node up or down as appropriate.
-      OnNodeUpdated(oldLastNode);
-      return rNode;
-    }
-
-    void Swap(QueueNode node1, QueueNode node2) {
-      //Swap the nodes
-      _nodes[node1.QueueIndex] = node2;
-      _nodes[node2.QueueIndex] = node1;
-
-      //Swap their indicies
-      int temp = node1.QueueIndex;
-      node1.QueueIndex = node2.QueueIndex;
-      node2.QueueIndex = temp;
-    }
-
-    void ResizeIfNeedsResizing() {
-      if(Count == MaxSize)
-        Resize(2 * MaxSize + 1);
-    }
-
-    /// <summary>
-    ///   Reheapify up
-    /// </summary>
-    /// <param name="node">Node.</param>
-    void CascadeUp(QueueNode node) {
-      int parent = node.QueueIndex / 2;
-      while(parent >= 1) {
-        QueueNode parentNode = _nodes[parent];
-        if(HasHigherPriority(parentNode, node))
-          break;
-
-        // Node has lower priority value, so move it up the heap
-        Swap(node, parentNode);
-        parent = node.QueueIndex / 2;
-      }
-    }
-
-    /// <summary>
-    ///   Reheapify down.
-    /// </summary>
-    /// <param name="node">Node.</param>
-    void CascadeDown(QueueNode node) {
-      QueueNode newParent;
-      int finalQueueIndex = node.QueueIndex;
+    void MinHeapify(int i) {
       while(true) {
-        newParent = node;
-        int childLeftIndex = 2 * finalQueueIndex;
+        int smallest = i;
+        int left = i << 1;
+        int right = (i << 1) | 1;
 
-        //Check if the left-child is higher-priority than the current node
-        if(childLeftIndex > _numNodes) {
-          //This could be placed outside the loop, but then we'd have to check newParent != node twice
-          node.QueueIndex = finalQueueIndex;
-          _nodes[finalQueueIndex] = node;
-          break;
+        if(left <= _heapSize) {
+          var cmp = _comparer.Compare(_heap[left].Item, _heap[i].Item);
+          if(cmp < 0 || cmp == 0 && _heap[left].Handle.Order < _heap[i].Handle.Order)
+            smallest = left;
         }
 
-        QueueNode childLeft = _nodes[childLeftIndex];
-        if(HasHigherPriority(childLeft, newParent))
-          newParent = childLeft;
-
-        //Check if the right-child is higher-priority than either the current node or the left child
-        int childRightIndex = childLeftIndex + 1;
-        if(childRightIndex <= _numNodes) {
-          QueueNode childRight = _nodes[childRightIndex];
-          if(HasHigherPriority(childRight, newParent))
-            newParent = childRight;
+        if(right <= _heapSize) {
+          var cmp = _comparer.Compare(_heap[right].Item, _heap[smallest].Item);
+          if(cmp < 0 || cmp == 0 && _heap[right].Handle.Order < _heap[smallest].Handle.Order)
+            smallest = right;
         }
 
-        //If either of the children has higher (smaller) priority, swap and continue cascading
-        if(newParent != node) {
-          //Move new parent to its new index.  node will be moved once, at the end
-          //Doing it this way is one less assignment operation than calling Swap()
-          _nodes[finalQueueIndex] = newParent;
+        if(smallest == i)
+          return;
 
-          int temp = newParent.QueueIndex;
-          newParent.QueueIndex = finalQueueIndex;
-          finalQueueIndex = temp;
-        } else {
-          //See note above
-          node.QueueIndex = finalQueueIndex;
-          _nodes[finalQueueIndex] = node;
-          break;
-        }
+        Swap(i, smallest);
+        i = smallest;
       }
     }
 
-    /// <summary>
-    ///   Returns true if 'higher' has higher priority than 'lower', false otherwise.
-    ///   Note that calling HasHigherPriority(node, node) (i.e. both arguments the same node) will return false
-    /// </summary>
-    bool HasHigherPriority(QueueNode higher, QueueNode lower) {
-      var cmp = higher.Priority.CompareTo(lower.Priority);
-      return cmp < 0 || cmp == 0 && higher.InsertionIndex < lower.InsertionIndex;
-    }
-
-    void Resize(int maxNodes) {
-      if(maxNodes <= 0 ||
-         maxNodes < _numNodes)
+    void MinBubbleUp(int i) {
+      if(i < 1)
         return;
 
-      var newArray = new QueueNode[maxNodes + 1];
-      if(_numNodes > 0)
-        Array.Copy(_nodes, 1, newArray, 1, _numNodes);
-      _nodes = newArray;
+      int parent = i >> 1;
+      while(parent > 0)
+        if(_comparer.Compare(_heap[i].Item, _heap[parent].Item) < 0) {
+          Swap(parent, i);
+          i = parent;
+          parent = parent >> 1;
+        } else
+          break;
     }
 
-    void OnNodeUpdated(QueueNode node) {
-      //Bubble the updated node up or down as appropriate
-      int parentIndex = node.QueueIndex / 2;
-      QueueNode parentNode = _nodes[parentIndex];
+    void Swap(int i, int j) {
+      var tmp = _heap[i];
+      _heap[i] = _heap[j];
+      _heap[j] = tmp;
 
-      if(parentIndex > 0 &&
-         HasHigherPriority(node, parentNode))
-        CascadeUp(node);
-      else
-        CascadeDown(node);
+      _heap[i].Handle.Index = i;
+      _heap[j].Handle.Index = j;
     }
 
-    const int DefaultSize = 128;
 
-    class QueueNode : PriorityQueueNode<TPriority> {
-      public TItem Data { get; private set; }
+    class Handle : IPriorityQueueHandle<TQueuedItem> {
+      internal int Index = -1;
+      internal ulong Order;
+    }
 
-      public QueueNode(TItem data) {
-        Data = data;
+    class HeapNode {
+      internal TQueuedItem Item;
+      internal Handle Handle;
+
+      public HeapNode(TQueuedItem item) {
+        Item = item;
+        Handle = new Handle();
+        Item.Handle = Handle;
+      }
+
+      ~HeapNode() {
+        Item.Handle = null;
       }
     }
   }

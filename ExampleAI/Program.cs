@@ -19,6 +19,7 @@
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using Crystal;
@@ -26,8 +27,13 @@ using Crystal;
 
 namespace ExampleAI {
 
+  
+
   internal class Program {
+    
+
     static void Main() {
+         
       int N = 1;
       var characters = new List<Character>();
       var decisionMakers = new List<DecisionMaker>();

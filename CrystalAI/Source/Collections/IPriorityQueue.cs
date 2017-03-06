@@ -3,7 +3,7 @@
 // Copyright (c) 2016-2017 Bismur Studios Ltd.
 // Copyright (c) 2016-2017 Ioannis Giagkiozis
 // 
-// IPriorityQueue.cs is part of Crystal AI.
+// IPriorityQueueDEPRECATED.cs is part of Crystal AI.
 //  
 // Crystal AI is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,12 +22,26 @@ using System;
 
 namespace Crystal {
 
-  // The initial version of this file was based on https://github.com/BlueRaja/High-Speed-Priority-Queue-for-C-Sharp.git
+  /// <summary>
+  /// Interface to a priority queue handle.
+  /// </summary>
+  /// <typeparam name="TQueuedItem">The type of the queued item.</typeparam>
+  public interface IPriorityQueueHandle<TQueuedItem> {
+  }
 
+  /// <summary>
+  /// Every item that needs to be included in a <see cref="T:Crystal.PriorityQueue`1"/> must implement
+  /// this interface. NB Just add a the public property in this interface as is.
+  /// </summary>
+  /// <typeparam name="TQueuedItem">The type of the queued item.</typeparam>
+  public interface IHeapItem<TQueuedItem> {
+    IPriorityQueueHandle<TQueuedItem> Handle { get; set; }
+  }
+  
   /// <summary>
   ///   Priority queue interface.
   /// </summary>
-  public interface IPriorityQueue<TItem, in TPriority> where TPriority : IComparable<TPriority> {
+  public interface IPriorityQueue<TQueuedItem> {
     /// <summary>
     ///   Returns true if there is an element at the head of the queue, i.e. if the queue is not
     ///   empty.
@@ -35,57 +49,47 @@ namespace Crystal {
     bool HasNext { get; }
 
     /// <summary>
-    ///   Returns the number of items in the queue.
+    ///   Returns the number of items on the queue.
     /// </summary>
     int Count { get; }
 
     /// <summary>
     ///   Returns the item at the head of the queue without removing it.
     /// </summary>
-    TItem Peek();
+    TQueuedItem Peek();
 
     /// <summary>
-    ///   Enqueues an item to the list. Items with lower priority values are placed ahead of the
-    ///   queue.
+    ///   Enqueues an item to the list. 
     /// </summary>
-    void Enqueue(TItem item, TPriority priority);
+    void Enqueue(TQueuedItem item);
 
     /// <summary>
     ///   Removes and returns the item at the head of the queue. In the event of a priority tie the item
     ///   inserted first in the queue is returned.
     /// </summary>
-    TItem Dequeue();
+    TQueuedItem Dequeue();
 
     /// <summary>
-    ///   Returns true if the queue has 1 or more of the secified items.
+    ///   Returns true if the queue has 1 or more of the specified items.
     /// </summary>
-    bool Contains(TItem item);
+    bool Contains(TQueuedItem item);
 
     /// <summary>
-    ///   RemoveBehaviour the specified item. Note that the queue may contain multiples of the same item, in
+    ///   Remove the specified item. Note that the queue may contain multiples of the same item, in
     ///   which case this removes the one that is closest to the head.
     /// </summary>
-    /// <param name="item">Item.</param>
-    TItem Remove(TItem item);
-
+    void Remove(TQueuedItem item);
+    
     /// <summary>
-    ///   Removes the first item that matches the specified predicate. Note that the queue may contain
-    ///   multiples of the same item, in which case this removes the one that is closest to the head.
+    ///   Updates the priority of the given item. If the item does not exist in the queue no operation is 
+    /// performed.
     /// </summary>
-    /// <param name="predicate">The predicate.</param>
-    /// <returns>The item that was removed or null if no item was not found.</returns>
-    TItem Remove(Func<TItem, bool> predicate);
+    void UpdatePriority(TQueuedItem item);
 
     /// <summary>
-    ///   Updates the priority of the specified item. If the item does not exist in the queue, it simply
-    ///   returns.
-    /// </summary>
-    void UpdatePriority(TItem item, TPriority priority);
-
-    /// <summary>
-    ///   Removes every node from the queue.
+    ///   Removes all queued items.
     /// </summary>
     void Clear();
   }
-
+  
 }

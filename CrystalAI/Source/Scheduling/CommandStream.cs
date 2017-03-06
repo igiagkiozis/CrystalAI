@@ -82,7 +82,7 @@ namespace Crystal {
         NextExecution = time + cmd.InitExecutionDelay
       };
 
-      Queue.Enqueue(scheduledCommand, scheduledCommand.NextExecution);
+      Queue.Enqueue(scheduledCommand);
       return scheduledCommand;
     }
 
@@ -111,7 +111,8 @@ namespace Crystal {
     /// <param name="initialQueueSize">Initial queue size.</param>
     public CommandStream(int initialQueueSize) {
       _watch = new Stopwatch();
-      Queue = new PriorityQueue<QueuedCommand, float>(initialQueueSize);
+      var comparer = new QueuedCommandComparer();
+      Queue = new PriorityQueue<QueuedCommand>(initialQueueSize, comparer);
     }
 
     void ResetVariables() {
@@ -120,6 +121,9 @@ namespace Crystal {
       _processedCommandsCounter = 0;
     }
 
+    /// <summary>
+    /// Updates the frame time and start clock.
+    /// </summary>
     void UpdateFrameTimeAndStartClock() {
       _watch.Reset();
       _watch.Start();
@@ -155,7 +159,7 @@ namespace Crystal {
       _nextCommand.LastExecution = _frameBeginTime;
       _nextCommand.NextExecution = _frameBeginTime + _nextCommand.Command.ExecutionDelay + _minimumDelay;
       Queue.Dequeue();
-      Queue.Enqueue(_nextCommand, _nextCommand.NextExecution);
+      Queue.Enqueue(_nextCommand);
     }
 
     void UpdatePerformanceMeasurements() {
@@ -164,7 +168,7 @@ namespace Crystal {
       TotalMilliseconds = _watch.Elapsed.TotalMilliseconds;
     }
 
-    internal IPriorityQueue<QueuedCommand, float> Queue;
+    internal IPriorityQueue<QueuedCommand> Queue;
   }
 
 }
