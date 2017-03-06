@@ -18,19 +18,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 
 namespace Crystal {
 
-  // The initial version of this file was based on https://github.com/BlueRaja/High-Speed-Priority-Queue-for-C-Sharp.git
-
   /// <summary>
   ///   Thread safe priority queue.
   /// </summary>
-  public class ThreadSafePriorityQueue<TItem, TPriority> : IPriorityQueueDEPRECATED<TItem, TPriority>
-    where TPriority : IComparable<TPriority> {
-    readonly PriorityQueueDEPRECATED<TItem, TPriority> _queue;
+  /// 
+  /// : IPriorityQueue<TQueuedItem> where TQueuedItem : class, IHeapItem<TQueuedItem>
+  public class ThreadSafePriorityQueue<TQueuedItem> : IPriorityQueue<TQueuedItem> where TQueuedItem : class, IHeapItem<TQueuedItem> {
+    readonly PriorityQueue<TQueuedItem> _queue;
 
     readonly ReaderWriterLockSlim _rwlock = new ReaderWriterLockSlim();
 
@@ -60,17 +60,17 @@ namespace Crystal {
     ///   Determines whether the binary heap of the internal binary heap queue is valid.
     /// </summary>
     /// <returns><c>true</c> if this instance is binary heap valid; otherwise, <c>false</c>.</returns>
-    public bool IsBinaryHeapValid() {
+    public bool IsHeapValid() {
       using(_rwlock.Read())
-        return _queue.IsBinaryHeapValid();
+        return _queue.IsHeapValid();
     }
 
     /// <summary>
     ///   Returns the item at the head of the queue without removing it.
     /// </summary>
-    public TItem Peek() {
+    public TQueuedItem Peek() {
       using(_rwlock.Write())
-        return _queue.Count <= 0 ? default(TItem) : _queue.Peek();
+        return _queue.Count <= 0 ? default(TQueuedItem) : _queue.Peek();
     }
 
     /// <summary>
@@ -79,82 +79,76 @@ namespace Crystal {
     /// </summary>
     /// <param name="item">Item.</param>
     /// <param name="priority">Priority.</param>
-    public void Enqueue(TItem item, TPriority priority) {
+    public void Enqueue(TQueuedItem item) {
       using(_rwlock.Write())
-        _queue.Enqueue(item, priority);
+        _queue.Enqueue(item);
     }
 
     /// <summary>
     ///   Removes and returns the item at the head of the queue. In the event of a priority tie the item
     ///   inserted first in the queue is returned.
     /// </summary>
-    public TItem Dequeue() {
+    public TQueuedItem Dequeue() {
       using(_rwlock.Write())
-        return _queue.Count <= 0 ? default(TItem) : _queue.Dequeue();
+        return _queue.Count <= 0 ? default(TQueuedItem) : _queue.Dequeue();
     }
 
     /// <summary>
-    ///   Returns true if the queue has 1 or more of the secified items.
+    ///   Returns true if the queue has 1 or more of the specified items.
     /// </summary>
     /// <param name="item">Item.</param>
-    public bool Contains(TItem item) {
+    public bool Contains(TQueuedItem item) {
       using(_rwlock.Read())
         return _queue.Contains(item);
     }
 
-    /// <summary>
-    ///   RemoveBehaviour the specified item. Note that the queue may contain multiples of the same item, in
-    ///   which case this removes the one that is closest to the head.
-    /// </summary>
-    public TItem Remove(TItem item) {
-      using(_rwlock.Write())
-        return _queue.Remove(item);
-    }
 
-    /// <summary>
-    ///   RemoveBehaviour the specified item. Note that the queue may contain multiples of the same item, in
-    ///   which case this removes the one that is closest to the head.
-    /// </summary>
-    public TItem Remove(Func<TItem, bool> predicate) {
+    public void Remove(TQueuedItem item) {
       using(_rwlock.Write())
-        return _queue.Remove(predicate);
+        _queue.Remove(item);
     }
-
+    
     /// <summary>
-    ///   Updates the priority of the specified item. If the item does not exist in the queue, it simply
-    ///   returns.
+    /// Updates the priority of the given item. If the item does not exist in the queue no operation is
+    /// performed.
     /// </summary>
-    /// <param name="item">Item.</param>
-    /// <param name="priority">Priority.</param>
-    public void UpdatePriority(TItem item, TPriority priority) {
+    /// <param name="item"></param>
+    public void UpdatePriority(TQueuedItem item) {
       using(_rwlock.Write())
-        _queue.UpdatePriority(item, priority);
+        _queue.UpdatePriority(item);
     }
-
+    
     /// <summary>
-    ///   Removes every node from the queue.
-    ///   O(n)
+    /// Removes all queued items.
     /// </summary>
     public void Clear() {
       using(_rwlock.Write())
         _queue.Clear();
     }
-
+    
     /// <summary>
-    ///   Initializes a new instance of the <see cref="T:Crystal.ThreadSafePriorityQueue`2"/>
-    ///   class.
+    /// Initializes a new instance of the <see cref="ThreadSafePriorityQueue{TQueuedItem}"/> class.
     /// </summary>
     public ThreadSafePriorityQueue() {
-      _queue = new PriorityQueueDEPRECATED<TItem, TPriority>(DefaultSize);
+      _queue = new PriorityQueue<TQueuedItem>(DefaultSize);
+    }
+
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ThreadSafePriorityQueue{TQueuedItem}"/> class.
+    /// </summary>
+    /// <param name="size">The size.</param>
+    public ThreadSafePriorityQueue(int size) {
+      _queue = new PriorityQueue<TQueuedItem>(size);
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="T:Crystal.ThreadSafePriorityQueue`2"/>
-    ///   class.
+    /// Initializes a new instance of the <see cref="ThreadSafePriorityQueue{TQueuedItem}"/> class.
     /// </summary>
-    /// <param name="size">Size.</param>
-    public ThreadSafePriorityQueue(int size) {
-      _queue = new PriorityQueueDEPRECATED<TItem, TPriority>(size);
+    /// <param name="size">The size.</param>
+    /// <param name="comparer">The comparer.</param>
+    public ThreadSafePriorityQueue(int size, IComparer<TQueuedItem> comparer) {
+      _queue = new PriorityQueue<TQueuedItem>(size, comparer);
     }
 
     const int DefaultSize = 128;

@@ -48,8 +48,7 @@
     <Compile Include="Tests\Actions\ActionTests.cs" />
     <Compile Include="Tests\Actions\BehaviourTransitionTests.cs" />
     <Compile Include="Tests\Actions\GenericActionBaseTests.cs" />
-    <Compile Include="Tests\Collections\BinaryHeapTests.cs" />
-    <Compile Include="Tests\Collections\ThreadSafePriorityQueueTests.cs" />
+    <Compile Include="Tests\Collections\PriorityQueueTests.cs" />
     <Compile Include="Tests\Considerations\ConsiderationConstructorTests.cs" />
     <Compile Include="Tests\Evaluators\EvaluatorBaseTests.cs" />
     <Compile Include="Tests\Evaluators\TestEvaluator.cs" />
@@ -81,8 +80,6 @@
     <Compile Include="Tests\Collections\AIComponents.cs" />
     <Compile Include="Tests\Collections\CircularBufferTests.cs" />
     <Compile Include="Tests\Collections\MovingAverageTests.cs" />
-    <Compile Include="Tests\Collections\PriorityQueueTestBase.cs" />
-    <Compile Include="Tests\Collections\PriorityQueueTests.cs" />
     <Compile Include="Tests\Considerations\AbsoluteChebyshevConsiderationTests.cs" />
     <Compile Include="Tests\Considerations\AbsoluteWeightedMetricsConsiderationTests.cs" />
     <Compile Include="Tests\Considerations\ChebyshevConsiderationTests.cs" />

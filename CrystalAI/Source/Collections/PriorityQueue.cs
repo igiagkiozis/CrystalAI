@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Resources;
 
 
 namespace Crystal {
-  
+
   /// <summary>
-  ///   TODO doc
+  ///   A standard priority queue implemented using a min-heap with some extra functionality
+  ///   such as "contains" test and efficient item removal.
   /// </summary>
   /// <typeparam name="TQueuedItem">The type of the queued item.</typeparam>
   /// <seealso cref="Crystal.IPriorityQueue{TQueuedItem}"/>
-  public class BinaryHeap<TQueuedItem> : IPriorityQueue<TQueuedItem> where TQueuedItem : class, IHeapItem<TQueuedItem> {
+  public class PriorityQueue<TQueuedItem> : IPriorityQueue<TQueuedItem>
+    where TQueuedItem : class, IHeapItem<TQueuedItem> {
     const int DefaultSize = 128;
 
     int _heapSize;
@@ -66,11 +67,10 @@ namespace Crystal {
         return default(TQueuedItem);
 
       TQueuedItem ret = _heap[1].Item;
-//      _heap[1] = _heap[_heapSize];
-//      _heap[_heapSize] = null;
-//      _heapSize--;
-//      MinHeapify(1);
-      Remove(ret);
+      _heap[1] = _heap[_heapSize];
+      _heap[_heapSize] = null;
+      _heapSize--;
+      MinHeapify(1);
       return ret;
     }
 
@@ -144,7 +144,10 @@ namespace Crystal {
       _heapSize = 0;
     }
 
-    public bool IsBinaryHeapValid() {
+    /// <summary>
+    ///   Determines whether the min-heap used in the priority queue is valid.
+    /// </summary>
+    public bool IsHeapValid() {
       for(int i = 1; i < _heap.Length; i++)
         if(_heap[i] != null) {
           int left = i << 1;
@@ -164,21 +167,21 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="BinaryHeap{TQueuedItem}"/> class.
+    ///   Initializes a new instance of the <see cref="PriorityQueue{TQueuedItem}"/> class.
     /// </summary>
     /// <param name="comparer">The comparer.</param>
-    public BinaryHeap(IComparer<TQueuedItem> comparer = null) {
+    public PriorityQueue(IComparer<TQueuedItem> comparer = null) {
       _heap = new HeapNode[DefaultSize];
       _comparer = comparer ?? Comparer<TQueuedItem>.Default;
       _heapSize = 0;
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="BinaryHeap{TQueuedItem}"/> class.
+    ///   Initializes a new instance of the <see cref="PriorityQueue{TQueuedItem}"/> class.
     /// </summary>
     /// <param name="initialHeapSize">Initial size of the heap.</param>
     /// <param name="comparer">The comparer.</param>
-    public BinaryHeap(int initialHeapSize, IComparer<TQueuedItem> comparer = null) {
+    public PriorityQueue(int initialHeapSize, IComparer<TQueuedItem> comparer = null) {
       _heap = initialHeapSize < 1 ? new HeapNode[DefaultSize] : new HeapNode[initialHeapSize];
       _comparer = comparer ?? Comparer<TQueuedItem>.Default;
       _heapSize = 0;
@@ -188,25 +191,6 @@ namespace Crystal {
       var resizedHeap = new HeapNode[2 * _heap.Length];
       Array.Copy(_heap, 1, resizedHeap, 1, _heapSize);
       _heap = resizedHeap;
-    }
-
-    void MaxHeapify(int i) {
-      int largest;
-      int left = i << 1;
-      int right = (i << 1) | 1;
-
-      if(left <= _heapSize && _comparer.Compare(_heap[left].Item, _heap[i].Item) > 0)
-        largest = left;
-      else
-        largest = i;
-
-      if(right <= _heapSize && _comparer.Compare(_heap[right].Item, _heap[largest].Item) > 0)
-        largest = right;
-
-      if(largest != i) {
-        Swap(i, largest);
-        MaxHeapify(largest);
-      }
     }
 
     void MinHeapify(int i) {
@@ -238,16 +222,15 @@ namespace Crystal {
     void MinBubbleUp(int i) {
       if(i < 1)
         return;
-      
+
       int parent = i >> 1;
-      while(parent > 0) {
+      while(parent > 0)
         if(_comparer.Compare(_heap[i].Item, _heap[parent].Item) < 0) {
           Swap(parent, i);
           i = parent;
           parent = parent >> 1;
         } else
           break;
-      }
     }
 
     void Swap(int i, int j) {
@@ -259,31 +242,15 @@ namespace Crystal {
       _heap[j].Handle.Index = j;
     }
 
-    [Serializable]
-    class Handle : IPriorityQueueHandle<TQueuedItem> {
-      public override string ToString() {
-        return string.Format("[{0}]", Index);
-      }
 
+    class Handle : IPriorityQueueHandle<TQueuedItem> {
       internal int Index = -1;
       internal ulong Order;
     }
 
     class HeapNode {
-      public override string ToString() {
-        return string.Format("[{0}]", Item);
-      }
-
-      public void Reset() {
-        Item.Handle = null;
-        Item = null;
-        Handle.Index = -1;
-      }
-
-      public HeapNode() {
-        Item = null;
-        Handle = null;
-      }
+      internal TQueuedItem Item;
+      internal Handle Handle;
 
       public HeapNode(TQueuedItem item) {
         Item = item;
@@ -291,29 +258,10 @@ namespace Crystal {
         Item.Handle = Handle;
       }
 
-      internal TQueuedItem Item;
-      internal Handle Handle; // { get; set; }
-
-//      ~HeapNode() {
-//        Item.Handle = null;
-//      }
-    }
-
-
-    class HeapNodePool {
-      public HeapNode Create() {
-        
-      }
-
-      public void Release(HeapNode node) {
-        
-      }
-
-      public HeapNodePool(int size) {
-        
+      ~HeapNode() {
+        Item.Handle = null;
       }
     }
-
   }
 
 }

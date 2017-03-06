@@ -17,9 +17,18 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
+using System.Collections.Generic;
+
+
 namespace Crystal {
 
-  internal class QueuedCommand : IDeferredCommandHandle {
+  internal class QueuedCommandComparer : IComparer<QueuedCommand> {
+    public int Compare(QueuedCommand x, QueuedCommand y) {
+      return x.NextExecution.CompareTo(y.NextExecution);
+    }
+  }
+
+  internal class QueuedCommand : IDeferredCommandHandle, IHeapItem<QueuedCommand> {
     bool _isActive = true;
 
     CommandStream _stream;
@@ -31,6 +40,8 @@ namespace Crystal {
     /// </summary>
     /// <value>The command.</value>
     public DeferredCommand Command { get; set; }
+
+    public IPriorityQueueHandle<QueuedCommand> Handle { get; set; }
 
     /// <summary>
     ///   If true the associated command is still being executed.
@@ -56,7 +67,7 @@ namespace Crystal {
       float num = NextExecution - time;
       LastExecution = num;
       NextExecution = float.PositiveInfinity;
-      _stream.Queue.UpdatePriority(this, NextExecution);
+      _stream.Queue.UpdatePriority(this);
     }
 
     public void Resume() {
@@ -66,7 +77,7 @@ namespace Crystal {
       float time = CrTime.Time;
       LastExecution = time;
       NextExecution = time + Command.ExecutionDelay;
-      _stream.Queue.UpdatePriority(this, NextExecution);
+      _stream.Queue.UpdatePriority(this);
     }
 
     public QueuedCommand(CommandStream stream) {
@@ -77,7 +88,7 @@ namespace Crystal {
       float time = CrTime.Time;
       LastExecution = time;
       NextExecution = time + Command.ExecutionDelay;
-      _stream.Queue.Enqueue(this, NextExecution);
+      _stream.Queue.Enqueue(this);
     }
 
     void RemoveSelfFromQueue() {
@@ -86,6 +97,7 @@ namespace Crystal {
       else
         _stream.Queue.Remove(this);
     }
+    
   }
 
 }
