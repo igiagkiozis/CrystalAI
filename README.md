@@ -23,4 +23,4 @@ To get started check out the [Crystal AI pages](https://theldoctor.github.io/Cry
 - v0.7.1 First public version containing only the library and the test suite.
 
 ## Copyright and License
-Code and documentation copyright 2016-2017 the Bismur Studios Ltd. and Ioannis Giagkiozis. The source code is released under the GPL v3 license. For further details on licensing please see [Crystal AI licensing page](https://theldoctor.github.io/CrystalAI/license/).
+Code and documentation copyright 2016-2017 the Bismur Studios Ltd. and Ioannis Giagkiozis. This is the Community version of Crystal AI and is released under the GPL v3 license. A commercial version for Unity is available at the [Unity Asset Store](https://www.assetstore.unity3d.com/en/#!/content/82168). For further details on licensing please see [Crystal AI licensing page](https://theldoctor.github.io/CrystalAI/license/).
