@@ -41,7 +41,10 @@ namespace Crystal {
 
     /// <summary>
     /// Starts the associated AI and sets the decision maker state to
-    /// <see cref="F:Crystal.DecisionMakerState.Running" />.
+    /// <see cref="F:Crystal.DecisionMakerState.Running" /> informing the 
+    /// <see cref="T:Crystal.IScheduler"/> that this AI should be executed.
+    /// Don't forget to invoke in your Update loop <see cref="M:Crystal.IScheduler.Tick()"/>
+    /// otherwise the AI will never actually run!
     /// </summary>
     public void Start() {
       if(State != DecisionMakerState.Stopped)

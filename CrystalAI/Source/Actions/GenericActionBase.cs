@@ -22,7 +22,7 @@ using System.Diagnostics;
 
 
 namespace Crystal {
-
+  
   /// <summary>
   ///   Base class for generic <see cref="T:Crystal.IAction"/>s. All actions should derive either from
   ///   this class or its non-generic version <see cref="T:Crystal.ActionBase"/>.
@@ -185,8 +185,8 @@ namespace Crystal {
     /// <param name="other">The other.</param>
     protected ActionBase(ActionBase<TContext> other) {
       NameId = other.NameId;
-      _collection = other._collection;
       Cooldown = other.Cooldown;
+      _collection = other._collection;      
       _cooldownTimer = new Stopwatch();
     }
 

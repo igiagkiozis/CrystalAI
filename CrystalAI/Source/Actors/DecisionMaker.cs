@@ -27,14 +27,20 @@ namespace Crystal {
   /// </summary>
   public sealed class DecisionMaker : DecisionMakerBase {
     IScheduler _aiScheduler;
-    float _initThinkDelayMax;
-    float _initThinkDelayMin;
-    float _initUpdateDelayMax;
-    float _initUpdateDelayMin;
-    float _thinkDelayMax;
-    float _thinkDelayMin;
-    float _updateDelayMax;
-    float _updateDelayMin;
+    // Being explicit for clarity.
+    float _initThinkDelayMax = 0f;
+    float _initThinkDelayMin = 0f;
+    float _initUpdateDelayMax = 0f;
+    float _initUpdateDelayMin = 0f;
+
+    // Default decision making frequency 10Hz, i.e. 10 times per second.
+    float _thinkDelayMin = 0.1f;
+    float _thinkDelayMax = 0.1f;    
+    // Default update frequency ~60Hz (or 60 Frames per second).
+    float _updateDelayMax = 0.0167f;
+    float _updateDelayMin = 0.0167f;
+
+
     DeferredCommand _thinkCommand;
     IDeferredCommandHandle _thinkCommandHandle;
     

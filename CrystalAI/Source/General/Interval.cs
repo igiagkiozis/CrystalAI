@@ -46,7 +46,7 @@ namespace Crystal {
   ///   than the start element, the interval will swap the two ends around
   ///   such that a is always %lt; b.
   /// </remarks>
-  public struct Interval<T> where T : struct, IComparable {
+  public struct Interval<T> where T : struct, IComparable<T> {
     /// <summary>
     /// Lower bound of the interval.
     /// </summary>
@@ -74,11 +74,6 @@ namespace Crystal {
     /// <param name="point">Point to check</param>
     /// <returns>True if point lies within the interval, otherwise false</returns>
     public bool Contains(T point) {
-      if(LowerBound.GetType() != typeof(T)
-         ||
-         UpperBound.GetType() != typeof(T))
-        throw new ArgumentException("Type mismatch", "point");
-
       var lower = LowerBoundType == IntervalType.Open
                     ? LowerBound.CompareTo(point) < 0
                     : LowerBound.CompareTo(point) <= 0;
@@ -95,13 +90,19 @@ namespace Crystal {
     /// </summary>
     /// <returns></returns>
     public override string ToString() {
-      return string.Format(
-                           "{0}{1}, {2}{3}",
+      return string.Format("{0}{1}, {2}{3}",
                            LowerBoundType == IntervalType.Open ? "(" : "[",
-                           LowerBound,
-                           UpperBound,
+                           LowerBound.ToString(),
+                           UpperBound.ToString(),
                            UpperBoundType == IntervalType.Open ? ")" : "]"
                           );
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Interval{T}"/> struct.
+    /// </summary>
+    /// <param name="point">The point.</param>
+    public Interval(T point) : this(point, point) {      
     }
 
     /// <summary>
@@ -135,6 +136,16 @@ namespace Crystal {
   ///   Static class to generate regular Intervals using common types.
   /// </summary>
   public static class Interval {
+
+    /// <summary>
+    /// Creates the specified point interval.
+    /// </summary>
+    /// <param name="point">The point.</param>
+    /// <returns></returns>
+    public static Interval<int> Create(int point) {
+      return new Interval<int>(point);
+    }
+
     /// <summary>
     /// Creates an interval of integers.
     /// </summary>
@@ -147,6 +158,15 @@ namespace Crystal {
                                       IntervalType lowerboundIntervalType = IntervalType.Closed,
                                       IntervalType upperboundIntervalType = IntervalType.Closed) {
       return new Interval<int>(lowerbound, upperbound, lowerboundIntervalType, upperboundIntervalType);
+    }
+
+    /// <summary>
+    /// Creates the specified point.
+    /// </summary>
+    /// <param name="point">The point.</param>
+    /// <returns></returns>
+    public static Interval<float> Create(float point) {
+      return new Interval<float>(point);
     }
 
     /// <summary>

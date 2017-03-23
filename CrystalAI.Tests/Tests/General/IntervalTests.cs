@@ -26,6 +26,11 @@ namespace Crystal.GeneralTests {
   [TestFixture]
   public class IntervalTests {
     static readonly object[] ContainsTestCases = {
+      // Point interval constructor 
+      new object[] {new Interval<float>(1f), 1f, true },
+      new object[] {new Interval<double>(1.0), 1.0, true },
+      new object[] {new Interval<float>(-1f), -1f, true },
+      new object[] {new Interval<double>(1.0), 1.0, true },
       // Closed interval: [a, b]
       new object[] {Interval.Create(1, 10), 1, true},
       new object[] {Interval.Create(1, 10), 10, true},
@@ -118,7 +123,7 @@ namespace Crystal.GeneralTests {
     };
 
     [Test, TestCaseSource("ContainsTestCases")]
-    public void ContainsTests<T>(Interval<T> interval, T point, bool expected) where T : struct, IComparable {
+    public void ContainsTests<T>(Interval<T> interval, T point, bool expected) where T : struct, IComparable<T> {
       Assert.That(interval.Contains(point), Is.EqualTo(expected));
     }
 
