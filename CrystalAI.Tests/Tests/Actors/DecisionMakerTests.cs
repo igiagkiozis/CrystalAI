@@ -108,184 +108,188 @@ namespace Crystal.ActorTests {
     [Test]
     public void GetSetFirstThinkDelayMinTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.InitThinkDelayMin, Is.EqualTo(0f));
-      dm.InitThinkDelayMin = 0.5f;
-      Assert.That(dm.InitThinkDelayMin, Is.EqualTo(0.5));
+      Assert.That(dm.InitThinkDelay.LowerBound, Is.EqualTo(0f));
+      dm.InitThinkDelay = dm.InitThinkDelay.ChangeLowerBound(0.5f);
+      Assert.That(dm.InitThinkDelay.LowerBound, Is.EqualTo(0.5f));
     }
 
     [Test]
     public void FirstThinkDelayMinCannotBeNegativeTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.InitThinkDelayMin = -100f;
-      Assert.That(dm.InitThinkDelayMin, Is.EqualTo(0f));
+      dm.InitThinkDelay = dm.InitThinkDelay.ChangeLowerBound(-100f);
+      Assert.That(dm.InitThinkDelay.LowerBound, Is.EqualTo(0f));
     }
 
     [Test]
     public void GetSetFirstThinkDelayMaxTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.InitThinkDelayMax, Is.EqualTo(0f));
-      dm.InitThinkDelayMax = 0.5f;
-      Assert.That(dm.InitThinkDelayMax, Is.EqualTo(0.5f));
+      Assert.That(dm.InitThinkDelay.UpperBound, Is.EqualTo(0f));
+      dm.InitThinkDelay = dm.InitThinkDelay.ChangeUpperBound(0.5f);
+      Assert.That(dm.InitThinkDelay.UpperBound, Is.EqualTo(0.5f));
     }
 
     [Test]
     public void FirstThinkDelayMaxCannotBeNegativeTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.InitThinkDelayMax = -100f;
-      Assert.That(dm.InitThinkDelayMax, Is.EqualTo(0f));
+      dm.InitThinkDelay = dm.InitThinkDelay.ChangeUpperBound(-100f);
+      Assert.That(dm.InitThinkDelay.UpperBound, Is.EqualTo(0f));
     }
 
     [Test]
     public void FirstThinkDelayMinIsLessOrEqualToMinTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.InitThinkDelayMax = 0.5f;
-      dm.InitThinkDelayMin = 0.6f;
-      Assert.That(dm.InitThinkDelayMax, Is.EqualTo(0.6f));
+      dm.InitThinkDelay = Interval.Create(0.6f, 0.5f);
+      Assert.That(dm.InitThinkDelay.UpperBound, Is.EqualTo(0.6f));
 
-      dm.InitThinkDelayMax = 0.5f;
-      Assert.That(dm.InitThinkDelayMax, Is.EqualTo(0.6f));
-
-      dm.InitThinkDelayMin = 0f;
-      dm.InitThinkDelayMax = 0.1f;
-      Assert.That(dm.InitThinkDelayMax, Is.EqualTo(0.1f));
+      dm.InitThinkDelay = dm.InitThinkDelay.ChangeUpperBound(0.5f);
+      Assert.That(dm.InitThinkDelay.UpperBound, Is.EqualTo(0.5f));
+      
+      dm.InitThinkDelay = Interval.Create(0f, 0.1f);
+      Assert.That(dm.InitThinkDelay.UpperBound, Is.EqualTo(0.1f));
     }
 
 
     [Test]
     public void GetSetThinkDelayMinTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.ThinkDelayMin, Is.EqualTo(0f));
-      dm.ThinkDelayMin = 0.5f;
-      Assert.That(dm.ThinkDelayMin, Is.EqualTo(0.5));
+      Assert.That(dm.ThinkDelay.LowerBound, Is.EqualTo(0f));
+
+      dm.ThinkDelay = dm.ThinkDelay.ChangeLowerBound(0.5f);
+      Assert.That(dm.ThinkDelay.LowerBound, Is.EqualTo(0.5f));
     }
 
     [Test]
     public void ThinkDelayMinCannotBeNegativeTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.ThinkDelayMin = -100f;
-      Assert.That(dm.ThinkDelayMin, Is.EqualTo(0f));
+
+      dm.ThinkDelay = dm.ThinkDelay.ChangeLowerBound(-100f);
+      Assert.That(dm.ThinkDelay.LowerBound, Is.EqualTo(0f));
     }
 
     [Test]
     public void GetSetThinkDelayMaxTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.ThinkDelayMax, Is.EqualTo(0f));
-      dm.ThinkDelayMax = 0.5f;
-      Assert.That(dm.ThinkDelayMax, Is.EqualTo(0.5f));
+      Assert.That(dm.ThinkDelay.UpperBound, Is.EqualTo(0f));
+      dm.ThinkDelay = dm.ThinkDelay.ChangeUpperBound(0.5f);
+      Assert.That(dm.ThinkDelay.UpperBound, Is.EqualTo(0.5f));
     }
 
     [Test]
     public void ThinkDelayMaxCannotBeNegativeTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.ThinkDelayMax = -100f;
-      Assert.That(dm.ThinkDelayMax, Is.EqualTo(0f));
+
+      dm.ThinkDelay = dm.ThinkDelay.ChangeUpperBound(-100f);
+      Assert.That(dm.ThinkDelay.UpperBound, Is.EqualTo(0f));
     }
 
     [Test]
     public void ThinkDelayMinIsLessOrEqualToMinTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.ThinkDelayMax = 0.5f;
-      dm.ThinkDelayMin = 0.6f;
-      Assert.That(dm.ThinkDelayMax, Is.EqualTo(0.6f));
 
-      dm.ThinkDelayMax = 0.5f;
-      Assert.That(dm.ThinkDelayMax, Is.EqualTo(0.6f));
+      dm.ThinkDelay = Interval.Create(0.6f, 0.5f);
+      Assert.That(dm.ThinkDelay.UpperBound, Is.EqualTo(0.6f));
 
-      dm.ThinkDelayMin = 0f;
-      dm.ThinkDelayMax = 0.1f;
-      Assert.That(dm.ThinkDelayMax, Is.EqualTo(0.1f));
+      dm.ThinkDelay = dm.ThinkDelay.ChangeUpperBound(0.5f);
+      Assert.That(dm.ThinkDelay.UpperBound, Is.EqualTo(0.5f));
+
+      dm.ThinkDelay = Interval.Create(0f, 0.1f);
+      Assert.That(dm.ThinkDelay.UpperBound, Is.EqualTo(0.1f));
     }
 
 
     [Test]
     public void GetSetFirstUpdateDelayMinTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.InitUpdateDelayMin, Is.EqualTo(0f));
-      dm.InitUpdateDelayMin = 0.5f;
-      Assert.That(dm.InitUpdateDelayMin, Is.EqualTo(0.5));
+      Assert.That(dm.InitUpdateDelay.LowerBound, Is.EqualTo(0f));
+
+      dm.InitUpdateDelay = dm.InitUpdateDelay.ChangeLowerBound(0.5f);
+      Assert.That(dm.InitUpdateDelay.LowerBound, Is.EqualTo(0.5));
     }
 
     [Test]
     public void FirstUpdateMinCannotBeNegativeTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.InitUpdateDelayMin = -100f;
-      Assert.That(dm.InitUpdateDelayMin, Is.EqualTo(0f));
+
+      dm.InitUpdateDelay = dm.InitUpdateDelay.ChangeLowerBound(-100f);
+      Assert.That(dm.InitUpdateDelay.LowerBound, Is.EqualTo(0f));
     }
 
     [Test]
     public void GetSetFirstUpdateDelayMaxTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.InitUpdateDelayMax, Is.EqualTo(0f));
-      dm.InitUpdateDelayMax = 0.5f;
-      Assert.That(dm.InitUpdateDelayMax, Is.EqualTo(0.5f));
+      Assert.That(dm.InitUpdateDelay.UpperBound, Is.EqualTo(0f));
+      dm.InitUpdateDelay = dm.InitUpdateDelay.ChangeUpperBound(0.5f);
+      Assert.That(dm.InitUpdateDelay.UpperBound, Is.EqualTo(0.5f));
     }
 
     [Test]
     public void FirstUpdateMaxCannotBeNegativeTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.InitUpdateDelayMax = -100f;
-      Assert.That(dm.InitUpdateDelayMax, Is.EqualTo(0f));
+
+      dm.InitUpdateDelay = dm.InitUpdateDelay.ChangeUpperBound(-100f);
+      Assert.That(dm.InitUpdateDelay.UpperBound, Is.EqualTo(0f));
     }
 
     [Test]
     public void FirstUpdateMinIsLessOrEqualToMinTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.InitUpdateDelayMax = 0.5f;
-      dm.InitUpdateDelayMin = 0.6f;
-      Assert.That(dm.InitUpdateDelayMax, Is.EqualTo(0.6f));
-
-      dm.InitUpdateDelayMax = 0.5f;
-      Assert.That(dm.InitUpdateDelayMax, Is.EqualTo(0.6f));
-
-      dm.InitUpdateDelayMin = 0f;
-      dm.InitUpdateDelayMax = 0.1f;
-      Assert.That(dm.InitUpdateDelayMax, Is.EqualTo(0.1f));
+      
+      dm.InitUpdateDelay = Interval.Create(0.6f, 0.5f);
+      Assert.That(dm.InitUpdateDelay.UpperBound, Is.EqualTo(0.6f));
+      
+      dm.InitUpdateDelay = dm.InitUpdateDelay.ChangeUpperBound(0.5f);
+      Assert.That(dm.InitUpdateDelay.UpperBound, Is.EqualTo(0.5f));
+      
+      dm.InitUpdateDelay = Interval.Create(0f, 0.1f);
+      Assert.That(dm.InitUpdateDelay.UpperBound, Is.EqualTo(0.1f));
     }
 
 
     [Test]
     public void GetSetUpdateDelayMinTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.UpdateDelayMin, Is.EqualTo(0f));
-      dm.UpdateDelayMin = 0.5f;
-      Assert.That(dm.UpdateDelayMin, Is.EqualTo(0.5));
+      Assert.That(dm.UpdateDelay.LowerBound, Is.EqualTo(0f));
+
+      dm.UpdateDelay = dm.UpdateDelay.ChangeLowerBound(0.5f);
+      Assert.That(dm.UpdateDelay.LowerBound, Is.EqualTo(0.5));
     }
 
     [Test]
     public void UpdateDelayMinCannotBeNegativeTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.UpdateDelayMin = -100f;
-      Assert.That(dm.UpdateDelayMin, Is.EqualTo(0f));
+
+      dm.UpdateDelay = dm.UpdateDelay.ChangeLowerBound(-100f);
+      Assert.That(dm.UpdateDelay.LowerBound, Is.EqualTo(0f));
     }
 
     [Test]
     public void GetSetUpdateDelayMaxTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.UpdateDelayMax, Is.EqualTo(0f));
-      dm.UpdateDelayMax = 0.5f;
-      Assert.That(dm.UpdateDelayMax, Is.EqualTo(0.5f));
+      Assert.That(dm.UpdateDelay.UpperBound, Is.EqualTo(0f));
+
+      dm.UpdateDelay = dm.UpdateDelay.ChangeUpperBound(0.5f);
+      Assert.That(dm.UpdateDelay.UpperBound, Is.EqualTo(0.5f));
     }
 
     [Test]
     public void UpdateDelayMaxCannotBeNegativeTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.UpdateDelayMax = -100f;
-      Assert.That(dm.UpdateDelayMax, Is.EqualTo(0f));
+      dm.UpdateDelay = dm.UpdateDelay.ChangeUpperBound(-100f);
+      Assert.That(dm.UpdateDelay.UpperBound, Is.EqualTo(0f));
     }
 
     [Test]
     public void UpdateDelayMinIsLessOrEqualToMinTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      dm.UpdateDelayMax = 0.5f;
-      dm.UpdateDelayMin = 0.6f;
-      Assert.That(dm.UpdateDelayMax, Is.EqualTo(0.6f));
-
-      dm.UpdateDelayMax = 0.5f;
-      Assert.That(dm.UpdateDelayMax, Is.EqualTo(0.6f));
-
-      dm.UpdateDelayMin = 0f;
-      dm.UpdateDelayMax = 0.1f;
-      Assert.That(dm.UpdateDelayMax, Is.EqualTo(0.1f));
+      
+      dm.UpdateDelay = Interval.Create(0.6f, 0.5f);
+      Assert.That(dm.UpdateDelay.UpperBound, Is.EqualTo(0.6f));
+      
+      dm.UpdateDelay = dm.UpdateDelay.ChangeUpperBound(0.5f);
+      Assert.That(dm.UpdateDelay.UpperBound, Is.EqualTo(0.5f));
+      
+      dm.UpdateDelay = Interval.Create(0f, 0.1f);
+      Assert.That(dm.UpdateDelay.UpperBound, Is.EqualTo(0.1f));
     }
 
 

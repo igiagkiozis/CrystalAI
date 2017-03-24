@@ -49,11 +49,13 @@ namespace Crystal.SchedulingTests {
     public void GetSetFirstExecutionDelayMinTest() {
       CommandAction ca = () => { };
       var dc = new DeferredCommand(ca);
-      Assert.That(dc.InitExecutionDelayMin, Is.EqualTo(0f));
-      dc.InitExecutionDelayMin = 0.5f;
-      Assert.That(dc.InitExecutionDelayMin, Is.EqualTo(0.5f));
-      dc.InitExecutionDelayMin = -1f;
-      Assert.That(dc.InitExecutionDelayMin, Is.EqualTo(0f));
+      Assert.That(dc.InitExecutionDelayInterval.LowerBound, Is.EqualTo(0f));
+
+      dc.InitExecutionDelayInterval = dc.InitExecutionDelayInterval.ChangeLowerBound(0.5f);
+      Assert.That(dc.InitExecutionDelayInterval.LowerBound, Is.EqualTo(0.5f));
+      
+      dc.InitExecutionDelayInterval = dc.InitExecutionDelayInterval.ChangeLowerBound(-1f);
+      Assert.That(dc.InitExecutionDelayInterval.LowerBound, Is.EqualTo(0f));
     }
   }
 

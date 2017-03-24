@@ -30,6 +30,30 @@ namespace Crystal {
     DecisionMakerState State { get; }
 
     /// <summary>
+    /// The initial think delay interval in seconds. If this is a point interval (e.g. [a,a])
+    /// the delay is deterministic, always i.e. equal to the given point.
+    /// </summary>
+    Interval<float> InitThinkDelay { get; set; }
+
+    /// <summary>
+    /// The think delay interval in seconds. If this is a point interval (e.g. [a,a]) the delay
+    /// is deterministic, i.e. always equal to the given point.
+    /// </summary>
+    Interval<float> ThinkDelay { get; set; }
+
+    /// <summary>
+    /// The initial update delay interval in seconds. If this is a point interval (e.g. [a,a])
+    /// the delay is deterministic, i.e. always equal to the given point.
+    /// </summary>
+    Interval<float> InitUpdateDelay { get; set; }
+
+    /// <summary>
+    /// The update delay interval in seconds. If this is a point interval (e.g. [a,a]) the
+    /// delay is deterministic, i.e. always equal to the given point.
+    /// </summary>
+    Interval<float> UpdateDelay { get; set; }    
+
+    /// <summary>
     ///   Starts the associated AI and sets the decision maker state to
     ///  <see cref="F:Crystal.DecisionMakerState.Running"/>.
     /// </summary>

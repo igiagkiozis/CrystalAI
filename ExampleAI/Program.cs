@@ -19,7 +19,6 @@
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using Crystal;
@@ -27,13 +26,8 @@ using Crystal;
 
 namespace ExampleAI {
 
-  
-
   internal class Program {
-    
-
     static void Main() {
-         
       int N = 1;
       var characters = new List<Character>();
       var decisionMakers = new List<DecisionMaker>();
@@ -45,18 +39,14 @@ namespace ExampleAI {
 
       // Create characters and their corresponding decision making logic
       for(int i = 0; i < N; i++) {
-        var character = new Character(string.Format("Toon {0}", i));
+        var character = new Character(string.Format("Toon {0}", i.ToString()));
         var decisionMaker = new DecisionMaker(aiConstructor.Create(AiDefs.ToonAi), character, scheduler) {
-          InitThinkDelayMin = 0.1f,
-          InitThinkDelayMax = 0.5f,
-          ThinkDelayMin = 0.25f,
-          ThinkDelayMax = 0.3f,
-          InitUpdateDelayMin = 0.1f,
-          InitUpdateDelayMax = 0.15f,
-          UpdateDelayMin = 0.1f,
-          UpdateDelayMax = 0.12f
+          InitThinkDelay = Interval.Create(0.1f, 0.5f),
+          ThinkDelay = Interval.Create(0.25f, 0.3f),
+          InitUpdateDelay = Interval.Create(0.1f, 0.15f),
+          UpdateDelay = Interval.Create(0.1f, 0.12f)
         };
-        
+
         characters.Add(character);
         decisionMakers.Add(decisionMaker);
         decisionMaker.Start();
@@ -77,7 +67,6 @@ namespace ExampleAI {
         scheduler.Tick();
         Thread.Sleep(250);
       }
-
     }
   }
 

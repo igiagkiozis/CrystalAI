@@ -27,6 +27,7 @@ namespace Crystal {
   /// </summary>
   /// <seealso cref="T:Crystal.IDecisionMaker"/>
   public abstract class DecisionMakerBase : IDecisionMaker {
+    const int MaxRecursions = 100;
     IUtilityAi _ai;
     IContextProvider _contextProvider;
     IAction _currentAction;
@@ -34,17 +35,60 @@ namespace Crystal {
     int _recursionCounter;
     ITransition _transitionAction;
 
+    Interval<float> _initThinkDelay = Interval.Create(0f);
+    // Default decision making frequency 10Hz, i.e. 10 times per second.
+    Interval<float> _thinkDelay = Interval.Create(0.1f);
+    Interval<float> _initUpdateDelay = Interval.Create(0f);
+    // Default update frequency ~60Hz (or 60 Frames per second).
+    Interval<float> _updateDelay = Interval.Create(0.0167f);
+
     /// <summary>
-    /// The state of the decision maker.
+    ///   The state of the decision maker.
     /// </summary>
     public DecisionMakerState State { get; protected set; }
 
     /// <summary>
-    /// Starts the associated AI and sets the decision maker state to
-    /// <see cref="F:Crystal.DecisionMakerState.Running" /> informing the 
-    /// <see cref="T:Crystal.IScheduler"/> that this AI should be executed.
-    /// Don't forget to invoke in your Update loop <see cref="M:Crystal.IScheduler.Tick()"/>
-    /// otherwise the AI will never actually run!
+    ///   The initial think delay interval in seconds. If this is a point interval (e.g. [a,a])
+    ///   the delay is deterministic, always i.e. equal to the given point.
+    /// </summary>
+    public Interval<float> InitThinkDelay {
+      get { return _initThinkDelay; }
+      set { _initThinkDelay = value.ClampToPositive(); }
+    }
+
+    /// <summary>
+    ///   The think delay interval in seconds. If this is a point interval (e.g. [a,a]) the delay
+    ///   is deterministic, i.e. always equal to the given point.
+    /// </summary>
+    public Interval<float> ThinkDelay {
+      get { return _thinkDelay; }
+      set { _thinkDelay = value.ClampToPositive(); }
+    }
+
+    /// <summary>
+    ///   The initial update delay interval in seconds. If this is a point interval (e.g. [a,a])
+    ///   the delay is deterministic, i.e. always equal to the given point.
+    /// </summary>
+    public Interval<float> InitUpdateDelay {
+      get { return _initUpdateDelay; }
+      set { _initUpdateDelay = value.ClampToPositive(); }
+    }
+
+    /// <summary>
+    ///   The update delay interval in seconds. If this is a point interval (e.g. [a,a]) the
+    ///   delay is deterministic, i.e. always equal to the given point.
+    /// </summary>
+    public Interval<float> UpdateDelay {
+      get { return _updateDelay; }
+      set { _updateDelay = value.ClampToPositive(); }
+    }
+
+    /// <summary>
+    ///   Starts the associated AI and sets the decision maker state to
+    ///   <see cref="F:Crystal.DecisionMakerState.Running"/> informing the
+    ///   <see cref="T:Crystal.IScheduler"/> that this AI should be executed.
+    ///   Don't forget to invoke in your Update loop <see cref="M:Crystal.IScheduler.Tick()"/>
+    ///   otherwise the AI will never actually run!
     /// </summary>
     public void Start() {
       if(State != DecisionMakerState.Stopped)
@@ -55,8 +99,8 @@ namespace Crystal {
     }
 
     /// <summary>
-    /// Stops the associated AI and sets the decision maker state to
-    /// <see cref="F:Crystal.DecisionMakerState.Stopped" />.
+    ///   Stops the associated AI and sets the decision maker state to
+    ///   <see cref="F:Crystal.DecisionMakerState.Stopped"/>.
     /// </summary>
     public void Stop() {
       if(State == DecisionMakerState.Stopped)
@@ -67,8 +111,8 @@ namespace Crystal {
     }
 
     /// <summary>
-    /// Pauses the associated AI and the decision maker state to
-    /// <see cref="F:Crystal.DecisionMakerState.Paused" />.
+    ///   Pauses the associated AI and the decision maker state to
+    ///   <see cref="F:Crystal.DecisionMakerState.Paused"/>.
     /// </summary>
     public void Pause() {
       if(State != DecisionMakerState.Running)
@@ -79,8 +123,8 @@ namespace Crystal {
     }
 
     /// <summary>
-    /// Resumes execution of the associated AI and sets the decision maker state to
-    /// <see cref="F:Crystal.DecisionMakerState.Running" />.
+    ///   Resumes execution of the associated AI and sets the decision maker state to
+    ///   <see cref="F:Crystal.DecisionMakerState.Running"/>.
     /// </summary>
     public void Resume() {
       if(State != DecisionMakerState.Paused)
@@ -120,7 +164,7 @@ namespace Crystal {
     }
 
     /// <summary>
-    ///   Called after <see cref="M:Crystal.DecisionMakerBase.Start"/>. 
+    ///   Called after <see cref="M:Crystal.DecisionMakerBase.Start"/>.
     /// </summary>
     protected abstract void OnStart();
 
@@ -130,7 +174,7 @@ namespace Crystal {
     protected abstract void OnStop();
 
     /// <summary>
-    ///   Called after <see cref="M:Crystal.DecisionMakerBase.Pause"/>. 
+    ///   Called after <see cref="M:Crystal.DecisionMakerBase.Pause"/>.
     /// </summary>
     protected abstract void OnPause();
 
@@ -138,9 +182,9 @@ namespace Crystal {
     ///   Called after <see cref="M:Crystal.DecisionMakerBase.Resume"/>.
     /// </summary>
     protected abstract void OnResume();
-    
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="DecisionMakerBase"/> class.
+    ///   Initializes a new instance of the <see cref="DecisionMakerBase"/> class.
     /// </summary>
     /// <param name="ai">The ai.</param>
     /// <param name="contextProvider">The context provider.</param>
@@ -196,8 +240,6 @@ namespace Crystal {
       if(_currentAction.ActionStatus != ActionStatus.Running)
         _currentAction = null;
     }
-
-    const int MaxRecursions = 100;
 
     internal class UtilityAiNullException : Exception {
     }

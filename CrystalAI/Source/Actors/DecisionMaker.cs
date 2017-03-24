@@ -27,139 +27,12 @@ namespace Crystal {
   /// </summary>
   public sealed class DecisionMaker : DecisionMakerBase {
     IScheduler _aiScheduler;
-    // Being explicit for clarity.
-    float _initThinkDelayMax = 0f;
-    float _initThinkDelayMin = 0f;
-    float _initUpdateDelayMax = 0f;
-    float _initUpdateDelayMin = 0f;
-
-    // Default decision making frequency 10Hz, i.e. 10 times per second.
-    float _thinkDelayMin = 0.1f;
-    float _thinkDelayMax = 0.1f;    
-    // Default update frequency ~60Hz (or 60 Frames per second).
-    float _updateDelayMax = 0.0167f;
-    float _updateDelayMin = 0.0167f;
-
-
+    
     DeferredCommand _thinkCommand;
     IDeferredCommandHandle _thinkCommandHandle;
     
     DeferredCommand _updateCommand;
     IDeferredCommandHandle _updateCommandHandle;
-
-    /// <summary>
-    /// The minimum initial think delay in seconds.
-    /// </summary>
-    public float InitThinkDelayMin {
-      get { return _initThinkDelayMin; }
-      set {
-        _initThinkDelayMin = value.ClampToPositive();
-        _initThinkDelayMax = _initThinkDelayMax.ClampToLowerBound(_initThinkDelayMin);
-        _thinkCommand.InitExecutionDelayMin = _initThinkDelayMin;
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the initialize think delay maximum.
-    /// </summary>
-    /// <value>
-    /// The initialize think delay maximum.
-    /// </value>
-    public float InitThinkDelayMax {
-      get { return _initThinkDelayMax; }
-      set {
-        _initThinkDelayMax = value.ClampToLowerBound(_initThinkDelayMin);
-        _thinkCommand.InitExecutionDelayMax = _initThinkDelayMax;
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the think delay minimum.
-    /// </summary>
-    /// <value>
-    /// The think delay minimum.
-    /// </value>
-    public float ThinkDelayMin {
-      get { return _thinkDelayMin; }
-      set {
-        _thinkDelayMin = value.ClampToPositive();
-        _thinkDelayMax = _thinkDelayMax.ClampToLowerBound(_thinkDelayMin);
-        _thinkCommand.ExecutionDelayMin = _thinkDelayMin;
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the think delay maximum.
-    /// </summary>
-    /// <value>
-    /// The think delay maximum.
-    /// </value>
-    public float ThinkDelayMax {
-      get { return _thinkDelayMax; }
-      set {
-        _thinkDelayMax = value.ClampToLowerBound(_thinkDelayMin);
-        _thinkCommand.ExecutionDelayMax = _thinkDelayMax;
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the initialize update delay minimum.
-    /// </summary>
-    /// <value>
-    /// The initialize update delay minimum.
-    /// </value>
-    public float InitUpdateDelayMin {
-      get { return _initUpdateDelayMin; }
-      set {
-        _initUpdateDelayMin = value.ClampToPositive();
-        _initUpdateDelayMax = _initUpdateDelayMax.ClampToLowerBound(_initUpdateDelayMin);
-        _updateCommand.InitExecutionDelayMin = _initUpdateDelayMin;
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the initialize update delay maximum.
-    /// </summary>
-    /// <value>
-    /// The initialize update delay maximum.
-    /// </value>
-    public float InitUpdateDelayMax {
-      get { return _initUpdateDelayMax; }
-      set {
-        _initUpdateDelayMax = value.ClampToLowerBound(_initUpdateDelayMin);
-        _updateCommand.InitExecutionDelayMax = _initUpdateDelayMax;
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the update delay minimum.
-    /// </summary>
-    /// <value>
-    /// The update delay minimum.
-    /// </value>
-    public float UpdateDelayMin {
-      get { return _updateDelayMin; }
-      set {
-        _updateDelayMin = value.ClampToPositive();
-        _updateDelayMax = _updateDelayMax.ClampToLowerBound(_updateDelayMin);
-        _updateCommand.ExecutionDelayMin = _updateDelayMin;
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the update delay maximum.
-    /// </summary>
-    /// <value>
-    /// The update delay maximum.
-    /// </value>
-    public float UpdateDelayMax {
-      get { return _updateDelayMax; }
-      set {
-        _updateDelayMax = value.ClampToLowerBound(_updateDelayMin);
-        _updateCommand.ExecutionDelayMax = _updateDelayMax;
-      }
-    }
-
 
     /// <summary>
     /// Called after <see cref="M:Crystal.DecisionMakerBase.Start" />.
@@ -212,19 +85,15 @@ namespace Crystal {
 
     void InitializeThinkCommand() {
       _thinkCommand = new DeferredCommand(Think) {
-        InitExecutionDelayMin = InitThinkDelayMin,
-        InitExecutionDelayMax = InitThinkDelayMin,
-        ExecutionDelayMin = ThinkDelayMin,
-        ExecutionDelayMax = ThinkDelayMax
+        InitExecutionDelayInterval = InitThinkDelay,
+        ExecutionDelayInterval = ThinkDelay
       };
     }
 
     void InitializeUpdateCommand() {
       _updateCommand = new DeferredCommand(Update) {
-        InitExecutionDelayMin = InitUpdateDelayMin,
-        InitExecutionDelayMax = InitUpdateDelayMin,
-        ExecutionDelayMin = UpdateDelayMin,
-        ExecutionDelayMax = UpdateDelayMax
+        InitExecutionDelayInterval = InitUpdateDelay,
+        ExecutionDelayInterval = UpdateDelay
       };
     }
 

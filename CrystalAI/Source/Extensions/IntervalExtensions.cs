@@ -17,6 +17,10 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
+using System;
+using System.Runtime.InteropServices;
+
+
 namespace Crystal {
 
   /// <summary>
@@ -145,6 +149,38 @@ namespace Crystal {
     /// </summary>
     public static double Length(this Interval<double> @this) {
       return @this.UpperBound - @this.LowerBound;
+    }
+
+    /// <summary>
+    /// Replaces the lower bound of the given interval with the given value. Note, in the event that 
+    /// the new lower bound is larger than the upper bound, the upper bound will be set to the 
+    /// lower bound and a point interval is returned.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="this">The this.</param>
+    /// <param name="lowerBound">The lower bound.</param>
+    public static Interval<T> ChangeLowerBound<T>(this Interval<T> @this, T lowerBound) 
+      where T : struct, IComparable<T> {
+      if(lowerBound.CompareTo(@this.UpperBound) >= 0)
+        return new Interval<T>(lowerBound, lowerBound);
+
+      return new Interval<T>(lowerBound, @this.UpperBound, @this.LowerBoundType, @this.UpperBoundType);
+    }
+
+    /// <summary>
+    /// Replaces the upper bound of the given interval with the given value. Note, in the event that 
+    /// the new upper bound is smaller than the lower bound, the lower bound will be set to the 
+    /// upper bound and a point interval is returned.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="this">The this.</param>
+    /// <param name="upperBound">The upper bound.</param>
+    public static Interval<T> ChangeUpperBound<T>(this Interval<T> @this, T upperBound)
+      where T : struct, IComparable<T> {
+      if(upperBound.CompareTo(@this.LowerBound) <= 0)
+        return new Interval<T>(upperBound, upperBound);
+
+      return new Interval<T>(@this.LowerBound, upperBound, @this.LowerBoundType, @this.UpperBoundType);
     }
   }
 
