@@ -48,7 +48,7 @@ namespace Crystal {
     public float ElapsedTime {
       get {
         if(ActionStatus == ActionStatus.Running)
-          return CrTime.Time - _startedTime;
+          return CrTime.TotalSeconds - _startedTime;
 
         return 0f;
       }
@@ -91,7 +91,7 @@ namespace Crystal {
         return;
 
       if(TryUpdate(context) == false) {
-        _startedTime = CrTime.Time;
+        _startedTime = CrTime.TotalSeconds;
         ActionStatus = ActionStatus.Running;
         OnExecute(context);
       }

@@ -32,11 +32,6 @@ namespace Crystal {
   ///   repeatedly.
   /// </summary>
   public class DeferredCommand {
-    // TODO Cleanup
-    //    float _initExecutionDelayMax;
-    //    float _initExecutionDelayMin;
-    //    float _executionDelayMax;
-    //    float _executionDelayMin;
 
     // This is by and far the most common use.
     bool _isRepeating = true;
@@ -77,28 +72,6 @@ namespace Crystal {
       set { _executionDelayInterval = value.ClampToPositive(); }
     }
 
-    // TODO Cleanup
-    //    /// <summary>
-    //    ///   Controls the minimum Time delay before this command is executed for the first time.
-    //    /// </summary>
-    //    /// <value>The first execution delay minimum.</value>
-    //    public float InitExecutionDelayMin {
-    //      get { return _initExecutionDelayMin; }
-    //      set {
-    //        _initExecutionDelayMin = value.ClampToPositive();
-    //        _initExecutionDelayMax = _initExecutionDelayMax.ClampToLowerBound(_initExecutionDelayMin);
-    //      }
-    //    }
-    //
-    //    /// <summary>
-    //    ///   Controls the maximum Time delay before this command is executed for the first Time.
-    //    /// </summary>
-    //    /// <value>The first execution delay max.</value>
-    //    public float InitExecutionDelayMax {
-    //      get { return _initExecutionDelayMax; }
-    //      set { _initExecutionDelayMax = value.ClampToLowerBound(_initExecutionDelayMin); }
-    //    }
-
     /// <summary>
     ///   This determines how much Time to wait (in seconds), before executing the scheduled item
     ///   for the first Time. This is ignored after the first execution
@@ -107,25 +80,6 @@ namespace Crystal {
     public float InitExecutionDelay {
       get { return PcgExtended.Default.NextFloat(_initExecutionDelayInterval); }
     }
-
-    // TODO Cleanup
-    //    /// <summary>
-    //    ///   The minimum Time to wait (in seconds) before executing this command again.
-    //    /// </summary>
-    //    /// <value>The next execution delay minimum.</value>
-    //    public float ExecutionDelayMin {
-    //      get { return _executionDelayMin; }
-    //      set { _executionDelayMin = value.ClampToPositive(); }
-    //    }
-    //
-    //    /// <summary>
-    //    ///   The maximum Time to wait (in seconds) before executing this command again.
-    //    /// </summary>
-    //    /// <value>The next execution delay max.</value>
-    //    public float ExecutionDelayMax {
-    //      get { return _executionDelayMax; }
-    //      set { _executionDelayMax = value.ClampToLowerBound(_executionDelayMin); }
-    //    }
 
     /// <summary>
     ///   The Time to wait in seconds to execute again the scheduled item.
@@ -153,11 +107,11 @@ namespace Crystal {
     ///   The time since the last update in seconds.
     /// </summary>
     public float TimeSinceLastUpdate {
-      get { return CrTime.Time - _lastExecutionTime; }
+      get { return CrTime.TotalSeconds - _lastExecutionTime; }
     }
 
     /// <summary>
-    ///   This returns the time difference between the last update time and the second to
+    ///   This returns the time difference in seconds between the last update time and the second to
     ///   last update time.
     /// </summary>
     public float LastUpdateDeltaTime {
@@ -170,7 +124,7 @@ namespace Crystal {
     public void Execute() {
       _process();
       var lastExecOld = _lastExecutionTime;
-      _lastExecutionTime = CrTime.Time;
+      _lastExecutionTime = CrTime.TotalSeconds;
       _lastUpdateDeltaTime = _lastExecutionTime - lastExecOld;
       unchecked {
         _timesExecuted++;

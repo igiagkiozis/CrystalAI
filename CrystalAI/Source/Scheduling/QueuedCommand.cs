@@ -63,7 +63,7 @@ namespace Crystal {
       if(_isActive == false)
         return;
 
-      float time = CrTime.Time;
+      float time = CrTime.TotalSeconds;
       float num = NextExecution - time;
       LastExecution = num;
       NextExecution = float.PositiveInfinity;
@@ -74,7 +74,7 @@ namespace Crystal {
       if(_isActive == false)
         return;
 
-      float time = CrTime.Time;
+      float time = CrTime.TotalSeconds;
       LastExecution = time;
       NextExecution = time + Command.ExecutionDelay;
       _stream.Queue.UpdatePriority(this);
@@ -85,7 +85,7 @@ namespace Crystal {
     }
 
     void AddSelfToQueue() {
-      float time = CrTime.Time;
+      float time = CrTime.TotalSeconds;
       LastExecution = time;
       NextExecution = time + Command.ExecutionDelay;
       _stream.Queue.Enqueue(this);
