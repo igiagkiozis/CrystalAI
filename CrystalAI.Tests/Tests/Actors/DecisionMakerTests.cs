@@ -152,7 +152,7 @@ namespace Crystal.ActorTests {
     [Test]
     public void GetSetThinkDelayMinTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.ThinkDelay.LowerBound, Is.EqualTo(0f));
+      Assert.That(dm.ThinkDelay.LowerBound, Is.EqualTo(0.1f));
 
       dm.ThinkDelay = dm.ThinkDelay.ChangeLowerBound(0.5f);
       Assert.That(dm.ThinkDelay.LowerBound, Is.EqualTo(0.5f));
@@ -169,7 +169,7 @@ namespace Crystal.ActorTests {
     [Test]
     public void GetSetThinkDelayMaxTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.ThinkDelay.UpperBound, Is.EqualTo(0f));
+      Assert.That(dm.ThinkDelay.UpperBound, Is.EqualTo(0.1f));
       dm.ThinkDelay = dm.ThinkDelay.ChangeUpperBound(0.5f);
       Assert.That(dm.ThinkDelay.UpperBound, Is.EqualTo(0.5f));
     }
@@ -248,7 +248,7 @@ namespace Crystal.ActorTests {
     [Test]
     public void GetSetUpdateDelayMinTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.UpdateDelay.LowerBound, Is.EqualTo(0f));
+      Assert.That(dm.UpdateDelay.LowerBound, Is.EqualTo(0.0167f));
 
       dm.UpdateDelay = dm.UpdateDelay.ChangeLowerBound(0.5f);
       Assert.That(dm.UpdateDelay.LowerBound, Is.EqualTo(0.5));
@@ -265,7 +265,7 @@ namespace Crystal.ActorTests {
     [Test]
     public void GetSetUpdateDelayMaxTest() {
       var dm = new DecisionMaker(_ai, _toon, _scheduler);
-      Assert.That(dm.UpdateDelay.UpperBound, Is.EqualTo(0f));
+      Assert.That(dm.UpdateDelay.UpperBound, Is.EqualTo(0.0167f));
 
       dm.UpdateDelay = dm.UpdateDelay.ChangeUpperBound(0.5f);
       Assert.That(dm.UpdateDelay.UpperBound, Is.EqualTo(0.5f));

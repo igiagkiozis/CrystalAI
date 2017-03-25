@@ -39,9 +39,9 @@ namespace Crystal {
     public bool Add(IAction action) {
       if(action == null)
         return false;
-      if(_actionsMap.ContainsKey(action.NameId))
-        return false;
       if(string.IsNullOrEmpty(action.NameId))
+        return false;
+      if(_actionsMap.ContainsKey(action.NameId))
         return false;
 
       _actionsMap.Add(action.NameId, action);
