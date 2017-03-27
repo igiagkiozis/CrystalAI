@@ -17,7 +17,28 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
+
 namespace Crystal.OptionTests {
+
+  public class OptionParameters : IParameterProvider {
+    bool _power;
+
+    public bool Power {
+      get { return _power; }
+      set { _power = value; }
+    }
+
+    public OptionParameters() {
+    }
+
+    public OptionParameters(OptionParameters parameters) : this() {
+      Power = parameters.Power;
+    }
+
+    public IParameterProvider Clone() {
+      return new OptionParameters(this);
+    }
+  }
 
   public class OptionContext : IContext {
     float _xVal1;
@@ -28,6 +49,7 @@ namespace Crystal.OptionTests {
     float _xVal6;
     float _xVal7;
     float _xVal8;
+    float _xVal9;
 
     public float XVal1 {
       get { return _xVal1; }
@@ -67,6 +89,11 @@ namespace Crystal.OptionTests {
     public float XVal8 {
       get { return _xVal8; }
       set { _xVal8 = value.Clamp<float>(0.0f, 10.0f); }
+    }
+
+    public float XVal9 {
+      get { return _xVal9; }
+      set { _xVal9 = value.Clamp<float>(0.0f, 10.0f); }
     }
   }
 
@@ -321,6 +348,43 @@ namespace Crystal.OptionTests {
       cev.Add(ev1);
       cev.Add(ev2);
       _ev = cev;
+    }
+  }
+
+  public class OptionParametersConsideration : ConsiderationBase<OptionContext> {
+    IEvaluator _linear;
+    IEvaluator _power;
+
+    public override void Consider(OptionContext context) {
+      OptionParameters parameters = (OptionParameters)Parameters;
+
+      Utility = new Utility(parameters.Power ? _power.Evaluate(context.XVal9) : _linear.Evaluate(context.XVal9), Weight);
+    }
+
+    public override IConsideration Clone() {
+      return new OptionParametersConsideration(this);
+    }
+
+    public OptionParametersConsideration() {
+      Initialize();
+    }
+
+    OptionParametersConsideration(OptionParametersConsideration other) : base(other) {
+      Initialize();
+    }
+
+    public OptionParametersConsideration(string nameId, IConsiderationCollection collection) : base(nameId, collection) {
+      Initialize();
+    }
+
+    void Initialize() {
+      OptionParameters parameters = Parameters as OptionParameters;
+
+      var ptA = new Pointf(0f, 0f);
+      var ptB = new Pointf(10.0f, 1f);
+
+      _linear = new LinearEvaluator(ptA, ptB);
+      _power = new PowerEvaluator(ptA, ptB, 2);
     }
   }
 

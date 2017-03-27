@@ -78,6 +78,11 @@ namespace Crystal {
       }
     }
 
+    /// <summary>
+    ///   Optional parameters for this consideration.
+    /// </summary>
+    public IParameterProvider Parameters { get; set; }
+
     /// <summary>Calculates the utility given the specified context.</summary>
     /// <param name="context">The context.</param>
     public abstract void Consider(IContext context);
@@ -108,6 +113,7 @@ namespace Crystal {
       DefaultUtility = other.DefaultUtility;
       Utility = other.Utility;
       Weight = other.Weight;
+      Parameters = other.Parameters?.Clone();
     }
 
     /// <summary>
@@ -125,6 +131,18 @@ namespace Crystal {
       _collection = collection;
       if(_collection.Add(this) == false)
         throw new ConsiderationAlreadyExistsInCollectionException(nameId);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="T:Crystal.ConsiderationBase"/> class.
+    /// </summary>
+    /// <param name="nameId">The name identifier.</param>
+    /// <param name="collection">The collection.</param>
+    /// <param name="parameters">The parameters.</param>
+    /// <exception cref="T:Crystal.ConsiderationBase.ConsiderationCollectionNullException"></exception>
+    /// <exception cref="T:Crystal.ConsiderationBase.ConsiderationAlreadyExistsInCollectionException"></exception>
+    protected ConsiderationBase(string nameId, IConsiderationCollection collection, IParameterProvider parameters) : this(nameId, collection) {
+      Parameters = parameters;
     }
 
     internal class ConsiderationCollectionNullException : Exception {

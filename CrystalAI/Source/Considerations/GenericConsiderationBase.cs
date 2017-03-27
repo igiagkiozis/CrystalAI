@@ -57,6 +57,12 @@ namespace Crystal {
     public Utility Utility { get; protected set; }
 
     /// <summary>
+    ///   Returns the parameters for this consideration.
+    /// </summary>
+    /// <value>The parameters.</value>
+    public IParameterProvider Parameters { get; set; }
+
+    /// <summary>
     ///   The weight of this consideration.
     /// </summary>
     public float Weight {

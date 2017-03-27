@@ -50,6 +50,11 @@ namespace Crystal {
     /// </summary>
     bool IsInverted { get; set; }
 
+    /// <summary>
+    ///   Optional parameters for this consideration.
+    /// </summary>
+    IParameterProvider Parameters { get; set; }
+
     /// <summary>Calculates the utility given the specified context.</summary>
     /// <param name="context">The context.</param>
     /// <returns>The utility.</returns>

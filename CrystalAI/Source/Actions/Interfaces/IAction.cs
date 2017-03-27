@@ -51,6 +51,11 @@ namespace Crystal {
     ActionStatus ActionStatus { get; }
 
     /// <summary>
+    ///   Optional parameters for this action.
+    /// </summary>
+    IParameterProvider Parameters { get; set; }
+
+    /// <summary>
     ///   Executes the AI Action.
     /// </summary>
     /// <param name="context">AI Context.</param>

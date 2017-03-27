@@ -61,7 +61,7 @@ namespace Crystal {
       _optionsMap.Add(option.NameId, option);
       return true;
     }
-    
+
     /// <summary>
     /// Determines whether this collection contains the option associated with the
     /// specified identifier.

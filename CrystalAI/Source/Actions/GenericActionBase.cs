@@ -83,6 +83,12 @@ namespace Crystal {
     }
 
     /// <summary>
+    ///   Optional parameters for this action.
+    /// </summary>
+    /// <value>The action parameters.</value>
+    public IParameterProvider Parameters { get; set; }
+
+    /// <summary>
     ///   Executes the specified context.
     /// </summary>
     /// <param name="context">The context.</param>

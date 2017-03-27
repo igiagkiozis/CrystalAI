@@ -70,6 +70,7 @@ namespace Crystal {
     /// Adds the option associated with optionId, if one exists.
     /// </summary>
     /// <param name="optionId">The option identifier.</param>
+    /// <param name="parameters">The parameters.</param>
     /// <returns>
     /// Returns true if the option was successfully added, false otherwise.
     /// </returns>
