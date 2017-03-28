@@ -127,6 +127,7 @@
     <Compile Include="Tests\Options\MultiplicativeUtilityOptionTests.cs" />
     <Compile Include="Tests\Options\OptionCollectionTests.cs" />
     <Compile Include="Tests\Options\OptionConstructorTests.cs" />
+    <Compile Include="Tests\Options\OptionParameterTests.cs" />
     <Compile Include="Tests\Options\WeightedMetricsTests.cs" />
     <Compile Include="Tests\Options\Helpers\Considerations.cs" />
     <Compile Include="Tests\Scheduling\DeferredCommandTests.cs" />
@@ -242,4 +243,5 @@
     </Content>
     <Content Include="Data\Readme.txt" />
   </ItemGroup>
+  <ItemGroup />
 </Project>

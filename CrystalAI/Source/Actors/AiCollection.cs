@@ -36,7 +36,7 @@ namespace Crystal {
     ///   All behaviours available to this AiCollection.
     /// </summary>
     public IBehaviourCollection Behaviours { get; private set; }
-    
+
     /// <summary>
     ///   All options available to this AiCollection.
     /// </summary>

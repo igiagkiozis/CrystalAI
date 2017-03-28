@@ -13,3 +13,4 @@ ExampleAI/obj
 .DS_Store
 *.csproj.user
 CrystalAI/docs
+CrystalAI/packages.config

@@ -103,6 +103,7 @@
     <Compile Include="Source\Options\OptionConstructor.cs" />
     <Compile Include="Source\Options\Interfaces\IOption.cs" />
     <Compile Include="Source\Options\Interfaces\IOptionCollection.cs" />
+    <Compile Include="Source\Parameters\Interfaces\IParameterProvider.cs" />
     <Compile Include="Source\Scheduling\QueuedCommand.cs" />
     <Compile Include="Source\Utilities\Pcg.cs" />
     <Compile Include="Source\Utilities\PcgExtended.cs" />
@@ -125,5 +126,7 @@
     <Compile Include="Source\Extensions\ReaderWriterLockSlimExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>

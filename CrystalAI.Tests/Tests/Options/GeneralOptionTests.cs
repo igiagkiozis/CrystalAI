@@ -17,9 +17,9 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
-using System;
 using CrystalAI.TestHelpers;
 using NUnit.Framework;
+using System;
 
 
 #pragma warning disable
