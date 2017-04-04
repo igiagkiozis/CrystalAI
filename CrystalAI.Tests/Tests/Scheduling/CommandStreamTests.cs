@@ -43,22 +43,16 @@ namespace Crystal.SchedulingTests {
       _proc2 = _p.Process2;
       _proc3 = _p.Process3;
       _cmd1 = new DeferredCommand(_proc1) {
-        InitExecutionDelayMin = 0.0f,
-        InitExecutionDelayMax = 0.0f,
-        ExecutionDelayMin = 0.0f,
-        ExecutionDelayMax = 0.0f
+        InitExecutionDelayInterval = Interval.Create(0f),
+        ExecutionDelayInterval = Interval.Create(0f)
       };
       _cmd2 = new DeferredCommand(_proc2) {
-        InitExecutionDelayMin = 0.0f,
-        InitExecutionDelayMax = 0.0f,
-        ExecutionDelayMin = 0.0f,
-        ExecutionDelayMax = 0.0f
+        InitExecutionDelayInterval = Interval.Create(0f),
+        ExecutionDelayInterval = Interval.Create(0f)
       };
       _cmd3 = new DeferredCommand(_proc3) {
-        InitExecutionDelayMin = 0.0f,
-        InitExecutionDelayMax = 0.0f,
-        ExecutionDelayMin = 0.0f,
-        ExecutionDelayMax = 0.0f
+        InitExecutionDelayInterval = Interval.Create(0f),
+        ExecutionDelayInterval = Interval.Create(0f)
       };
     }
 
@@ -91,10 +85,8 @@ namespace Crystal.SchedulingTests {
       for(int i = 0; i < numOfCommands; i++) {
         var cm1 = new DeferredCommand(_p.PopulateRandomList100) {
           IsRepeating = false,
-          InitExecutionDelayMin = 0.0f,
-          InitExecutionDelayMax = 0.0f,
-          ExecutionDelayMin = 0.0f,
-          ExecutionDelayMax = 0.0f
+          InitExecutionDelayInterval = Interval.Create(0f),
+          ExecutionDelayInterval = Interval.Create(0f)
         };
         s.Add(cm1);
       }
@@ -120,10 +112,8 @@ namespace Crystal.SchedulingTests {
 
       var cm1 = new DeferredCommand(_p.PopulateRandomList100) {
         IsRepeating = false,
-        InitExecutionDelayMin = 0.0f,
-        InitExecutionDelayMax = 0.0f,
-        ExecutionDelayMin = 0.0f,
-        ExecutionDelayMax = 0.0f
+        InitExecutionDelayInterval = Interval.Create(0f),
+        ExecutionDelayInterval = Interval.Create(0f)
       };
       var cmh = s.Add(cm1);
 
@@ -153,10 +143,8 @@ namespace Crystal.SchedulingTests {
       var cmdList = new List<DeferredCommand>();
       for(int i = 0; i < numOfCommands; i++) {
         var cm1 = new DeferredCommand(_p.PopulateRandomList100) {
-          InitExecutionDelayMin = 0.0f,
-          InitExecutionDelayMax = 0.0f,
-          ExecutionDelayMin = 0.00001f,
-          ExecutionDelayMax = 0.00001f
+          InitExecutionDelayInterval = Interval.Create(0f),
+          ExecutionDelayInterval = Interval.Create(0.00001f)
         };
         s.Add(cm1);
         cmdList.Add(cm1);

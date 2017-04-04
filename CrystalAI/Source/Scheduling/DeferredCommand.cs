@@ -32,10 +32,7 @@ namespace Crystal {
   ///   repeatedly.
   /// </summary>
   public class DeferredCommand {
-    float _executionDelayMax;
-    float _executionDelayMin;
-    float _firstExecutionDelayMax;
-    float _firstExecutionDelayMin;
+
     // This is by and far the most common use.
     bool _isRepeating = true;
     CommandAction _process;
@@ -53,25 +50,26 @@ namespace Crystal {
       set { _isRepeating = value; }
     }
 
-    /// <summary>
-    ///   Controls the minimum Time delay before this command is executed for the first time.
-    /// </summary>
-    /// <value>The first execution delay minimum.</value>
-    public float InitExecutionDelayMin {
-      get { return _firstExecutionDelayMin; }
-      set {
-        _firstExecutionDelayMin = value.ClampToPositive();
-        _firstExecutionDelayMax = _firstExecutionDelayMax.ClampToLowerBound(_firstExecutionDelayMin);
-      }
-    }
+    Interval<float> _initExecutionDelayInterval = Interval.Create(0f);
 
     /// <summary>
-    ///   Controls the maximum Time delay before this command is executed for the first Time.
+    /// The initial execution delay interval in seconds. If this is a point interval (e.g. [a,a]) the delay
+    /// is deterministic, i.e. always equal to the given point.
     /// </summary>
-    /// <value>The first execution delay max.</value>
-    public float InitExecutionDelayMax {
-      get { return _firstExecutionDelayMax; }
-      set { _firstExecutionDelayMax = value.ClampToLowerBound(_firstExecutionDelayMin); }
+    public Interval<float> InitExecutionDelayInterval {
+      get { return _initExecutionDelayInterval; }
+      set { _initExecutionDelayInterval = value.ClampToPositive(); }
+    }
+
+    // The default execution delay is ~16 milliseconds, i.e. the period of a frame in a game running at 60 fps.
+    Interval<float> _executionDelayInterval = Interval.Create(0.0167f);
+    /// <summary>
+    /// The execution delay interval in seconds. If this is a point interval (e.g. [a,a]) the delay
+    /// is deterministic, i.e. always equal to the given point.
+    /// </summary>
+    public Interval<float> ExecutionDelayInterval {
+      get { return _executionDelayInterval; }
+      set { _executionDelayInterval = value.ClampToPositive(); }
     }
 
     /// <summary>
@@ -80,25 +78,7 @@ namespace Crystal {
     /// </summary>
     /// <value>The first execution delay.</value>
     public float InitExecutionDelay {
-      get { return PcgExtended.Default.NextFloat(_firstExecutionDelayMin, _firstExecutionDelayMax); }
-    }
-
-    /// <summary>
-    ///   The minimum Time to wait (in seconds) before executing this command again.
-    /// </summary>
-    /// <value>The next execution delay minimum.</value>
-    public float ExecutionDelayMin {
-      get { return _executionDelayMin; }
-      set { _executionDelayMin = value.ClampToPositive(); }
-    }
-
-    /// <summary>
-    ///   The maximum Time to wait (in seconds) before executing this command again.
-    /// </summary>
-    /// <value>The next execution delay max.</value>
-    public float ExecutionDelayMax {
-      get { return _executionDelayMax; }
-      set { _executionDelayMax = value.ClampToLowerBound(_executionDelayMin); }
+      get { return PcgExtended.Default.NextFloat(_initExecutionDelayInterval); }
     }
 
     /// <summary>
@@ -106,7 +86,7 @@ namespace Crystal {
     /// </summary>
     /// <value>The next execution delay.</value>
     public float ExecutionDelay {
-      get { return PcgExtended.Default.NextFloat(_executionDelayMin, _executionDelayMax); }
+      get { return PcgExtended.Default.NextFloat(_executionDelayInterval); }
     }
 
     /// <summary>
@@ -127,11 +107,11 @@ namespace Crystal {
     ///   The time since the last update in seconds.
     /// </summary>
     public float TimeSinceLastUpdate {
-      get { return CrTime.Time - _lastExecutionTime; }
+      get { return CrTime.TotalSeconds - _lastExecutionTime; }
     }
 
     /// <summary>
-    ///   This returns the time difference between the last update time and the second to
+    ///   This returns the time difference in seconds between the last update time and the second to
     ///   last update time.
     /// </summary>
     public float LastUpdateDeltaTime {
@@ -144,7 +124,7 @@ namespace Crystal {
     public void Execute() {
       _process();
       var lastExecOld = _lastExecutionTime;
-      _lastExecutionTime = CrTime.Time;
+      _lastExecutionTime = CrTime.TotalSeconds;
       _lastUpdateDeltaTime = _lastExecutionTime - lastExecOld;
       unchecked {
         _timesExecuted++;

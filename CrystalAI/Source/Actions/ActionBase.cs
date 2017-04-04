@@ -18,7 +18,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 using System;
-using System.Diagnostics;
 
 
 namespace Crystal {
@@ -29,11 +28,9 @@ namespace Crystal {
   /// </summary>
   /// <seealso cref="T:Crystal.IAction"/>
   public class ActionBase : IAction {
-    ActionStatus _actionStatus = ActionStatus.Idle;
     IActionCollection _collection;
     float _cooldown;
     float _startedTime;
-    Stopwatch _cooldownTimer = new Stopwatch();
 
     /// <summary>
     ///   A string alias for ID.
@@ -48,7 +45,7 @@ namespace Crystal {
     public float ElapsedTime {
       get {
         if(ActionStatus == ActionStatus.Running)
-          return CrTime.Time - _startedTime;
+          return CrTime.TotalSeconds - _startedTime;
 
         return 0f;
       }
@@ -71,7 +68,7 @@ namespace Crystal {
            ActionStatus == ActionStatus.Idle)
           return false;
 
-        return (float)_cooldownTimer.Elapsed.TotalSeconds < _cooldown;
+        return CrTime.TotalSeconds - _startedTime < _cooldown;
       }
     }
 
@@ -79,10 +76,7 @@ namespace Crystal {
     ///   Gets the action status.
     /// </summary>
     /// <value>The action status.</value>
-    public ActionStatus ActionStatus {
-      get { return _actionStatus; }
-      protected set { _actionStatus = value; }
-    }
+    public ActionStatus ActionStatus { get; protected set; } = ActionStatus.Idle;
 
     /// <summary>Executes the action.</summary>
     /// <param name="context">The context.</param>
@@ -91,7 +85,7 @@ namespace Crystal {
         return;
 
       if(TryUpdate(context) == false) {
-        _startedTime = CrTime.Time;
+        _startedTime = CrTime.TotalSeconds;
         ActionStatus = ActionStatus.Running;
         OnExecute(context);
       }
@@ -170,8 +164,7 @@ namespace Crystal {
     protected ActionBase(ActionBase other) {
       NameId = other.NameId;
       _collection = other._collection;
-      Cooldown = other.Cooldown;
-      _cooldownTimer = new Stopwatch();
+      Cooldown = other.Cooldown;     
     }
 
     /// <summary>
@@ -212,12 +205,6 @@ namespace Crystal {
 
     void FinalizeAction(IContext context) {
       OnStop(context);
-      ResetAndStartCooldownTimer();
-    }
-
-    void ResetAndStartCooldownTimer() {
-      _cooldownTimer.Reset();
-      _cooldownTimer.Start();
     }
 
     void AddSelfToCollection() {

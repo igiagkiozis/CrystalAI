@@ -47,6 +47,7 @@ namespace Crystal.GeneralTests {
     public void ConstructorTest() {
       var ai = _ctor.Create(_ctor.CharacterAi);
     }
+
   }
 
 }

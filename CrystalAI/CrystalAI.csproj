@@ -8,8 +8,7 @@
     <RootNamespace>CrystalAI</RootNamespace>
     <AssemblyName>CrystalAI</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -84,9 +83,10 @@
     <Compile Include="Source\Evaluators\SigmoidEvaluator.cs" />
     <Compile Include="Source\Evaluators\Interfaces\IEvaluator.cs" />
     <Compile Include="Source\Extensions\IntervalExtensions.cs" />
+    <Compile Include="Source\Extensions\PcgExtensions.cs" />
     <Compile Include="Source\Extensions\UtilityExtensions.cs" />
     <Compile Include="Source\Extensions\ValueTypeExtensions.cs" />
-    <Compile Include="Source\General\AIConstructor.cs" />
+    <Compile Include="Source\General\AiConstructor.cs" />
     <Compile Include="Source\General\Interval.cs" />
     <Compile Include="Source\General\Point.cs" />
     <Compile Include="Source\General\Utility.cs" />

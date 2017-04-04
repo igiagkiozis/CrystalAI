@@ -18,6 +18,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.Diagnostics;
+using System.Text;
 
 
 namespace Crystal {
@@ -104,15 +106,27 @@ namespace Crystal {
     public IUtilityAi Create(string aiId) {
       return AIs.Create(aiId);
     }
-
+    
     /// <summary>
     ///   Determines whether the specified expression is okay.
     /// </summary>
     /// <param name="expression">if set to <c>true</c> [expression].</param>
     /// <exception cref="AiConfigurationxception"></exception>
     protected void IsOkay(bool expression) {
-      if(expression == false)
-        throw new AiConfigurationxception();
+      if(expression == false) {
+        // This extracts information from the stack about the calling Class, method and 
+        // line number at which initialization failed. This should help locate the offending 
+        // code quickly.
+        var stack = new StackTrace(true);
+        StackFrame frame = stack.GetFrame(1);
+        var fileLineNumber = frame.GetFileLineNumber();
+        var method = frame.GetMethod();
+        var type = method.DeclaringType;
+        var name = method.Name;
+        var errorMessage = string.Format("{0}.{1}() Line : {2} - Failed to initialize!", type, name, fileLineNumber.ToString());
+        Console.WriteLine(errorMessage);
+        throw new AiConfigurationxception(errorMessage);
+      }        
     }
 
     /// <summary>
@@ -181,6 +195,8 @@ namespace Crystal {
     }
 
     internal class AiConfigurationxception : Exception {
+      public AiConfigurationxception(string message) : base(message) {
+      }
     }
   }
 

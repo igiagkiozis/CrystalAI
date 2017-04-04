@@ -18,11 +18,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Crystal AI.  If not, see <http://www.gnu.org/licenses/>.
 using System;
-using System.Diagnostics;
 
 
 namespace Crystal {
-
+  
   /// <summary>
   ///   Base class for generic <see cref="T:Crystal.IAction"/>s. All actions should derive either from
   ///   this class or its non-generic version <see cref="T:Crystal.ActionBase"/>.
@@ -31,10 +30,8 @@ namespace Crystal {
   /// <seealso cref="T:Crystal.IAction"/>
   public class ActionBase<TContext> : IAction where TContext : class, IContext {
     readonly IActionCollection _collection;
-    readonly Stopwatch _cooldownTimer = new Stopwatch();
     float _cooldown;
     float _startedTime;
-    ActionStatus _actionStatus = ActionStatus.Idle;
 
     /// <summary>
     ///   A unique identifier for this action.
@@ -47,7 +44,7 @@ namespace Crystal {
     public float ElapsedTime {
       get {
         if(ActionStatus == ActionStatus.Running)
-          return CrTime.Time - _startedTime;
+          return CrTime.TotalSeconds - _startedTime;
 
         return 0f;
       }
@@ -70,17 +67,14 @@ namespace Crystal {
            ActionStatus == ActionStatus.Idle)
           return false;
 
-        return (float)_cooldownTimer.Elapsed.TotalSeconds < _cooldown;
+        return CrTime.TotalSeconds - _startedTime < _cooldown;
       }
     }
 
     /// <summary>
     ///   Gets the action status.
     /// </summary>
-    public ActionStatus ActionStatus {
-      get { return _actionStatus; }
-      protected set { _actionStatus = value; }
-    }
+    public ActionStatus ActionStatus { get; protected set; } = ActionStatus.Idle;
 
     /// <summary>
     ///   Executes the specified context.
@@ -91,7 +85,7 @@ namespace Crystal {
         return;
 
       if(TryUpdate(context) == false) {
-        _startedTime = CrTime.Time;
+        _startedTime = CrTime.TotalSeconds;
         ActionStatus = ActionStatus.Running;
         OnExecute(context);
       }
@@ -185,9 +179,8 @@ namespace Crystal {
     /// <param name="other">The other.</param>
     protected ActionBase(ActionBase<TContext> other) {
       NameId = other.NameId;
-      _collection = other._collection;
       Cooldown = other.Cooldown;
-      _cooldownTimer = new Stopwatch();
+      _collection = other._collection;
     }
 
     /// <summary>
@@ -232,12 +225,6 @@ namespace Crystal {
 
     void FinalizeAction(TContext context) {
       OnStop(context);
-      ResetAndStartCooldownTimer();
-    }
-
-    void ResetAndStartCooldownTimer() {
-      _cooldownTimer.Reset();
-      _cooldownTimer.Start();
     }
 
     void AddSelfToCollection() {

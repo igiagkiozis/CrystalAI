@@ -23,18 +23,26 @@ using System.Diagnostics;
 namespace Crystal {
 
   /// <summary>
-  ///   A wrapper for the UnityEngine.Time class. This is necessary for unit tests
-  ///   without the Unity runtime.
+  /// Clock.
   /// </summary>
   public static class CrTime {
     static readonly Stopwatch Clock;
 
     /// <summary>
-    ///   The Time at the beginning of this frame (Read Only). This is the Time in seconds since the
-    ///   start of the game.
+    ///   The time in seconds since the start of the game.
     /// </summary>
-    public static float Time {
+    public static float TotalSeconds {
       get { return (float)Clock.Elapsed.TotalSeconds; }
+    }
+
+    /// <summary>
+    /// The time in milliseconds since the start of the game.
+    /// </summary>
+    /// <value>
+    /// The milliseconds.
+    /// </value>
+    public static float TotalMilliseconds {
+      get { return (float)Clock.Elapsed.TotalMilliseconds; }
     }
 
     /// <summary>

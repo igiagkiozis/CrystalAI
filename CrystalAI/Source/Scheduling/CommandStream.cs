@@ -75,7 +75,7 @@ namespace Crystal {
     /// <param name="cmd">The command.</param>
     /// <returns></returns>
     public IDeferredCommandHandle Add(DeferredCommand cmd) {
-      float time = CrTime.Time;
+      float time = CrTime.TotalSeconds;
       var scheduledCommand = new QueuedCommand(this) {
         Command = cmd,
         LastExecution = time,
@@ -127,7 +127,7 @@ namespace Crystal {
     void UpdateFrameTimeAndStartClock() {
       _watch.Reset();
       _watch.Start();
-      _frameBeginTime = CrTime.Time;
+      _frameBeginTime = CrTime.TotalSeconds;
     }
 
     bool CanGetNextCommand() {

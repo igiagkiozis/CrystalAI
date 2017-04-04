@@ -200,6 +200,24 @@ namespace Crystal {
     }
 
     /// <summary>
+    /// If both bounds of the interval are positive or zero it is returned as is. If only the lower bound
+    /// is negative while the upper bound is positive, the lower bound is set to zero and the upper bound 
+    /// is retained. If both the lower and upper bounds are negative this returns a point interval equal to
+    /// zero. 
+    /// </summary>
+    /// <param name="this">The this.</param>
+    /// <returns></returns>
+    public static Interval<float> ClampToPositive(this Interval<float> @this) {
+      if(@this.LowerBound >= 0f)
+        return @this;
+
+      if(@this.LowerBound < 0f && @this.UpperBound >= 0f)
+        return Interval.Create(0f, @this.UpperBound);
+
+      return Interval.Create(0f);
+    }
+
+    /// <summary>
     ///   If the value is non-negative it is returned as is. If it is negative its clamped to 0.0.
     ///   WARNING: Never use this extension like this: 1.0.ClampToPositive(), since if the value is negative
     ///   the sign (if there is one) will not be passed to the extension method leading to unexpected results.
