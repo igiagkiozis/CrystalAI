@@ -9,7 +9,7 @@
 
 Crystal is a fast, scalable and extensible general purpose decision making AI for C# that is based on concepts in utility theory. It was created and is maintained by [Ioannis Giagkiozis](http://www.bismur.co.uk/). 
 
-To get started check out the [Crystal AI pages](https://theldoctor.github.io/CrystalAI/).
+To get started check out the [Crystal AI pages](https://igiagkiozis.github.io/CrystalAI/).
 
 ## Roadmap
 You can have a look at the [Crystal AI Roadmap](https://trello.com/b/e3r5Zgrd/crystal-ai-roadmap) on Trello. Drop us a line at the [Crystal AI Forums](http://www.bismur.co.uk/forums/forum-11.html) if you think we've missed a feature you'd love to see implemented in future versions of Crystal. 
