@@ -1,4 +1,4 @@
-[![license](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](https://github.com/igiagkiozis/CrystalAI/blob/master/LICENSE)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/igiagkiozis/CrystalAI/blob/master/LICENSE)
 [![Build status](https://ci.appveyor.com/api/projects/status/rw0tma0eucs45fi5/branch/master?svg=true)](https://ci.appveyor.com/project/ThelDoctor/crystalai/branch/master)
 ![Tests Status](http://flauschig.ch/batch.php?type=tests&account=ThelDoctor&slug=CrystalAI)
 
@@ -25,4 +25,4 @@ You can have a look at the [Crystal AI Roadmap](https://trello.com/b/e3r5Zgrd/cr
 - v0.7.1 First public version containing only the library and the test suite.
 
 ## Copyright and License
-Code and documentation copyright 2016-2017 the Bismur Studios Ltd. and Ioannis Giagkiozis. This is the Community version of Crystal AI and is released under the GPL v3 license. For further details on licensing please see [Crystal AI licensing page](https://igiagkiozis.github.io/CrystalAI/license/). 
+Code and documentation copyright 2016-2017 the Bismur Studios Ltd. and Ioannis Giagkiozis. Crystal AI and is released under the MIT license. 
